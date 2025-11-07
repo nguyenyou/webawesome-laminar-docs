@@ -1,3 +1,3 @@
-export const Preview = () => {
-  return <div>Previewwwwwww</div>
+export const Preview = ({ code }: { code: string }) => {
+  return <div>{code}</div>
 }
