@@ -158,8 +158,8 @@ const generateExampleModule = (
 };
 
 /**
- * Get the compiled JavaScript file path for an example
- * e.g., out/examples/laminar/example1/fullLinkJS.dest/main.js
+ * Get the built JavaScript file path for an example
+ * e.g., examples-build/laminar/button/example1.js
  */
 const getCompiledJsPath = (
   examplesPath: string,
@@ -168,16 +168,16 @@ const getCompiledJsPath = (
 ): string => {
   const modulePathParts = getModulePathParts(examplesPath, workspaceRoot);
   
-  // Build path: out/examples/{modulePathParts}/example{N}/fullLinkJS.dest/main.js
+  // Build path: examples-build/{modulePathParts}/example{N}.js
   const pathParts = modulePathParts.length > 0
-    ? ["out", "examples", ...modulePathParts, `example${exampleNumber}`, "fullLinkJS.dest", "main.js"]
-    : ["out", "examples", `example${exampleNumber}`, "fullLinkJS.dest", "main.js"];
+    ? ["examples-build", ...modulePathParts, `example${exampleNumber}.js`]
+    : ["examples-build", `example${exampleNumber}.js`];
   
   return join(workspaceRoot, ...pathParts);
 };
 
 /**
- * Read compiled JavaScript file content
+ * Read built JavaScript file content
  * Returns null if file doesn't exist or can't be read
  */
 const readCompiledJsFile = (filePath: string): string | null => {
@@ -187,7 +187,7 @@ const readCompiledJsFile = (filePath: string): string | null => {
     }
     return readFileSync(filePath, "utf-8");
   } catch (error) {
-    console.warn(`Failed to read compiled JS file at ${filePath}:`, error);
+    console.warn(`Failed to read built JS file at ${filePath}:`, error);
     return null;
   }
 };
@@ -300,14 +300,14 @@ export const previewPlugin: Plugin<[any], Root> = () => {
 
     // Second pass: transform nodes to Preview components
     for (const { node, exampleNumber, parent, index } of previewNodes) {
-      // Get compiled JS file path
+      // Get built JS file path
       const compiledJsPath = getCompiledJsPath(examplesPath, exampleNumber, workspaceRoot);
       
-      // Read compiled JS file content
+      // Read built JS file content
       const jsContent = readCompiledJsFile(compiledJsPath);
       
       if (jsContent === null) {
-        console.warn(`Compiled JS file not found at ${compiledJsPath}, skipping transformation`);
+        console.warn(`Built JS file not found at ${compiledJsPath}, skipping transformation`);
         continue;
       }
 

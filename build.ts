@@ -30,16 +30,21 @@ function findExamples(outDir: string, baseDir: string = ''): ExampleEntry[] {
       // Check if this directory contains main.js (it's an example directory)
       const mainJsPath = path.join(entryPath, 'fullLinkJS.dest', 'main.js');
       if (existsSync(mainJsPath)) {
-        // Extract docName and exampleName from path
-        // relativePath format: {docName}/example{number}
+        // Extract full path structure preserving all intermediate directories
+        // relativePath format: {docName}/{intermediate}/example{number}
         const parts = relativePath.split(path.sep);
-        const docName = parts[0];
-        const exampleName = parts[1]; // e.g., "example1"
+        const exampleName = parts[parts.length - 1]; // e.g., "example1" (last part)
+        const pathParts = parts.slice(0, -1); // All parts except the last (example name)
+
+        // Construct output path preserving full structure: examples-build/{pathParts}/example{N}.js
+        const outputPath = pathParts.length > 0
+          ? path.join('examples-build', ...pathParts, `${exampleName}.js`)
+          : path.join('examples-build', `${exampleName}.js`);
 
         examples.push({
           entrypoint: mainJsPath,
-          outputPath: path.join('examples-build', docName, `${exampleName}.js`),
-          docName,
+          outputPath,
+          docName: pathParts[0] || '', // First part for backward compatibility
           exampleName,
         });
       } else {
