@@ -1,23 +1,29 @@
+"use client";
 import { Frame } from "@ark-ui/react/frame";
+import { useRef } from "react";
 
 export const Preview = ({ code }: { code: string }) => {
+  const ref = useRef<HTMLIFrameElement>(null);
+
+  const srcDoc = `<html>
+<head>
+<link href="//use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet" />
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css" />
+<base target=_blank>
+</head>
+<body style='overflow: hidden'>
+ <div id="root"></div>
+ <script type="module">
+  ${code}
+ </script>
+</body>
+</html>
+`;
   return (
     <Frame
       title="Custom Frame"
-      style={{
-        border: "1px solid #ccc",
-        width: "100%",
-        height: "var(--height)",
-      }}
-      head={<style>{"body { background-color: #f0f0f0; }"}</style>}
-    >
-      <div style={{ padding: "40px" }}>
-        <h1>Hello from inside the frame!</h1>
-        <p>
-          This content is rendered within our custom frame component using a
-          Portal.
-        </p>
-      </div>
-    </Frame>
+      style={{ border: "1px solid #ccc", maxWidth: "800px", width: "100%" }}
+      srcDoc={srcDoc}
+    ></Frame>
   );
 };
