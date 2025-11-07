@@ -30,6 +30,27 @@ const getDocNameFromPath = (filePath: string) => {
   const nameWithoutExt = extname(filename) ? filename.replace(extname(filename), '') : filename;
   return nameWithoutExt || 'default';
 };
+
+interface TemplateContext {
+    number: number;
+    userCode: string;
+    docName: string;
+  }
+
+export const applyTemplate = (ctx: TemplateContext): string => {
+    return `package examples.${ctx.docName}.example${ctx.number}
+  
+  import org.scalajs.dom
+  import com.raquo.laminar.api.L.*
+  @main def app = {
+    val container = dom.document.querySelector("#root")
+    render(container, {
+      ${ctx.userCode.split("\n").join("\n    ")}
+    })
+  }
+  `;
+  };
+
 export const previewPlugin: Plugin<[any], Root> = () => {
   return (tree, file) => {
     // Extract doc name from file path
@@ -49,8 +70,13 @@ export const previewPlugin: Plugin<[any], Root> = () => {
           return;
         }
         exampleCounter++;
-        const scalaSource = node.value;
-
+        const templateContext: TemplateContext = {
+          number: exampleCounter,
+          userCode: node.value,
+          docName: docName,
+        };
+        const scalaSource = applyTemplate(templateContext);
+        console.log(scalaSource);
         // generate a module for the code block
         console.log("hi");
       }
