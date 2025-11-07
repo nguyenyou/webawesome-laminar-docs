@@ -4,7 +4,7 @@ import type { Plugin } from "unified";
 import type { Code, Root } from "mdast";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import { join, basename, extname } from "path";
-import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync } from "fs";
+import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync } from "fs";
 
 /**
  * Convert docs file path to examples directory path
@@ -81,7 +81,7 @@ export const applyTemplate = (ctx: TemplateContext): string => {
   
   import org.scalajs.dom
   import com.raquo.laminar.api.L.*
-  
+
   @main def app = {
     val container = dom.document.querySelector("#root")
     render(container, {
@@ -155,6 +155,41 @@ const generateExampleModule = (
 };
 
 /**
+ * Get the compiled JavaScript file path for an example
+ * e.g., out/examples/laminar/example1/fullLinkJS.dest/main.js
+ */
+const getCompiledJsPath = (
+  examplesPath: string,
+  exampleNumber: number,
+  workspaceRoot: string
+): string => {
+  const modulePathParts = getModulePathParts(examplesPath, workspaceRoot);
+  
+  // Build path: out/examples/{modulePathParts}/example{N}/fullLinkJS.dest/main.js
+  const pathParts = modulePathParts.length > 0
+    ? ["out", "examples", ...modulePathParts, `example${exampleNumber}`, "fullLinkJS.dest", "main.js"]
+    : ["out", "examples", `example${exampleNumber}`, "fullLinkJS.dest", "main.js"];
+  
+  return join(workspaceRoot, ...pathParts);
+};
+
+/**
+ * Read compiled JavaScript file content
+ * Returns null if file doesn't exist or can't be read
+ */
+const readCompiledJsFile = (filePath: string): string | null => {
+  try {
+    if (!existsSync(filePath)) {
+      return null;
+    }
+    return readFileSync(filePath, "utf-8");
+  } catch (error) {
+    console.warn(`Failed to read compiled JS file at ${filePath}:`, error);
+    return null;
+  }
+};
+
+/**
  * Clean up example modules that no longer exist in the current MDX file
  */
 const cleanupOldExamples = (
@@ -207,12 +242,19 @@ export const previewPlugin: Plugin<[any], Root> = () => {
     // Ensure all parent modules exist
     ensureParentModules(examplesPath, workspaceRoot);
 
-    // Track example numbers for this MDX file
-    const exampleNumbers: number[] = [];
-    let exampleCounter = 0;
+    // First pass: collect all Scala preview blocks
 
-    // Process all code blocks
-    visit(tree, "code", (node) => {
+    // Track example numbers and nodes for transformation
+    const exampleNumbers: number[] = [];
+    const previewNodes: Array<{
+      node: Code;
+      exampleNumber: number;
+      parent: any;
+      index: number;
+    }> = [];
+    let exampleCounter = 0;
+    
+    visit(tree, "code", (node, index, parent) => {
       // hasVisited is a custom property
       if ("hasVisited" in node) {
         return;
@@ -226,6 +268,16 @@ export const previewPlugin: Plugin<[any], Root> = () => {
         
         exampleCounter++;
         exampleNumbers.push(exampleCounter);
+        
+        // Store node information for second pass transformation
+        if (parent && typeof index === "number") {
+          previewNodes.push({
+            node,
+            exampleNumber: exampleCounter,
+            parent,
+            index,
+          });
+        }
         
         try {
           generateExampleModule(
@@ -242,5 +294,37 @@ export const previewPlugin: Plugin<[any], Root> = () => {
 
     // Clean up old examples that are no longer in this MDX file
     cleanupOldExamples(examplesPath, exampleNumbers, workspaceRoot);
+
+    // Second pass: transform nodes to Preview components
+    for (const { node, exampleNumber, parent, index } of previewNodes) {
+      // Get compiled JS file path
+      const compiledJsPath = getCompiledJsPath(examplesPath, exampleNumber, workspaceRoot);
+      
+      // Read compiled JS file content
+      const jsContent = readCompiledJsFile(compiledJsPath);
+      
+      if (jsContent === null) {
+        console.warn(`Compiled JS file not found at ${compiledJsPath}, skipping transformation`);
+        continue;
+      }
+
+      // Create MDX JSX element for Preview component
+      const previewElement: MdxJsxFlowElement = {
+        type: "mdxJsxFlowElement",
+        name: "Preview",
+        attributes: [
+          {
+            type: "mdxJsxAttribute",
+            name: "code",
+            value: jsContent,
+          },
+        ],
+        children: [],
+      };
+
+      // Replace the code node with the Preview component
+      parent.children[index] = previewElement;
+    }
+    
   };
 };
