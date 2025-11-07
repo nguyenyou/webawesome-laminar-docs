@@ -1,0 +1,3 @@
+package build.examples.laminar
+
+object `package` extends build.WebModule
