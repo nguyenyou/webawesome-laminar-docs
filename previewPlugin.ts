@@ -18,27 +18,29 @@ const getDocNameFromPath = (filePath: string) => {
     // e.g., ["content", "docs", "react", "sjs.mdx"] -> docsIndex=1, next part is "react"
     const nextPart = parts[docsIndex + 1];
     const filename = parts[parts.length - 1];
-    
+
     // If next part is not a filename (doesn't have extension), it's a subfolder
     if (nextPart && !extname(nextPart) && nextPart !== filename) {
       return nextPart;
     }
   }
-  
+
   // Fallback to filename without extension
   const filename = basename(filePath);
-  const nameWithoutExt = extname(filename) ? filename.replace(extname(filename), '') : filename;
-  return nameWithoutExt || 'default';
+  const nameWithoutExt = extname(filename)
+    ? filename.replace(extname(filename), "")
+    : filename;
+  return nameWithoutExt || "default";
 };
 
 interface TemplateContext {
-    number: number;
-    userCode: string;
-    docName: string;
-  }
+  number: number;
+  userCode: string;
+  docName: string;
+}
 
 export const applyTemplate = (ctx: TemplateContext): string => {
-    return `package examples.${ctx.docName}.example${ctx.number}
+  return `package examples.${ctx.docName}.example${ctx.number}
   
   import org.scalajs.dom
   import com.raquo.laminar.api.L.*
@@ -49,12 +51,44 @@ export const applyTemplate = (ctx: TemplateContext): string => {
     })
   }
   `;
+};
+
+interface ScalaPreviewBlock {
+  number: number;
+  sourceCode: string;
+  wrappedCode: string;
+  docName: string;
+}
+
+const processCodeBlock = (
+  scalaCode: string,
+  docName: string,
+  exampleCounter: number
+): ScalaPreviewBlock => {
+  const templateContext: TemplateContext = {
+    number: exampleCounter,
+    userCode: scalaCode,
+    docName: docName,
   };
+  const scalaSource = applyTemplate(templateContext);
+  return {
+    number: exampleCounter,
+    sourceCode: scalaSource,
+    wrappedCode: scalaCode,
+    docName: docName,
+  };
+};
+
+const generateModule = (block: ScalaPreviewBlock, workspaceRoot: string) => {
+  const { number, wrappedCode, docName } = block;
+}
 
 export const previewPlugin: Plugin<[any], Root> = () => {
   return (tree, file) => {
     // Extract doc name from file path
-    const docName = getDocNameFromPath(file.path || file.history?.[0] || 'default');
+    const docName = getDocNameFromPath(
+      file.path || file.history?.[0] || "default"
+    );
     console.log(docName);
 
     let exampleCounter = 0;
@@ -70,15 +104,12 @@ export const previewPlugin: Plugin<[any], Root> = () => {
           return;
         }
         exampleCounter++;
-        const templateContext: TemplateContext = {
-          number: exampleCounter,
-          userCode: node.value,
-          docName: docName,
-        };
-        const scalaSource = applyTemplate(templateContext);
-        console.log(scalaSource);
-        // generate a module for the code block
-        console.log("hi");
+        const block = processCodeBlock(node.value, docName, exampleCounter);
+        try {
+          //  
+        } catch (error) {
+          console.error(`Failed to generate module for Scala preview:`, error);
+        }
       }
     });
   };
