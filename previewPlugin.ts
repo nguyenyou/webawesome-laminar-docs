@@ -8,7 +8,7 @@ import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync
 
 /**
  * Convert docs file path to examples directory path
- * e.g., content/docs/laminar/components/button.mdx -> examples/laminar/components/
+ * e.g., content/docs/laminar/components/button.mdx -> examples/laminar/components/button/
  */
 const getExamplesPathFromDocsPath = (filePath: string, workspaceRoot: string): string => {
   const normalizedPath = filePath.replace(/\\/g, "/");
@@ -26,8 +26,11 @@ const getExamplesPathFromDocsPath = (filePath: string, workspaceRoot: string): s
   // Get all parts after "docs" excluding the filename
   const pathAfterDocs = parts.slice(docsIndex + 1, -1);
   
-  // Build examples path
-  const examplesPath = join(workspaceRoot, "examples", ...pathAfterDocs);
+  // Extract filename without extension
+  const filename = basename(filePath, extname(filePath));
+  
+  // Build examples path including the filename
+  const examplesPath = join(workspaceRoot, "examples", ...pathAfterDocs, filename);
   return examplesPath;
 };
 

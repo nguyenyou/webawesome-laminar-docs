@@ -1,4 +1,4 @@
-package examples.laminar.example1
+package examples.laminar.button.example1
   
   import org.scalajs.dom
   import com.raquo.laminar.api.L.*

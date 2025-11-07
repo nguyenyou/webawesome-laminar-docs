@@ -1,4 +1,4 @@
-package examples.react.example1
+package examples.react.button.example1
   
   import org.scalajs.dom
   import com.raquo.laminar.api.L.*
