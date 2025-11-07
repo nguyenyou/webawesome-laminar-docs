@@ -1,17 +1,22 @@
 import type { VFile } from "vfile";
 import { visit } from "unist-util-visit";
 import type { Plugin } from "unified";
-import type { Code, Root } from "mdast";
+import type { Code, Root, Parent } from "mdast";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import { join, basename, extname } from "path";
 import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync } from "fs";
+
+/**
+ * Normalize path separators to forward slashes
+ */
+const normalizePath = (path: string): string => path.replace(/\\/g, "/");
 
 /**
  * Convert docs file path to examples directory path
  * e.g., content/docs/laminar/components/button.mdx -> examples/laminar/components/button/
  */
 const getExamplesPathFromDocsPath = (filePath: string, workspaceRoot: string): string => {
-  const normalizedPath = filePath.replace(/\\/g, "/");
+  const normalizedPath = normalizePath(filePath);
   const parts = normalizedPath.split("/");
   
   // Find the index of "docs" folder
@@ -39,8 +44,8 @@ const getExamplesPathFromDocsPath = (filePath: string, workspaceRoot: string): s
  * e.g., examples/laminar/components -> ['laminar', 'components']
  */
 const getModulePathParts = (examplesPath: string, workspaceRoot: string): string[] => {
-  const normalizedExamplesPath = examplesPath.replace(/\\/g, "/");
-  const normalizedWorkspaceRoot = workspaceRoot.replace(/\\/g, "/");
+  const normalizedExamplesPath = normalizePath(examplesPath);
+  const normalizedWorkspaceRoot = normalizePath(workspaceRoot);
   
   // Remove workspace root and "examples" prefix
   const relativePath = normalizedExamplesPath
@@ -69,6 +74,21 @@ const getMillPackageName = (parts: string[]): string => {
   return `build.examples.${parts.join(".")}`;
 };
 
+/**
+ * Indent code by adding spaces to each line
+ */
+const indentCode = (code: string, spaces: number = 4): string => {
+  const indent = " ".repeat(spaces);
+  return code.split("\n").map(line => `${indent}${line}`).join("\n");
+};
+
+/**
+ * Generate package.mill content for a Mill module
+ */
+const createPackageMillContent = (packageName: string): string => {
+  return `package ${packageName}\n\nobject \`package\` extends build.WebModule\n`;
+};
+
 interface TemplateContext {
   number: number;
   userCode: string;
@@ -88,7 +108,7 @@ export const applyTemplate = (ctx: TemplateContext): string => {
   @main def app = {
     val container = dom.document.querySelector("#root")
     render(container, {
-      ${ctx.userCode.split("\n").join("\n    ")}
+${indentCode(ctx.userCode, 6)}
     })
   }
   `;
@@ -107,7 +127,7 @@ const ensureParentModules = (examplesPath: string, workspaceRoot: string): void 
   const rootPackagePath = join(currentPath, "package.mill");
   if (!existsSync(rootPackagePath)) {
     mkdirSync(currentPath, { recursive: true });
-    writeFileSync(rootPackagePath, "package build.examples\n\nobject `package` extends build.WebModule\n");
+    writeFileSync(rootPackagePath, createPackageMillContent("build.examples"));
   }
   
   // Create each intermediate level
@@ -119,7 +139,7 @@ const ensureParentModules = (examplesPath: string, workspaceRoot: string): void 
       mkdirSync(currentPath, { recursive: true });
       const moduleParts = parts.slice(0, i + 1);
       const packageName = getMillPackageName(moduleParts);
-      writeFileSync(packagePath, `package ${packageName}\n\nobject \`package\` extends build.WebModule\n`);
+      writeFileSync(packagePath, createPackageMillContent(packageName));
     }
   }
 };
@@ -154,7 +174,7 @@ const generateExampleModule = (
   // Generate package.mill
   const packageParts = [...modulePathParts, `example${exampleNumber}`];
   const packageName = getMillPackageName(packageParts);
-  writeFileSync(packageMillPath, `package ${packageName}\n\nobject \`package\` extends build.WebModule\n`);
+  writeFileSync(packageMillPath, createPackageMillContent(packageName));
 };
 
 /**
@@ -187,7 +207,7 @@ const readCompiledJsFile = (filePath: string): string | null => {
     }
     return readFileSync(filePath, "utf-8");
   } catch (error) {
-    console.warn(`Failed to read built JS file at ${filePath}:`, error);
+    console.warn(`Failed to read compiled JS file at ${filePath}:`, error);
     return null;
   }
 };
@@ -228,7 +248,9 @@ const cleanupOldExamples = (
   }
 }
 
-export const previewPlugin: Plugin<[any], Root> = () => {
+interface PreviewPluginOptions {}
+
+export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
   return (tree, file) => {
     const filePath = file.path || file.history?.[0];
     if (!filePath) {
@@ -252,17 +274,12 @@ export const previewPlugin: Plugin<[any], Root> = () => {
     const previewNodes: Array<{
       node: Code;
       exampleNumber: number;
-      parent: any;
+      parent: Parent;
       index: number;
     }> = [];
     let exampleCounter = 0;
     
     visit(tree, "code", (node, index, parent) => {
-      // hasVisited is a custom property
-      if ("hasVisited" in node) {
-        return;
-      }
-
       if (node.lang && node.lang === "scala") {
         // Only process code blocks with "preview" meta
         if (!node.meta?.includes("preview")) {
@@ -277,7 +294,7 @@ export const previewPlugin: Plugin<[any], Root> = () => {
           previewNodes.push({
             node,
             exampleNumber: exampleCounter,
-            parent,
+            parent: parent as Parent,
             index,
           });
         }
@@ -307,7 +324,7 @@ export const previewPlugin: Plugin<[any], Root> = () => {
       const jsContent = readCompiledJsFile(compiledJsPath);
       
       if (jsContent === null) {
-        console.warn(`Built JS file not found at ${compiledJsPath}, skipping transformation`);
+        console.warn(`Compiled JS file not found at ${compiledJsPath}, skipping preview transformation`);
         continue;
       }
 
