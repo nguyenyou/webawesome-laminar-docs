@@ -1,0 +1,19 @@
+---
+title: Button
+description: Button
+---
+
+```scala preview
+Button(
+  _.onClick --> Observer[dom.MouseEvent] { event =>
+    dom.window.alert(s"Clicked at clientX ${event.clientX}, clientY ${event.clientY}")
+  }
+)("Button")
+```
+
+<Preview
+  code={`
+  const root = document.getElementById('root')
+  root.innerHTML = "Hohohoho"
+`}
+/>
