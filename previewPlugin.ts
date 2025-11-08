@@ -86,7 +86,7 @@ const indentCode = (code: string, spaces: number = 4): string => {
  * Generate package.mill content for a Mill module
  */
 const createPackageMillContent = (packageName: string): string => {
-  return `package ${packageName}\n\nobject \`package\` extends build.WebModule\n`;
+  return `package ${packageName}\n\nobject \`package\` extends build.ExampleModule\n`;
 };
 
 interface TemplateContext {
@@ -104,6 +104,7 @@ export const applyTemplate = (ctx: TemplateContext): string => {
   
   import org.scalajs.dom
   import com.raquo.laminar.api.L.*
+  import doc.*
   import io.github.nguyenyou.webawesome.laminar.*
 
   @main def app = {

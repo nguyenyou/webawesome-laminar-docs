@@ -1,16 +1,15 @@
 ---
 title: Button
 description: Button
-lastUpdated: 2025-11-08T04:04:11.779Z
+lastUpdated: 2025-11-08T05:26:49.649Z
 ---
 
 ```scala preview
-Button(_.variant.brand)("Brand")
+Examples(
+  Button(_.variant.brand)("Brand"),
+  Button(_.variant.danger)("Danger"),
+  Button(_.variant.neutral)("Neutral"),
+  Button(_.variant.success)("Success"),
+  Button(_.variant.warning)("Warning")
+)
 ```
-
-<Preview
-  code={`
-  const root = document.getElementById('root')
-  root.innerHTML = "Hohohoho"
-`}
-/>

@@ -24,3 +24,9 @@ trait WebModule extends ScalaJSModule {
     mvn"io.github.nguyenyou::webawesome-laminar::${Versions.webawesomeLaminar}"
   )
 }
+
+trait ExampleModule extends WebModule {
+  def moduleDeps = Seq(
+    build.doc
+  )
+}
