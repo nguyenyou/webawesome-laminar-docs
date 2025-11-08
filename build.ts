@@ -169,52 +169,91 @@ async function main() {
     return;
   }
 
-  console.log(`Found ${examples.length} example(s) to build:`);
-  examples.forEach(ex => {
+  // Filter examples to only those with valid mill build outputs
+  const validExamples = examples.filter(ex => {
+    if (!existsSync(ex.entrypoint)) {
+      console.warn(`Mill build output not found: ${ex.entrypoint}. Skipping.`);
+      return false;
+    }
+    return true;
+  });
+
+  if (validExamples.length === 0) {
+    console.log('No valid examples to build (all mill build outputs are missing).');
+    return;
+  }
+
+  console.log(`Found ${validExamples.length} example(s) to build:`);
+  validExamples.forEach(ex => {
     console.log(`  - ${ex.entrypoint} -> ${ex.outputPath}`);
   });
+
+  // Collect all entrypoints and create mappings
+  const entrypoints = validExamples.map(ex => ex.entrypoint);
+  const entrypointToOutputPath = new Map<string, string>();
+  const entrypointToDocPath = new Map<string, string>();
+
+  for (const example of validExamples) {
+    entrypointToOutputPath.set(example.entrypoint, example.outputPath);
+    entrypointToDocPath.set(example.entrypoint, example.docPath);
+  }
 
   // Track which markdown files need to be updated
   const markdownFilesToUpdate = new Set<string>();
 
-  // Build each example
-  for (const example of examples) {
-    try {
-      // Check if mill build output exists
-      if (!existsSync(example.entrypoint)) {
-        console.warn(`Mill build output not found: ${example.entrypoint}. Skipping.`);
-        continue;
-      }
+  try {
+    // Build all examples in a single Bun.build call
+    const result = await Bun.build({
+      entrypoints,
+      target: 'browser',
+      format: 'esm',
+      minify: true,
+    });
 
-      const result = await Bun.build({
-        entrypoints: [example.entrypoint],
-        target: 'browser',
-        format: 'esm',
-        minify: true,
-      });
+    if (!result.success) {
+      console.error('Failed to build examples:', result.logs);
+      return;
+    }
 
-      if (!result.success) {
-        console.error(`Failed to build ${example.entrypoint}:`, result.logs);
+    // Verify outputs match entrypoints count
+    if (result.outputs.length !== entrypoints.length) {
+      console.warn(
+        `Output count mismatch: expected ${entrypoints.length} outputs, got ${result.outputs.length}`
+      );
+    }
+
+    // Match outputs to entrypoints and write them
+    // Bun.build outputs array order should match entrypoints order
+    const outputCount = Math.min(result.outputs.length, entrypoints.length);
+    for (let i = 0; i < outputCount; i++) {
+      const entrypoint = entrypoints[i];
+      const output = result.outputs[i];
+      const outputPath = entrypointToOutputPath.get(entrypoint);
+
+      if (!outputPath) {
+        console.warn(`No output path found for entrypoint: ${entrypoint}`);
         continue;
       }
 
       // Ensure output directory exists
-      const outputDir = path.dirname(example.outputPath);
+      const outputDir = path.dirname(outputPath);
       if (!existsSync(outputDir)) {
         mkdirSync(outputDir, { recursive: true });
       }
 
       // Write bundled output
-      for (const output of result.outputs) {
-        await Bun.write(example.outputPath, output);
-        console.log(`✓ Built: ${example.outputPath}`);
-      }
+      await Bun.write(outputPath, output);
+      console.log(`✓ Built: ${outputPath}`);
 
       // Track markdown file for update
-      markdownFilesToUpdate.add(example.docPath);
-    } catch (error) {
-      console.error(`Error building ${example.entrypoint}:`, error);
+      const docPath = entrypointToDocPath.get(entrypoint);
+      if (docPath) {
+        markdownFilesToUpdate.add(docPath);
+      }
     }
+  } catch (error) {
+    console.error('Error building examples:', error);
+    return;
   }
 
   // Update markdown files to trigger HMR
