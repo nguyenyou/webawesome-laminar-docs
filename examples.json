@@ -1,102 +1,102 @@
 {
   "examples": [
     {
-      "path": "examples/laminar/button/example1",
-      "docPath": "content/docs/laminar/button.mdx",
-      "millBuildOutPath": "out/examples/laminar/button/example1/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/laminar/button/example1.js",
-      "lastUpdated": "2025-11-08T06:56:44.337Z"
-    },
-    {
       "path": "examples/react/button/example1",
       "docPath": "content/docs/react/button.mdx",
       "millBuildOutPath": "out/examples/react/button/example1/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/react/button/example1.js",
-      "lastUpdated": "2025-11-08T06:56:44.584Z"
+      "lastUpdated": "2025-11-08T07:01:45.555Z"
     },
     {
       "path": "examples/webawesome/button/example1",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example1/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example1.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example2",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example2/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example2.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example3",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example3/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example3.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example4",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example4/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example4.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example5",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example5/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example5.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example6",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example6/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example6.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example7",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example7/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example7.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example8",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example8/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example8.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example9",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example9/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example9.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example10",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example10/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example10.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example11",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example11/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example11.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
     },
     {
       "path": "examples/webawesome/button/example12",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example12/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example12.js",
-      "lastUpdated": "2025-11-08T06:56:44.929Z"
+      "lastUpdated": "2025-11-08T07:01:45.881Z"
+    },
+    {
+      "path": "examples/laminar/button/example1",
+      "docPath": "content/docs/laminar/button.mdx",
+      "millBuildOutPath": "out/examples/laminar/button/example1/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/laminar/button/example1.js",
+      "lastUpdated": "2025-11-08T07:01:46.067Z"
     }
   ]
 }

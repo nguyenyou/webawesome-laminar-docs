@@ -411,12 +411,10 @@ const generateExampleModule = (
  * e.g., examples-build/laminar/button/example1.js
  */
 const getCompiledJsPath = (
-  examplesPath: string,
+  modulePathParts: string[],
   exampleNumber: number,
   workspaceRoot: string
 ): string => {
-  const modulePathParts = getModulePathParts(examplesPath, workspaceRoot);
-  
   // Build path: examples-build/{modulePathParts}/example{N}.js
   const pathParts = modulePathParts.length > 0
     ? ["examples-build", ...modulePathParts, `example${exampleNumber}.js`]
@@ -688,7 +686,7 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
     // Second pass: transform nodes to Preview components
     for (const { node, exampleNumber, parent, index } of previewNodes) {
       // Get built JS file path
-      const compiledJsPath = getCompiledJsPath(examplesPath, exampleNumber, workspaceRoot);
+      const compiledJsPath = getCompiledJsPath(modulePathParts, exampleNumber, workspaceRoot);
       
       // Read built JS file content
       const jsContent = readCompiledJsFile(compiledJsPath);
