@@ -16,12 +16,42 @@ import {
 } from "./previewUtils";
 
 /**
+ * Convert hyphenated string to camelCase
+ * e.g., "zoomable-frame" -> "zoomableFrame"
+ * e.g., "button-group-item" -> "buttonGroupItem"
+ * Preserves strings without hyphens unchanged
+ */
+const toCamelCase = (str: string): string => {
+  if (!str.includes("-")) {
+    return str;
+  }
+  const parts = str.split("-");
+  return parts[0] + parts.slice(1).map(part => 
+    part.charAt(0).toUpperCase() + part.slice(1)
+  ).join("");
+};
+
+/**
+ * Wrap hyphenated string in backticks for valid Scala package names
+ * e.g., "zoomable-frame" -> "`zoomable-frame`"
+ * Preserves strings without hyphens unchanged
+ */
+const toBacktickPackageName = (str: string): string => {
+  if (!str.includes("-")) {
+    return str;
+  }
+  return `\`${str}\``;
+};
+
+/**
  * Generate mill package name for a hierarchical example module
  * e.g., ["webawesome", "button"], "abc123" -> 'build.examples.webawesome.button.habc123'
+ * Wraps hyphenated segments in backticks for valid Scala package names
  */
 const getMillPackageName = (pathSegments: string[], hash: string): string => {
   const hHash = `h${hash}`; // Prefix hash with "h" for valid package name
-  const packagePath = pathSegments.join(".");
+  const packageSegments = pathSegments.map(toBacktickPackageName);
+  const packagePath = packageSegments.join(".");
   return `build.examples.${packagePath}.${hHash}`;
 };
 
@@ -56,8 +86,11 @@ const createPackageMillContent = (packageName: string): string => {
 };
 
 export const applyTemplate = (ctx: TemplateContext): string => {
-  // ctx.prefix is now the hierarchical path joined with "/"
-  const packageName = `examples.${ctx.prefix.replace(/\//g, ".")}.h${ctx.hash}`;
+  // ctx.prefix is now the hierarchical path joined with "/" (using original segments with hyphens)
+  // Convert path segments to backtick-wrapped package names for valid Scala package names
+  const pathSegments = ctx.prefix.split("/");
+  const packageSegments = pathSegments.map(toBacktickPackageName);
+  const packageName = `examples.${packageSegments.join(".")}.h${ctx.hash}`;
   const userCode = ctx.userCode || "";
   
   return `package ${packageName}
@@ -279,8 +312,11 @@ const groupExpressionsByBlankLines = (code: string, expressions: string[]): stri
  * Only adds commas between complete top-level expressions, preserving nested structures.
  */
 export const applyExamplesTemplate = (ctx: TemplateContext): string => {
-  // ctx.prefix is now the hierarchical path joined with "/"
-  const packageName = `examples.${ctx.prefix.replace(/\//g, ".")}.h${ctx.hash}`;
+  // ctx.prefix is now the hierarchical path joined with "/" (using original segments with hyphens)
+  // Convert path segments to backtick-wrapped package names for valid Scala package names
+  const pathSegments = ctx.prefix.split("/");
+  const packageSegments = pathSegments.map(toBacktickPackageName);
+  const packageName = `examples.${packageSegments.join(".")}.h${ctx.hash}`;
   const userCode = ctx.userCode || "";
   
   // Parse into top-level expressions (preserving nested structure)
@@ -367,8 +403,11 @@ const ensureParentModules = (workspaceRoot: string, pathSegments: string[]): voi
   let packageName = "build.examples";
   
   for (const segment of pathSegments) {
+    // Use original segment for directory name (keep hyphens)
     currentPath = join(currentPath, segment);
-    packageName = `${packageName}.${segment}`;
+    // Use backticks for package name if segment contains hyphens
+    const packageSegment = toBacktickPackageName(segment);
+    packageName = `${packageName}.${packageSegment}`;
     
     // Ensure directory exists
     mkdirSync(currentPath, { recursive: true });
@@ -396,6 +435,7 @@ const generateExampleModule = (
   ensureParentModules(workspaceRoot, pathSegments);
   
   // Create hierarchical path: examples/webawesome/button/h{hash}
+  // Use original segments for directory names (keep hyphens)
   const hHash = `h${hash}`;
   const hierarchicalPath = joinHierarchicalPath(pathSegments);
   const exampleDir = join(workspaceRoot, "examples", hierarchicalPath, hHash);
@@ -407,7 +447,8 @@ const generateExampleModule = (
   mkdirSync(srcDir, { recursive: true });
   
   // Generate Main.scala
-  // TemplateContext.prefix should be the hierarchical path joined with "/"
+  // TemplateContext.prefix should be the hierarchical path joined with "/" (using original segments)
+  // Package names will be converted to backticks in applyTemplate/applyExamplesTemplate
   const templateContext: TemplateContext = {
     prefix: hierarchicalPath,
     hash: hash,
@@ -556,6 +597,7 @@ const getMillBuildOutPath = (
   workspaceRoot: string
 ): string => {
   const hHash = `h${hash}`;
+  // Use original segments for directory paths (keep hyphens)
   const hierarchicalPath = joinHierarchicalPath(pathSegments);
   const pathParts = ["out", "examples", hierarchicalPath, hHash, "fullLinkJS.dest", "main.js"];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
@@ -571,6 +613,7 @@ const getExampleDirectoryPath = (
   workspaceRoot: string
 ): string => {
   const hHash = `h${hash}`;
+  // Use original segments for directory paths (keep hyphens)
   const hierarchicalPath = joinHierarchicalPath(pathSegments);
   const pathParts = ["examples", hierarchicalPath, hHash];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));

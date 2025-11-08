@@ -1,4 +1,4 @@
-package examples.webawesome.format-number.h65a6b7be4111
+package examples.webawesome.`format-number`.h65a6b7be4111
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

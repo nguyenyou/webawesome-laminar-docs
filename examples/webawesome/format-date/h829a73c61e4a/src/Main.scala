@@ -1,4 +1,4 @@
-package examples.webawesome.format-date.h829a73c61e4a
+package examples.webawesome.`format-date`.h829a73c61e4a
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

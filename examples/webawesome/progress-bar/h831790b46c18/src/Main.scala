@@ -1,4 +1,4 @@
-package examples.webawesome.progress-bar.h831790b46c18
+package examples.webawesome.`progress-bar`.h831790b46c18
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

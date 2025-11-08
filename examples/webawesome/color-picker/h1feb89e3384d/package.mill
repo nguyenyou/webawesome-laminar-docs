@@ -1,3 +1,3 @@
-package build.examples.webawesome.color-picker.h1feb89e3384d
+package build.examples.webawesome.`color-picker`.h1feb89e3384d
 
 object `package` extends build.ExampleModule

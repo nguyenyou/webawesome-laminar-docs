@@ -1,4 +1,4 @@
-package examples.webawesome.radio-group.h28fe02b46068
+package examples.webawesome.`radio-group`.h28fe02b46068
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

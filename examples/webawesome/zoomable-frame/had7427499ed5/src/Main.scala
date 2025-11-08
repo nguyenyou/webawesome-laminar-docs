@@ -1,4 +1,4 @@
-package examples.webawesome.zoomable-frame.had7427499ed5
+package examples.webawesome.`zoomable-frame`.had7427499ed5
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

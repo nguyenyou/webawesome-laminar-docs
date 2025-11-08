@@ -1,3 +1,3 @@
-package build.examples.webawesome.progress-ring.h637972da112e
+package build.examples.webawesome.`progress-ring`.h637972da112e
 
 object `package` extends build.ExampleModule

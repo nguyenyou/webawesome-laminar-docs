@@ -1,4 +1,4 @@
-package examples.webawesome.relative-time.h4e66a021cd3e
+package examples.webawesome.`relative-time`.h4e66a021cd3e
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

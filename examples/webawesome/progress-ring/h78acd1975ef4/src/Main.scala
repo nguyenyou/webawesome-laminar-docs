@@ -1,4 +1,4 @@
-package examples.webawesome.progress-ring.h78acd1975ef4
+package examples.webawesome.`progress-ring`.h78acd1975ef4
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

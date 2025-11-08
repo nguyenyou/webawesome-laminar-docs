@@ -1,4 +1,4 @@
-package examples.webawesome.qr-code.h83bf1eb2d9b6
+package examples.webawesome.`qr-code`.h83bf1eb2d9b6
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

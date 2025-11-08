@@ -1,4 +1,4 @@
-package examples.webawesome.color-picker.h48fc03724f26
+package examples.webawesome.`color-picker`.h48fc03724f26
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

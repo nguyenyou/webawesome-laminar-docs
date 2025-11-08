@@ -1,4 +1,4 @@
-package examples.webawesome.split-panel.hf38b3494dabd
+package examples.webawesome.`split-panel`.hf38b3494dabd
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

@@ -1,4 +1,4 @@
-package examples.webawesome.format-bytes.h714ea8ff2632
+package examples.webawesome.`format-bytes`.h714ea8ff2632
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

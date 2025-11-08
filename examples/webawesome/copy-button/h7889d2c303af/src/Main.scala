@@ -1,4 +1,4 @@
-package examples.webawesome.copy-button.h7889d2c303af
+package examples.webawesome.`copy-button`.h7889d2c303af
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

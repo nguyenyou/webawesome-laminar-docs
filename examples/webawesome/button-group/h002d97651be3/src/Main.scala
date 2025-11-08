@@ -1,4 +1,4 @@
-package examples.webawesome.button-group.h002d97651be3
+package examples.webawesome.`button-group`.h002d97651be3
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

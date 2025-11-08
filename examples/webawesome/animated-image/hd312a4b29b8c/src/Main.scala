@@ -1,4 +1,4 @@
-package examples.webawesome.animated-image.hd312a4b29b8c
+package examples.webawesome.`animated-image`.hd312a4b29b8c
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

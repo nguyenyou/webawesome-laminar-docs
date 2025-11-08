@@ -1,4 +1,4 @@
-package examples.webawesome.mutation-observer.hc0a564ddac27
+package examples.webawesome.`mutation-observer`.hc0a564ddac27
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

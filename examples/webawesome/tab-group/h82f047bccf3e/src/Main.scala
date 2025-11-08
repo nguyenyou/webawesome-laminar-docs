@@ -1,4 +1,4 @@
-package examples.webawesome.tab-group.h82f047bccf3e
+package examples.webawesome.`tab-group`.h82f047bccf3e
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*

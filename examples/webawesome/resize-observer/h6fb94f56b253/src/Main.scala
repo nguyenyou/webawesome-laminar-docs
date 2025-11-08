@@ -1,4 +1,4 @@
-package examples.webawesome.resize-observer.h6fb94f56b253
+package examples.webawesome.`resize-observer`.h6fb94f56b253
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*
