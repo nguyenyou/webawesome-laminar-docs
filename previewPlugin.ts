@@ -9,7 +9,10 @@ import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync
 /**
  * Normalize path separators to forward slashes
  */
-const normalizePath = (path: string): string => path.replace(/\\/g, "/");
+const normalizePath = (path: string | null | undefined): string => {
+  if (!path) return "";
+  return path.replace(/\\/g, "/");
+};
 
 /**
  * Convert docs file path to examples directory path
@@ -17,6 +20,9 @@ const normalizePath = (path: string): string => path.replace(/\\/g, "/");
  */
 const getExamplesPathFromDocsPath = (filePath: string, workspaceRoot: string): string => {
   const normalizedPath = normalizePath(filePath);
+  if (!normalizedPath) {
+    return join(workspaceRoot || "", "examples");
+  }
   const parts = normalizedPath.split("/");
   
   // Find the index of "docs" folder
@@ -53,6 +59,9 @@ const getModulePathParts = (examplesPath: string, workspaceRoot: string): string
     .replace(/^\/+/, "")
     .replace(/\/+$/, "");
   
+  if (!relativePath) {
+    return [];
+  }
   const parts = relativePath.split("/");
   
   // Remove "examples" if it's the first part
@@ -77,7 +86,8 @@ const getMillPackageName = (parts: string[]): string => {
 /**
  * Indent code by adding spaces to each line
  */
-const indentCode = (code: string, spaces: number = 4): string => {
+const indentCode = (code: string | null | undefined, spaces: number = 4): string => {
+  if (!code) return "";
   const indent = " ".repeat(spaces);
   return code.split("\n").map(line => `${indent}${line}`).join("\n");
 };
@@ -114,6 +124,8 @@ export const applyTemplate = (ctx: TemplateContext): string => {
     ? `examples.${ctx.modulePathParts.join(".")}.example${ctx.number}`
     : `examples.example${ctx.number}`;
   
+  const userCode = ctx.userCode || "";
+  
   return `package ${packageName}
   
 import org.scalajs.dom
@@ -125,7 +137,7 @@ import io.github.nguyenyou.webawesome.laminar.*
 def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
-${indentCode(ctx.userCode, 6)}
+${indentCode(userCode, 6)}
   })
 }
   `;
@@ -141,7 +153,8 @@ export const applyExamplesTemplate = (ctx: TemplateContext): string => {
     : `examples.example${ctx.number}`;
   
   // Split by newlines, filter empty/whitespace lines, trim each line
-  const lines = ctx.userCode
+  const userCode = ctx.userCode || "";
+  const lines = userCode
     .split("\n")
     .map(line => line.trim())
     .filter(line => line.length > 0);
@@ -555,6 +568,11 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
             type: "mdxJsxAttribute",
             name: "code",
             value: jsContent,
+          },
+          {
+            type: "mdxJsxAttribute",
+            name: "userCode",
+            value: node.value || "",
           },
         ],
         children: [],

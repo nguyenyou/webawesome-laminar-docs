@@ -2,7 +2,7 @@
 import { Frame } from "@ark-ui/react/frame";
 import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
 
-export const Preview = ({ code }: { code: string }) => {
+export const Preview = ({ code, userCode }: { code: string; userCode?: string }) => {
   const srcDoc = `<html>
 <head>
 <link href="//use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet" />
@@ -12,32 +12,14 @@ export const Preview = ({ code }: { code: string }) => {
 <body style='overflow: hidden'>
  <div id="root"></div>
  <script type="module">
-  ${code}
+  ${code || ""}
  </script>
 </body>
 </html>
 `;
 
-  const scalaCode = `package examples.webawesome.button.example1
-  
-import org.scalajs.dom
-import com.raquo.laminar.api.L.*
-import doc.*
-import io.github.nguyenyou.webawesome.laminar.*
+  const displayCode = userCode || "";
 
-@main 
-def app = {
-  val container = dom.document.querySelector("#root")
-  render(container, {
-    Examples(
-      Button(_.variant.brand)("Brand"),
-      Button(_.variant.danger)("Danger"),
-      Button(_.variant.neutral)("Neutral"),
-      Button(_.variant.success)("Success"),
-      Button(_.variant.warning)("Warning"),
-    )
-  })
-}`;
   return (
     <div className="space-y-2">
     <Frame
@@ -46,7 +28,7 @@ def app = {
       // style={{ border: "1px solid #ccc", width: "100%", borderRadius: "8px" }}
       srcDoc={srcDoc}
     ></Frame>
-    <DynamicCodeBlock code={scalaCode} lang="scala" />
+    <DynamicCodeBlock code={displayCode} lang="scala" />
     </div>
   );
 };
