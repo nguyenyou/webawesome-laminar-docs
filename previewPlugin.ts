@@ -27,11 +27,44 @@ const normalizePath = (path: string | null | undefined): string => {
 };
 
 /**
- * Generate mill package name for a hash-based example module
- * e.g., hash_abc123 -> 'build.examples.hash_abc123'
+ * Extract prefix from doc file path for meaningful example directory names
+ * e.g., content/docs/laminar/button.mdx -> laminar_button
  */
-const getMillPackageName = (hash: string): string => {
-  return `build.examples.hash_${hash}`;
+const extractPrefixFromDocPath = (docPath: string): string => {
+  let path = normalizePath(docPath);
+  
+  // Remove content/docs/ prefix if present
+  if (path.startsWith("content/docs/")) {
+    path = path.substring("content/docs/".length);
+  }
+  
+  // Remove .mdx extension
+  if (path.endsWith(".mdx")) {
+    path = path.substring(0, path.length - 4);
+  }
+  
+  // Replace path separators with underscores
+  path = path.replace(/\//g, "_");
+  
+  // Sanitize: remove any invalid characters for directory names
+  // Keep only alphanumeric, underscores, and hyphens
+  path = path.replace(/[^a-zA-Z0-9_-]/g, "_");
+  
+  // Remove consecutive underscores
+  path = path.replace(/_+/g, "_");
+  
+  // Remove leading/trailing underscores
+  path = path.replace(/^_+|_+$/g, "");
+  
+  return path || "example"; // Fallback to "example" if empty
+};
+
+/**
+ * Generate mill package name for a hash-based example module
+ * e.g., laminar_button_abc123 -> 'build.examples.laminar_button_abc123'
+ */
+const getMillPackageName = (prefix: string, hash: string): string => {
+  return `build.examples.${prefix}_${hash}`;
 };
 
 /**
@@ -65,12 +98,13 @@ const createPackageMillContent = (packageName: string): string => {
 };
 
 interface TemplateContext {
+  prefix: string;
   hash: string;
   userCode: string;
 }
 
 export const applyTemplate = (ctx: TemplateContext): string => {
-  const packageName = `examples.hash_${ctx.hash}`;
+  const packageName = `examples.${ctx.prefix}_${ctx.hash}`;
   const userCode = ctx.userCode || "";
   
   return `package ${packageName}
@@ -236,7 +270,7 @@ export const parseTopLevelExpressions = (code: string): string[] => {
  * preserving nested structures.
  */
 export const applyExamplesTemplate = (ctx: TemplateContext): string => {
-  const packageName = `examples.hash_${ctx.hash}`;
+  const packageName = `examples.${ctx.prefix}_${ctx.hash}`;
   const userCode = ctx.userCode || "";
   
   // Parse into top-level expressions (preserving nested structure)
@@ -303,12 +337,13 @@ const ensureParentModules = (workspaceRoot: string): void => {
  * Generate an example module with package.mill and src/Main.scala
  */
 const generateExampleModule = (
+  prefix: string,
   hash: string,
   scalaCode: string,
   workspaceRoot: string,
   templateType: "preview" | "examples" = "preview"
 ): void => {
-  const exampleDir = join(workspaceRoot, "examples", `hash_${hash}`);
+  const exampleDir = join(workspaceRoot, "examples", `${prefix}_${hash}`);
   const srcDir = join(exampleDir, "src");
   const mainScalaPath = join(srcDir, "Main.scala");
   const packageMillPath = join(exampleDir, "package.mill");
@@ -318,6 +353,7 @@ const generateExampleModule = (
   
   // Generate Main.scala
   const templateContext: TemplateContext = {
+    prefix: prefix,
     hash: hash,
     userCode: scalaCode,
   };
@@ -325,19 +361,20 @@ const generateExampleModule = (
   writeFileSync(mainScalaPath, scalaSource);
   
   // Generate package.mill
-  const packageName = getMillPackageName(hash);
+  const packageName = getMillPackageName(prefix, hash);
   writeFileSync(packageMillPath, createPackageMillContent(packageName));
 };
 
 /**
  * Get the built JavaScript file path for an example
- * e.g., examples-build/hash_abc123.js
+ * e.g., examples-build/laminar_button_abc123.js
  */
 const getCompiledJsPath = (
+  prefix: string,
   hash: string,
   workspaceRoot: string
 ): string => {
-  return join(workspaceRoot, "examples-build", `hash_${hash}.js`);
+  return join(workspaceRoot, "examples-build", `${prefix}_${hash}.js`);
 };
 
 /**
@@ -360,9 +397,10 @@ const readCompiledJsFile = (filePath: string): string | null => {
  * Clean up example modules that no longer exist in the current MDX file
  * Works with flat examples/ directory structure
  * Only removes examples that belong to the current doc file
+ * Handles both old "hash_" format and new "{prefix}_" format for backward compatibility
  */
 const cleanupOldExamples = (
-  currentHashes: string[],
+  currentPrefixHashes: Array<{ prefix: string; hash: string }>,
   docFilePath: string,
   workspaceRoot: string,
   examplesJson: ExamplesJson
@@ -380,23 +418,54 @@ const cleanupOldExamples = (
     );
     const hashesForCurrentDoc = new Set(examplesForCurrentDoc.map(ex => ex.hash));
     
+    // Create a set of current prefix_hash combinations for quick lookup
+    const currentPrefixHashSet = new Set(
+      currentPrefixHashes.map(({ prefix, hash }) => `${prefix}_${hash}`)
+    );
+    
     const entries = readdirSync(examplesPath);
     
     for (const entry of entries) {
-      // Check if it's a hash-based example directory (starts with "hash_")
+      // Check if it's an old hash-based example directory (starts with "hash_")
       if (entry.startsWith("hash_")) {
         const hash = entry.substring(5); // Remove "hash_" prefix
         
         // Only remove if:
         // 1. This hash belongs to the current doc file (in hashesForCurrentDoc)
         // 2. AND it's not in the current hash list (was removed from the file)
-        if (hashesForCurrentDoc.has(hash) && !currentHashes.includes(hash)) {
-          const examplePath = join(examplesPath, entry);
-          rmSync(examplePath, { recursive: true, force: true });
+        if (hashesForCurrentDoc.has(hash)) {
+          // Check if this hash is still present in current examples (with new prefix format)
+          const stillExists = currentPrefixHashes.some(({ hash: currentHash }) => currentHash === hash);
+          if (!stillExists) {
+            const examplePath = join(examplesPath, entry);
+            rmSync(examplePath, { recursive: true, force: true });
+          }
+        }
+      }
+      // Check if it's a new prefix-based example directory (format: "{prefix}_{hash}")
+      else if (entry.includes("_") && !entry.startsWith("example")) {
+        // Extract hash from the entry (assuming format is prefix_hash)
+        // We need to check if this entry matches any current examples
+        const entryMatches = currentPrefixHashSet.has(entry);
+        
+        if (!entryMatches) {
+          // Check if this entry belongs to the current doc file
+          const entryBelongsToDoc = examplesForCurrentDoc.some(ex => {
+            // Extract hash from entry by finding the last underscore
+            const lastUnderscoreIndex = entry.lastIndexOf("_");
+            if (lastUnderscoreIndex === -1) return false;
+            const entryHash = entry.substring(lastUnderscoreIndex + 1);
+            return ex.hash === entryHash;
+          });
+          
+          if (entryBelongsToDoc) {
+            const examplePath = join(examplesPath, entry);
+            rmSync(examplePath, { recursive: true, force: true });
+          }
         }
       }
       // Also clean up old example{N} directories from previous implementation
-      else if (entry.startsWith("example")) {
+      else if (entry.startsWith("example") && !entry.includes("_")) {
         const examplePath = join(examplesPath, entry);
         rmSync(examplePath, { recursive: true, force: true });
       }
@@ -425,37 +494,40 @@ type ExamplesJson = {
 
 /**
  * Get mill build out path for an example
- * e.g., out/examples/hash_abc123/fullLinkJS.dest/main.js
+ * e.g., out/examples/laminar_button_abc123/fullLinkJS.dest/main.js
  */
 const getMillBuildOutPath = (
+  prefix: string,
   hash: string,
   workspaceRoot: string
 ): string => {
-  const pathParts = ["out", "examples", `hash_${hash}`, "fullLinkJS.dest", "main.js"];
+  const pathParts = ["out", "examples", `${prefix}_${hash}`, "fullLinkJS.dest", "main.js"];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
 };
 
 /**
  * Get example directory path relative to workspace root
- * e.g., examples/hash_abc123
+ * e.g., examples/laminar_button_abc123
  */
 const getExampleDirectoryPath = (
+  prefix: string,
   hash: string,
   workspaceRoot: string
 ): string => {
-  const pathParts = ["examples", `hash_${hash}`];
+  const pathParts = ["examples", `${prefix}_${hash}`];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
 };
 
 /**
  * Get example builds path relative to workspace root
- * e.g., examples-build/hash_abc123.js
+ * e.g., examples-build/laminar_button_abc123.js
  */
 const getExampleBuildsPath = (
+  prefix: string,
   hash: string,
   workspaceRoot: string
 ): string => {
-  const pathParts = ["examples-build", `hash_${hash}.js`];
+  const pathParts = ["examples-build", `${prefix}_${hash}.js`];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
 };
 
@@ -518,13 +590,17 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
 
     // Get docs file path relative to workspace root
     const docsFilePath = normalizePath(relative(workspaceRoot, filePath));
+    
+    // Extract prefix from doc file path
+    const prefix = extractPrefixFromDocPath(docsFilePath);
 
     // First pass: collect all Scala preview blocks
 
-    // Track example hashes and nodes for transformation
-    const exampleHashes: string[] = [];
+    // Track example prefix/hash combinations and nodes for transformation
+    const examplePrefixHashes: Array<{ prefix: string; hash: string }> = [];
     const previewNodes: Array<{
       node: Code;
+      prefix: string;
       hash: string;
       parent: Parent;
       index: number;
@@ -548,12 +624,13 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
         
         // Generate hash from file path, position, and code content
         const hash = hashCode(docsFilePath, line, column, node.value || "");
-        exampleHashes.push(hash);
+        examplePrefixHashes.push({ prefix, hash });
         
         // Store node information for second pass transformation
         if (parent && typeof index === "number") {
           previewNodes.push({
             node,
+            prefix,
             hash,
             parent: parent as Parent,
             index,
@@ -561,9 +638,9 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
         }
         
         // Collect example metadata
-        const examplePath = getExampleDirectoryPath(hash, workspaceRoot);
-        const millBuildOutPath = getMillBuildOutPath(hash, workspaceRoot);
-        const exampleBuildsPath = getExampleBuildsPath(hash, workspaceRoot);
+        const examplePath = getExampleDirectoryPath(prefix, hash, workspaceRoot);
+        const millBuildOutPath = getMillBuildOutPath(prefix, hash, workspaceRoot);
+        const exampleBuildsPath = getExampleBuildsPath(prefix, hash, workspaceRoot);
         
         exampleInfos.push({
           hash,
@@ -576,6 +653,7 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
         
         try {
           generateExampleModule(
+            prefix,
             hash,
             node.value || "",
             workspaceRoot,
@@ -589,7 +667,7 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
 
     // Clean up old examples that are no longer in this MDX file
     // Only remove examples that belong to the current doc file
-    cleanupOldExamples(exampleHashes, docsFilePath, workspaceRoot, examplesJson);
+    cleanupOldExamples(examplePrefixHashes, docsFilePath, workspaceRoot, examplesJson);
 
     // Update examples.json with new examples
     // Filter out existing examples from this doc file
@@ -604,9 +682,9 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
     writeExamplesJson(workspaceRoot, { examples: updatedExamples });
 
     // Second pass: transform nodes to Preview components
-    for (const { node, hash, parent, index } of previewNodes) {
-      // Get built JS file path using hash
-      const compiledJsPath = getCompiledJsPath(hash, workspaceRoot);
+    for (const { node, prefix, hash, parent, index } of previewNodes) {
+      // Get built JS file path using prefix and hash
+      const compiledJsPath = getCompiledJsPath(prefix, hash, workspaceRoot);
       
       // Read built JS file content
       const jsContent = readCompiledJsFile(compiledJsPath);

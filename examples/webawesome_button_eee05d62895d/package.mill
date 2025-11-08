@@ -1,0 +1,3 @@
+package build.examples.webawesome_button_eee05d62895d
+
+object `package` extends build.ExampleModule
