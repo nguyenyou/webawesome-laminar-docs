@@ -1,3 +1,0 @@
-package build.examples.react_button_fba1259347ee
-
-object `package` extends build.ExampleModule

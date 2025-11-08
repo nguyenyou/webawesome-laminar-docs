@@ -1,62 +1,17 @@
 import type { VFile } from "vfile";
 import { visit } from "unist-util-visit";
 import type { Plugin } from "unified";
-import type { Code, Root, Parent } from "mdast";
-import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
+import type { Root } from "mdast";
 import { join, relative } from "path";
 import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync } from "fs";
-import { createHash } from "crypto";
-
-/**
- * Generate a short hash from code content and meta for stable identifiers
- */
-const hashCode = (code: string, meta: string | null | undefined): string => {
-  const metaStr = meta || "";
-  const hashInput = `${code}:${metaStr}`;
-  const hash = createHash("sha256").update(hashInput).digest("hex");
-  return hash.substring(0, 12); // Use first 12 characters for readability
-};
-
-/**
- * Normalize path separators to forward slashes
- */
-const normalizePath = (path: string | null | undefined): string => {
-  if (!path) return "";
-  return path.replace(/\\/g, "/");
-};
-
-/**
- * Extract prefix from doc file path for meaningful example directory names
- * e.g., content/docs/laminar/button.mdx -> laminar_button
- */
-const extractPrefixFromDocPath = (docPath: string): string => {
-  let path = normalizePath(docPath);
-  
-  // Remove content/docs/ prefix if present
-  if (path.startsWith("content/docs/")) {
-    path = path.substring("content/docs/".length);
-  }
-  
-  // Remove .mdx extension
-  if (path.endsWith(".mdx")) {
-    path = path.substring(0, path.length - 4);
-  }
-  
-  // Replace path separators with underscores
-  path = path.replace(/\//g, "_");
-  
-  // Sanitize: remove any invalid characters for directory names
-  // Keep only alphanumeric, underscores, and hyphens
-  path = path.replace(/[^a-zA-Z0-9_-]/g, "_");
-  
-  // Remove consecutive underscores
-  path = path.replace(/_+/g, "_");
-  
-  // Remove leading/trailing underscores
-  path = path.replace(/^_+|_+$/g, "");
-  
-  return path || "example"; // Fallback to "example" if empty
-};
+import {
+  hashCode,
+  normalizePath,
+  extractPrefixFromDocPath,
+  type ExampleInfo,
+  type ExamplesJson,
+  type TemplateContext,
+} from "./previewUtils";
 
 /**
  * Generate mill package name for a hash-based example module
@@ -95,12 +50,6 @@ const extractTemplateType = (meta: string | null | undefined): "preview" | "exam
 const createPackageMillContent = (packageName: string): string => {
   return `package ${packageName}\n\nobject \`package\` extends build.ExampleModule\n`;
 };
-
-interface TemplateContext {
-  prefix: string;
-  hash: string;
-  userCode: string;
-}
 
 export const applyTemplate = (ctx: TemplateContext): string => {
   const packageName = `examples.${ctx.prefix}_${ctx.hash}`;
@@ -365,34 +314,6 @@ const generateExampleModule = (
 };
 
 /**
- * Get the built JavaScript file path for an example
- * e.g., examples-build/laminar_button_abc123.js
- */
-const getCompiledJsPath = (
-  prefix: string,
-  hash: string,
-  workspaceRoot: string
-): string => {
-  return join(workspaceRoot, "examples-build", `${prefix}_${hash}.js`);
-};
-
-/**
- * Read built JavaScript file content
- * Returns null if file doesn't exist or can't be read
- */
-const readCompiledJsFile = (filePath: string): string | null => {
-  try {
-    if (!existsSync(filePath)) {
-      return null;
-    }
-    return readFileSync(filePath, "utf-8");
-  } catch (error) {
-    console.warn(`Failed to read compiled JS file at ${filePath}:`, error);
-    return null;
-  }
-};
-
-/**
  * Clean up example modules that no longer exist in the current MDX file
  * Works with flat examples/ directory structure
  * Only removes examples that belong to the current doc file
@@ -476,22 +397,6 @@ const cleanupOldExamples = (
 }
 
 /**
- * JSON Structure Types
- */
-interface ExampleInfo {
-  hash: string; // Content hash for stable identification
-  path: string; // Example directory path relative to workspace root
-  docPath: string; // Docs file path relative to workspace root
-  millBuildOutPath: string; // Mill build output path relative to workspace root
-  exampleBuildsPath: string; // examples-build path relative to workspace root
-  lastUpdated: string; // ISO timestamp string
-}
-
-type ExamplesJson = {
-  examples: ExampleInfo[];
-};
-
-/**
  * Get mill build out path for an example
  * e.g., out/examples/laminar_button_abc123/fullLinkJS.dest/main.js
  */
@@ -568,13 +473,13 @@ const writeExamplesJson = (workspaceRoot: string, data: ExamplesJson): void => {
   }
 };
 
-interface PreviewPluginOptions {}
+interface MillModulePluginOptions {}
 
-export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
+export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => {
   return (tree, file) => {
     const filePath = file.path || file.history?.[0];
     if (!filePath) {
-      console.warn("No file path available for preview plugin");
+      console.warn("No file path available for mill module plugin");
       return;
     }
 
@@ -593,21 +498,12 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
     // Extract prefix from doc file path
     const prefix = extractPrefixFromDocPath(docsFilePath);
 
-    // First pass: collect all Scala preview blocks
-
-    // Track example prefix/hash combinations and nodes for transformation
+    // Track example prefix/hash combinations
     const examplePrefixHashes: Array<{ prefix: string; hash: string }> = [];
-    const previewNodes: Array<{
-      node: Code;
-      prefix: string;
-      hash: string;
-      parent: Parent;
-      index: number;
-    }> = [];
     const exampleInfos: ExampleInfo[] = [];
     const currentTimestamp = new Date().toISOString();
     
-    visit(tree, "code", (node, index, parent) => {
+    visit(tree, "code", (node) => {
       if (node.lang && node.lang === "scala") {
         // Extract template type from meta (defaults to "preview")
         const templateType = extractTemplateType(node.meta);
@@ -620,17 +516,6 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
         // Generate hash from code content and meta
         const hash = hashCode(node.value || "", node.meta);
         examplePrefixHashes.push({ prefix, hash });
-        
-        // Store node information for second pass transformation
-        if (parent && typeof index === "number") {
-          previewNodes.push({
-            node,
-            prefix,
-            hash,
-            parent: parent as Parent,
-            index,
-          });
-        }
         
         // Collect example metadata
         const examplePath = getExampleDirectoryPath(prefix, hash, workspaceRoot);
@@ -675,47 +560,6 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
     
     // Write updated examples.json
     writeExamplesJson(workspaceRoot, { examples: updatedExamples });
-
-    // Second pass: transform nodes to Preview components
-    for (const { node, prefix, hash, parent, index } of previewNodes) {
-      // Get built JS file path using prefix and hash
-      const compiledJsPath = getCompiledJsPath(prefix, hash, workspaceRoot);
-      
-      // Read built JS file content
-      const jsContent = readCompiledJsFile(compiledJsPath);
-      
-      if (jsContent === null) {
-        console.warn(`Compiled JS file not found at ${compiledJsPath}, skipping preview transformation`);
-        continue;
-      }
-
-      // Create MDX JSX element for Preview component
-      const previewElement: MdxJsxFlowElement = {
-        type: "mdxJsxFlowElement",
-        name: "Preview",
-        attributes: [
-          {
-            type: "mdxJsxAttribute",
-            name: "code",
-            value: jsContent,
-          },
-          {
-            type: "mdxJsxAttribute",
-            name: "userCode",
-            value: node.value || "",
-          },
-          {
-            type: "mdxJsxAttribute",
-            name: "exampleHash",
-            value: hash,
-          },
-        ],
-        children: [],
-      };
-
-      // Replace the code node with the Preview component
-      parent.children[index] = previewElement;
-    }
-    
   };
 };
+

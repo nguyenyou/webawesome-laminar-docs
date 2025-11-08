@@ -4,7 +4,8 @@ import {
   frontmatterSchema,
   metaSchema,
 } from 'fumadocs-mdx/config';
-import { previewPlugin } from './previewPlugin';
+import { millModulePlugin } from './millModulePlugin';
+import { previewTransformPlugin } from './previewTransformPlugin';
 
 // You can customise Zod schemas for frontmatter and `meta.json` here
 // see https://fumadocs.dev/docs/mdx/collections
@@ -23,6 +24,6 @@ export const docs = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
-    remarkPlugins: [previewPlugin],
+    remarkPlugins: [millModulePlugin, previewTransformPlugin],
   },
 });

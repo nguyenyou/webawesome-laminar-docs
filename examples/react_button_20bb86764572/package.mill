@@ -1,0 +1,3 @@
+package build.examples.react_button_20bb86764572
+
+object `package` extends build.ExampleModule

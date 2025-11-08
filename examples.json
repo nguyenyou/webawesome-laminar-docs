@@ -1,12 +1,20 @@
 {
   "examples": [
     {
-      "hash": "fba1259347ee",
-      "path": "examples/react_button_fba1259347ee",
+      "hash": "99144601b5e3",
+      "path": "examples/laminar_button_99144601b5e3",
+      "docPath": "content/docs/laminar/button.mdx",
+      "millBuildOutPath": "out/examples/laminar_button_99144601b5e3/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/laminar_button_99144601b5e3.js",
+      "lastUpdated": "2025-11-08T08:07:18.446Z"
+    },
+    {
+      "hash": "20bb86764572",
+      "path": "examples/react_button_20bb86764572",
       "docPath": "content/docs/react/button.mdx",
-      "millBuildOutPath": "out/examples/react_button_fba1259347ee/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/react_button_fba1259347ee.js",
-      "lastUpdated": "2025-11-08T07:47:51.756Z"
+      "millBuildOutPath": "out/examples/react_button_20bb86764572/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/react_button_20bb86764572.js",
+      "lastUpdated": "2025-11-08T08:07:18.698Z"
     },
     {
       "hash": "2104538b40ef",
@@ -14,7 +22,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_2104538b40ef/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_2104538b40ef.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "78dc72cf2b51",
@@ -22,7 +30,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_78dc72cf2b51/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_78dc72cf2b51.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "a46fa6fe899f",
@@ -30,7 +38,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_a46fa6fe899f/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_a46fa6fe899f.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "45c97ae8cb0e",
@@ -38,7 +46,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_45c97ae8cb0e/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_45c97ae8cb0e.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "5c0f197fe448",
@@ -46,7 +54,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_5c0f197fe448/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_5c0f197fe448.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "1da74058d354",
@@ -54,7 +62,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_1da74058d354/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_1da74058d354.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "0edde2ef8757",
@@ -62,7 +70,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_0edde2ef8757/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_0edde2ef8757.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "45c97ae8cb0e",
@@ -70,7 +78,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_45c97ae8cb0e/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_45c97ae8cb0e.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "7c93a450ba0c",
@@ -78,7 +86,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_7c93a450ba0c/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_7c93a450ba0c.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "2888a33cc3ec",
@@ -86,7 +94,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_2888a33cc3ec/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_2888a33cc3ec.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "8f168d7f2d17",
@@ -94,7 +102,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_8f168d7f2d17/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_8f168d7f2d17.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     },
     {
       "hash": "3bbad85eb7a5",
@@ -102,15 +110,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome_button_3bbad85eb7a5/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_3bbad85eb7a5.js",
-      "lastUpdated": "2025-11-08T07:49:07.093Z"
-    },
-    {
-      "hash": "99144601b5e3",
-      "path": "examples/laminar_button_99144601b5e3",
-      "docPath": "content/docs/laminar/button.mdx",
-      "millBuildOutPath": "out/examples/laminar_button_99144601b5e3/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/laminar_button_99144601b5e3.js",
-      "lastUpdated": "2025-11-08T07:49:07.201Z"
+      "lastUpdated": "2025-11-08T08:07:18.947Z"
     }
   ]
 }

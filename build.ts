@@ -1,20 +1,6 @@
 import path from 'path';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync } from 'fs';
-
-/**
- * JSON Structure Types matching previewPlugin.ts
- */
-interface ExampleInfo {
-  path: string; // Example directory path relative to workspace root
-  docPath: string; // Docs file path relative to workspace root
-  millBuildOutPath: string; // Mill build output path relative to workspace root
-  exampleBuildsPath: string; // examples-build path relative to workspace root
-  lastUpdated: string; // ISO timestamp string
-}
-
-type ExamplesJson = {
-  examples: ExampleInfo[];
-};
+import type { ExampleInfo, ExamplesJson } from './previewUtils';
 
 interface ExampleEntry {
   entrypoint: string; // Absolute path to mill build output main.js
@@ -189,43 +175,22 @@ async function main() {
   const entrypoints = validExamples.map(ex => ex.entrypoint);
   const entrypointToOutputPath = new Map<string, string>();
   const entrypointToDocPath = new Map<string, string>();
+  const entrypointToHash = new Map<string, string>();
 
   for (const example of validExamples) {
     entrypointToOutputPath.set(example.entrypoint, example.outputPath);
     entrypointToDocPath.set(example.entrypoint, example.exampleInfo.docPath);
+    entrypointToHash.set(example.entrypoint, example.exampleInfo.hash);
   }
 
   // Track which markdown files need to be updated
   const markdownFilesToUpdate = new Set<string>();
 
   try {
-    // Build all examples in a single Bun.build call
-    const result = await Bun.build({
-      entrypoints,
-      target: 'browser',
-      format: 'esm',
-      minify: false,
-    });
-
-    if (!result.success) {
-      console.error('Failed to build examples:', result.logs);
-      return;
-    }
-
-    // Verify outputs match entrypoints count
-    if (result.outputs.length !== entrypoints.length) {
-      console.warn(
-        `Output count mismatch: expected ${entrypoints.length} outputs, got ${result.outputs.length}`
-      );
-    }
-
-    // Match outputs to entrypoints and write them
-    // Bun.build outputs array order should match entrypoints order
-    const outputCount = Math.min(result.outputs.length, entrypoints.length);
-    for (let i = 0; i < outputCount; i++) {
-      const entrypoint = entrypoints[i];
-      const output = result.outputs[i];
+    // Build each example individually with its own banner
+    for (const entrypoint of entrypoints) {
       const outputPath = entrypointToOutputPath.get(entrypoint);
+      const hash = entrypointToHash.get(entrypoint);
 
       if (!outputPath) {
         console.warn(`No output path found for entrypoint: ${entrypoint}`);
@@ -238,9 +203,31 @@ async function main() {
         mkdirSync(outputDir, { recursive: true });
       }
 
-      // Write bundled output
-      await Bun.write(outputPath, output);
-      console.log(`✓ Built: ${outputPath}`);
+      // Create banner comment with example hash
+      const banner = hash ? `// Example hash: ${hash}\n` : '';
+
+      // Build with banner
+      const result = await Bun.build({
+        entrypoints: [entrypoint],
+        target: 'browser',
+        format: 'esm',
+        minify: false,
+        banner: banner,
+      });
+
+      if (!result.success) {
+        console.error(`Failed to build ${entrypoint}:`, result.logs);
+        continue;
+      }
+
+      if (result.outputs.length === 0) {
+        console.warn(`No output generated for ${entrypoint}`);
+        continue;
+      }
+
+      // Write bundled output (banner is already included)
+      await Bun.write(outputPath, result.outputs[0]);
+      console.log(`✓ Built: ${outputPath}${hash ? ` (hash: ${hash})` : ''}`);
 
       // Track markdown file for update
       const docPath = entrypointToDocPath.get(entrypoint);

@@ -1,4 +1,4 @@
-package examples.react_button_fba1259347ee
+package examples.react_button_20bb86764572
   
 import org.scalajs.dom
 import com.raquo.laminar.api.L.*
@@ -9,7 +9,7 @@ import io.github.nguyenyou.webawesome.laminar.*
 def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
-      div("Hello, worlddd!")
+      div("Hello, worlddd!ddd")
   })
 }
   
