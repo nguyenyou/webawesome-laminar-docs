@@ -39,7 +39,7 @@ div(
     )
   ),
   div(
-    tw.flex.gap2,
+    cls("flex gap-2"),
     Select(
       _.label := "Placement",
       _.name  := "placement",
@@ -75,7 +75,7 @@ div(
     )()
   ),
   div(
-    tw.flex.gap2.mt2,
+    cls("flex gap-2 mt-2"),
     Switch(
       _.name := "active",
       _.checked <-- activeVar,
@@ -324,7 +324,7 @@ div(
     )
   ),
   div(
-    tw.flex.flexWrap.gap4.itemsEnd,
+    cls("flex flex-wrap gap-4 items-end"),
     Select(
       _.label := "Placement",
       _.name  := "placement",
@@ -363,7 +363,7 @@ div(
     )
   ),
   div(
-    tw.flex.gap4.mt4,
+    cls("flex gap-4 mt-4"),
     Switch(
       _.name := "arrow",
       _.checked <-- arrowVar,

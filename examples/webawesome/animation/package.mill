@@ -1,3 +1,0 @@
-package build.examples.webawesome.animation
-
-object `package` extends build.ExampleModule

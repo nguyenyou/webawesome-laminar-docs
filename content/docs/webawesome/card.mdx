@@ -9,7 +9,7 @@ lastUpdated: 2025-01-27T00:00:00.000Z
 Card(
   _.slots.footer(
     div(
-      tw.flex.justifyBetween.itemsCenter,
+      cls("flex justify-between items-center"),
       Button(_.variant.brand, _.pill := true)("More Info"),
       Rating()()
     )
@@ -50,7 +50,7 @@ If using SSR, you need to also use the `with-header` attribute to add a header t
 Card(
   _.slots.header(
     div(
-      tw.flex.justifyBetween.itemsCenter,
+      cls("flex justify-between items-center"),
       "Header Title",
       Button(
         _.appearance.plain,
@@ -73,7 +73,7 @@ If using SSR, you need to also use the `with-footer` attribute to add a footer t
 Card(
   _.slots.footer(
     div(
-      tw.flex.justifyBetween.itemsCenter,
+      cls("flex justify-between items-center"),
       Rating()(),
       Button(_.variant.brand)("Preview")
     )

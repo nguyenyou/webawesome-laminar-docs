@@ -61,7 +61,7 @@ The `selection` attribute lets you change the selection behavior of the tree.
 val selectionMode = Var(TreeSelection.single.value)
 
 div(
-  tw.spaceY4,
+  cls("space-y-4"),
   Select(
     _.label := "Selection",
     _.value <-- selectionMode,

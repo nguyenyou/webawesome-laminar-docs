@@ -11,7 +11,8 @@ div(
     _.forId := "popover__overview"
   )(
     div(
-      tw.flex.flexCol.gap4,
+      cls("flex flex-col gap-4"),
+
       p("This popover contains interactive content that users can engage with directly."),
       Button(
         _.variant.brand,
@@ -31,7 +32,7 @@ Use `<wa-button>` or `<button>` elements as popover anchors. Connect the popover
 
 ```scala examples
 div(
-  tw.flex.flexCol.itemsStart.gap4,
+  cls("flex flex-col items-start gap-4"),
   div(
     Popover(
       _.forId := "popover__anchor-button"
@@ -68,7 +69,7 @@ div(
     _.forId := "popover__opening"
   )(
     div(
-      tw.flex.flexCol.gap4,
+      cls("flex flex-col gap-4"),
       "Click the button below to close the popover",
       Button(
         _.variant.brand,
@@ -88,7 +89,7 @@ Use the `placement` attribute to set where the popover appears relative to its a
 
 ```scala examples
 div(
-  tw.flex.gap4.itemsCenter,
+  cls("flex gap-4 items-center"),
   div(
     Button(
       _.id := "popover__top"
@@ -134,7 +135,7 @@ Use the `distance` attribute to control how far the popover appears from its anc
 
 ```scala examples
 div(
-  tw.flex.gap4.itemsCenter,
+  cls("flex gap-4 items-center"),
   div(
     Button(
       _.id := "popover__distance-near"
@@ -162,7 +163,7 @@ Use the `--arrow-size` custom property to change the size of the popover's arrow
 
 ```scala examples
 div(
-  tw.flex.gap4.itemsCenter,
+  cls("flex gap-4 items-center"),
   div(
     Button(
       _.id := "popover__big-arrow"
@@ -212,7 +213,7 @@ div(
     _.forId := "popover__autofocus"
   )(
     div(
-      tw.flex.flexCol.gap4,
+      cls("flex flex-col gap-4"),
       Textarea(
         _.autofocus   := true,
         _.placeholder := "What's on your mind?",

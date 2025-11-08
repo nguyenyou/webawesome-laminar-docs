@@ -42,7 +42,7 @@ Icons inherit their color from the current text color. Thus, you can set the `co
 ```scala examples
 div(
   color := "#4a90e2",
-  tw.flex.gap2.mb2,
+  cls("flex gap-2 mb-2")
   Icon(_.name := "exclamation-triangle")(),
   Icon(_.name := "archive")(),
   Icon(_.name := "battery-three-quarters")(),
@@ -50,7 +50,7 @@ div(
 )
 div(
   color := "#9013fe",
-  tw.flex.gap2.mb2,
+  cls("flex gap-2 mb-2")
   Icon(_.name := "clock")(),
   Icon(_.name := "cloud")(),
   Icon(_.name := "download")(),
@@ -58,7 +58,7 @@ div(
 )
 div(
   color := "#417505",
-  tw.flex.gap2.mb2,
+  cls("flex gap-2 mb-2")
   Icon(_.name := "flag")(),
   Icon(_.name := "heart")(),
   Icon(_.name := "image")(),
@@ -66,7 +66,7 @@ div(
 )
 div(
   color := "#f5a623",
-  tw.flex.gap2,
+  cls("flex gap-2"),
   Icon(_.name := "microphone")(),
   Icon(_.name := "search")(),
   Icon(_.name := "star")(),
@@ -81,7 +81,7 @@ Icons are sized relative to the current font size. To change their size, set the
 ```scala examples
 div(
   fontSize := "32px",
-  tw.flex.gap2,
+  cls("flex gap-2"),
   Icon(_.name := "bell")(),
   Icon(_.name := "heart")(),
   Icon(_.name := "image")(),

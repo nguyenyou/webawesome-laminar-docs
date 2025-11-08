@@ -90,8 +90,8 @@ div(
     } --> Observer.empty
   )(),
   span(
-    tw.relative.textCenter.py1.px2,
-    tw.hidden <-- hoverText.signal.map(_.isEmpty),
+    cls("relative text-center py-1 px-2"),
+    cls("hidden") <-- hoverText.signal.map(_.isEmpty),
     top.px(-4),
     left.px(8),
     borderRadius    := "var(--wa-border-radius-m)",

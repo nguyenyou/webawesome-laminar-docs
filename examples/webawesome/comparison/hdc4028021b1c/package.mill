@@ -1,3 +1,0 @@
-package build.examples.webawesome.comparison.hdc4028021b1c
-
-object `package` extends build.ExampleModule

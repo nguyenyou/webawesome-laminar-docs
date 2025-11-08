@@ -45,7 +45,7 @@ div(
     } --> Observer.empty
   )(
     div(
-      tw.flex.flexWrap.gap2,
+      cls("flex flex-wrap gap-2"),
       Button(_.variant := "brand")(
         onClick --> Observer[dom.MouseEvent] { _ =>
           buttonCountVar.update(_ + 1)

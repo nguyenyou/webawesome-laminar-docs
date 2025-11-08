@@ -313,54 +313,6 @@
       "lastUpdated": "2025-11-08T13:55:14.698Z"
     },
     {
-      "hash": "28d2a41b048e",
-      "path": "examples/webawesome/card/h28d2a41b048e",
-      "docPath": "content/docs/webawesome/card.mdx",
-      "millBuildOutPath": "out/examples/webawesome/card/h28d2a41b048e/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_card_28d2a41b048e.js",
-      "lastUpdated": "2025-11-08T13:55:24.865Z"
-    },
-    {
-      "hash": "f43952a0f573",
-      "path": "examples/webawesome/card/hf43952a0f573",
-      "docPath": "content/docs/webawesome/card.mdx",
-      "millBuildOutPath": "out/examples/webawesome/card/hf43952a0f573/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_card_f43952a0f573.js",
-      "lastUpdated": "2025-11-08T13:55:24.865Z"
-    },
-    {
-      "hash": "abd35939cfcb",
-      "path": "examples/webawesome/card/habd35939cfcb",
-      "docPath": "content/docs/webawesome/card.mdx",
-      "millBuildOutPath": "out/examples/webawesome/card/habd35939cfcb/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_card_abd35939cfcb.js",
-      "lastUpdated": "2025-11-08T13:55:24.865Z"
-    },
-    {
-      "hash": "34b603f15c42",
-      "path": "examples/webawesome/card/h34b603f15c42",
-      "docPath": "content/docs/webawesome/card.mdx",
-      "millBuildOutPath": "out/examples/webawesome/card/h34b603f15c42/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_card_34b603f15c42.js",
-      "lastUpdated": "2025-11-08T13:55:24.865Z"
-    },
-    {
-      "hash": "747d7f24e65d",
-      "path": "examples/webawesome/card/h747d7f24e65d",
-      "docPath": "content/docs/webawesome/card.mdx",
-      "millBuildOutPath": "out/examples/webawesome/card/h747d7f24e65d/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_card_747d7f24e65d.js",
-      "lastUpdated": "2025-11-08T13:55:24.865Z"
-    },
-    {
-      "hash": "c891bfa9d9e4",
-      "path": "examples/webawesome/card/hc891bfa9d9e4",
-      "docPath": "content/docs/webawesome/card.mdx",
-      "millBuildOutPath": "out/examples/webawesome/card/hc891bfa9d9e4/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_card_c891bfa9d9e4.js",
-      "lastUpdated": "2025-11-08T13:55:24.865Z"
-    },
-    {
       "hash": "42ee523d85d5",
       "path": "examples/webawesome/carousel/h42ee523d85d5",
       "docPath": "content/docs/webawesome/carousel.mdx",
@@ -647,174 +599,6 @@
       "millBuildOutPath": "out/examples/webawesome/relative-time/h3096956a0698/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_relative-time_3096956a0698.js",
       "lastUpdated": "2025-11-08T13:58:37.393Z"
-    },
-    {
-      "hash": "fb247ded5cee",
-      "path": "examples/webawesome/popover/hfb247ded5cee",
-      "docPath": "content/docs/webawesome/popover.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popover/hfb247ded5cee/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popover_fb247ded5cee.js",
-      "lastUpdated": "2025-11-08T13:58:53.440Z"
-    },
-    {
-      "hash": "0178e27adda9",
-      "path": "examples/webawesome/popover/h0178e27adda9",
-      "docPath": "content/docs/webawesome/popover.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popover/h0178e27adda9/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popover_0178e27adda9.js",
-      "lastUpdated": "2025-11-08T13:58:53.440Z"
-    },
-    {
-      "hash": "3b3ea90fdb23",
-      "path": "examples/webawesome/popover/h3b3ea90fdb23",
-      "docPath": "content/docs/webawesome/popover.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popover/h3b3ea90fdb23/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popover_3b3ea90fdb23.js",
-      "lastUpdated": "2025-11-08T13:58:53.440Z"
-    },
-    {
-      "hash": "3dfe2726821a",
-      "path": "examples/webawesome/popover/h3dfe2726821a",
-      "docPath": "content/docs/webawesome/popover.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popover/h3dfe2726821a/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popover_3dfe2726821a.js",
-      "lastUpdated": "2025-11-08T13:58:53.440Z"
-    },
-    {
-      "hash": "63caf8baeec2",
-      "path": "examples/webawesome/popover/h63caf8baeec2",
-      "docPath": "content/docs/webawesome/popover.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popover/h63caf8baeec2/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popover_63caf8baeec2.js",
-      "lastUpdated": "2025-11-08T13:58:53.440Z"
-    },
-    {
-      "hash": "a7ab01835816",
-      "path": "examples/webawesome/popover/ha7ab01835816",
-      "docPath": "content/docs/webawesome/popover.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popover/ha7ab01835816/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popover_a7ab01835816.js",
-      "lastUpdated": "2025-11-08T13:58:53.440Z"
-    },
-    {
-      "hash": "b59f3bb366e0",
-      "path": "examples/webawesome/popover/hb59f3bb366e0",
-      "docPath": "content/docs/webawesome/popover.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popover/hb59f3bb366e0/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popover_b59f3bb366e0.js",
-      "lastUpdated": "2025-11-08T13:58:53.440Z"
-    },
-    {
-      "hash": "837d20e9d08c",
-      "path": "examples/webawesome/popover/h837d20e9d08c",
-      "docPath": "content/docs/webawesome/popover.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popover/h837d20e9d08c/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popover_837d20e9d08c.js",
-      "lastUpdated": "2025-11-08T13:58:53.440Z"
-    },
-    {
-      "hash": "646ca988a761",
-      "path": "examples/webawesome/popup/h646ca988a761",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h646ca988a761/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_646ca988a761.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "395de7147635",
-      "path": "examples/webawesome/popup/h395de7147635",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h395de7147635/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_395de7147635.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "82352ef9a5c5",
-      "path": "examples/webawesome/popup/h82352ef9a5c5",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h82352ef9a5c5/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_82352ef9a5c5.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "490f0f0ff954",
-      "path": "examples/webawesome/popup/h490f0f0ff954",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h490f0f0ff954/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_490f0f0ff954.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "391b671d1321",
-      "path": "examples/webawesome/popup/h391b671d1321",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h391b671d1321/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_391b671d1321.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "db7fdfdfbeec",
-      "path": "examples/webawesome/popup/hdb7fdfdfbeec",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/hdb7fdfdfbeec/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_db7fdfdfbeec.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "f1650fe39c31",
-      "path": "examples/webawesome/popup/hf1650fe39c31",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/hf1650fe39c31/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_f1650fe39c31.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "972731a703d2",
-      "path": "examples/webawesome/popup/h972731a703d2",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h972731a703d2/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_972731a703d2.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "97c1881490ff",
-      "path": "examples/webawesome/popup/h97c1881490ff",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h97c1881490ff/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_97c1881490ff.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "3ddc6a1c04a7",
-      "path": "examples/webawesome/popup/h3ddc6a1c04a7",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h3ddc6a1c04a7/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_3ddc6a1c04a7.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "f193495df2d4",
-      "path": "examples/webawesome/popup/hf193495df2d4",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/hf193495df2d4/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_f193495df2d4.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "36f0d23930bf",
-      "path": "examples/webawesome/popup/h36f0d23930bf",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h36f0d23930bf/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_36f0d23930bf.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
-    },
-    {
-      "hash": "2adb6c64f4be",
-      "path": "examples/webawesome/popup/h2adb6c64f4be",
-      "docPath": "content/docs/webawesome/popup.mdx",
-      "millBuildOutPath": "out/examples/webawesome/popup/h2adb6c64f4be/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_popup_2adb6c64f4be.js",
-      "lastUpdated": "2025-11-08T13:59:30.407Z"
     },
     {
       "hash": "ca6652a9e66b",
@@ -1185,94 +969,6 @@
       "lastUpdated": "2025-11-08T14:06:25.467Z"
     },
     {
-      "hash": "b8e470491a88",
-      "path": "examples/webawesome/rating/hb8e470491a88",
-      "docPath": "content/docs/webawesome/rating.mdx",
-      "millBuildOutPath": "out/examples/webawesome/rating/hb8e470491a88/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_rating_b8e470491a88.js",
-      "lastUpdated": "2025-11-08T14:06:26.133Z"
-    },
-    {
-      "hash": "03142aff903c",
-      "path": "examples/webawesome/rating/h03142aff903c",
-      "docPath": "content/docs/webawesome/rating.mdx",
-      "millBuildOutPath": "out/examples/webawesome/rating/h03142aff903c/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_rating_03142aff903c.js",
-      "lastUpdated": "2025-11-08T14:06:26.133Z"
-    },
-    {
-      "hash": "f49c51ad3423",
-      "path": "examples/webawesome/rating/hf49c51ad3423",
-      "docPath": "content/docs/webawesome/rating.mdx",
-      "millBuildOutPath": "out/examples/webawesome/rating/hf49c51ad3423/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_rating_f49c51ad3423.js",
-      "lastUpdated": "2025-11-08T14:06:26.133Z"
-    },
-    {
-      "hash": "10687674578e",
-      "path": "examples/webawesome/rating/h10687674578e",
-      "docPath": "content/docs/webawesome/rating.mdx",
-      "millBuildOutPath": "out/examples/webawesome/rating/h10687674578e/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_rating_10687674578e.js",
-      "lastUpdated": "2025-11-08T14:06:26.133Z"
-    },
-    {
-      "hash": "848b1da1e840",
-      "path": "examples/webawesome/rating/h848b1da1e840",
-      "docPath": "content/docs/webawesome/rating.mdx",
-      "millBuildOutPath": "out/examples/webawesome/rating/h848b1da1e840/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_rating_848b1da1e840.js",
-      "lastUpdated": "2025-11-08T14:06:26.133Z"
-    },
-    {
-      "hash": "4e607433963a",
-      "path": "examples/webawesome/rating/h4e607433963a",
-      "docPath": "content/docs/webawesome/rating.mdx",
-      "millBuildOutPath": "out/examples/webawesome/rating/h4e607433963a/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_rating_4e607433963a.js",
-      "lastUpdated": "2025-11-08T14:06:26.133Z"
-    },
-    {
-      "hash": "1756ff0e42d4",
-      "path": "examples/webawesome/rating/h1756ff0e42d4",
-      "docPath": "content/docs/webawesome/rating.mdx",
-      "millBuildOutPath": "out/examples/webawesome/rating/h1756ff0e42d4/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_rating_1756ff0e42d4.js",
-      "lastUpdated": "2025-11-08T14:06:26.133Z"
-    },
-    {
-      "hash": "073cfec922aa",
-      "path": "examples/webawesome/rating/h073cfec922aa",
-      "docPath": "content/docs/webawesome/rating.mdx",
-      "millBuildOutPath": "out/examples/webawesome/rating/h073cfec922aa/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_rating_073cfec922aa.js",
-      "lastUpdated": "2025-11-08T14:06:26.133Z"
-    },
-    {
-      "hash": "fb9fafb4e3d2",
-      "path": "examples/webawesome/rating/hfb9fafb4e3d2",
-      "docPath": "content/docs/webawesome/rating.mdx",
-      "millBuildOutPath": "out/examples/webawesome/rating/hfb9fafb4e3d2/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_rating_fb9fafb4e3d2.js",
-      "lastUpdated": "2025-11-08T14:06:26.133Z"
-    },
-    {
-      "hash": "bef28a293dc5",
-      "path": "examples/webawesome/mutation-observer/hbef28a293dc5",
-      "docPath": "content/docs/webawesome/mutation-observer.mdx",
-      "millBuildOutPath": "out/examples/webawesome/mutation-observer/hbef28a293dc5/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_mutation-observer_bef28a293dc5.js",
-      "lastUpdated": "2025-11-08T14:06:49.051Z"
-    },
-    {
-      "hash": "c0a564ddac27",
-      "path": "examples/webawesome/mutation-observer/hc0a564ddac27",
-      "docPath": "content/docs/webawesome/mutation-observer.mdx",
-      "millBuildOutPath": "out/examples/webawesome/mutation-observer/hc0a564ddac27/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_mutation-observer_c0a564ddac27.js",
-      "lastUpdated": "2025-11-08T14:06:49.051Z"
-    },
-    {
       "hash": "5663b57de523",
       "path": "examples/webawesome/animated-image/h5663b57de523",
       "docPath": "content/docs/webawesome/animated-image.mdx",
@@ -1305,148 +1001,12 @@
       "lastUpdated": "2025-11-08T14:06:49.183Z"
     },
     {
-      "hash": "832b803e95d1",
-      "path": "examples/webawesome/slider/h832b803e95d1",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h832b803e95d1/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_832b803e95d1.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "54040307f78a",
-      "path": "examples/webawesome/slider/h54040307f78a",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h54040307f78a/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_54040307f78a.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "310dd46f54a3",
-      "path": "examples/webawesome/slider/h310dd46f54a3",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h310dd46f54a3/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_310dd46f54a3.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "e296ae1308d4",
-      "path": "examples/webawesome/slider/he296ae1308d4",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/he296ae1308d4/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_e296ae1308d4.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "487df72ec71e",
-      "path": "examples/webawesome/slider/h487df72ec71e",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h487df72ec71e/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_487df72ec71e.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "68312b0a3a4c",
-      "path": "examples/webawesome/slider/h68312b0a3a4c",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h68312b0a3a4c/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_68312b0a3a4c.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "8cc90648be96",
-      "path": "examples/webawesome/slider/h8cc90648be96",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h8cc90648be96/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_8cc90648be96.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "5594616a5bdc",
-      "path": "examples/webawesome/slider/h5594616a5bdc",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h5594616a5bdc/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_5594616a5bdc.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "153e8f22d8ea",
-      "path": "examples/webawesome/slider/h153e8f22d8ea",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h153e8f22d8ea/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_153e8f22d8ea.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "4fc889ee51d8",
-      "path": "examples/webawesome/slider/h4fc889ee51d8",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h4fc889ee51d8/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_4fc889ee51d8.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "dd8fb3cc989f",
-      "path": "examples/webawesome/slider/hdd8fb3cc989f",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/hdd8fb3cc989f/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_dd8fb3cc989f.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
-      "hash": "33cfbb2936cb",
-      "path": "examples/webawesome/slider/h33cfbb2936cb",
-      "docPath": "content/docs/webawesome/slider.mdx",
-      "millBuildOutPath": "out/examples/webawesome/slider/h33cfbb2936cb/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_slider_33cfbb2936cb.js",
-      "lastUpdated": "2025-11-08T14:06:49.230Z"
-    },
-    {
       "hash": "20bb86764572",
       "path": "examples/react/button/h20bb86764572",
       "docPath": "content/docs/react/button.mdx",
       "millBuildOutPath": "out/examples/react/button/h20bb86764572/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/react_button_20bb86764572.js",
       "lastUpdated": "2025-11-08T14:06:49.520Z"
-    },
-    {
-      "hash": "eac226d5dfda",
-      "path": "examples/webawesome/progress-ring/heac226d5dfda",
-      "docPath": "content/docs/webawesome/progress-ring.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progress-ring/heac226d5dfda/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-ring_eac226d5dfda.js",
-      "lastUpdated": "2025-11-08T14:06:49.562Z"
-    },
-    {
-      "hash": "637972da112e",
-      "path": "examples/webawesome/progress-ring/h637972da112e",
-      "docPath": "content/docs/webawesome/progress-ring.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progress-ring/h637972da112e/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-ring_637972da112e.js",
-      "lastUpdated": "2025-11-08T14:06:49.562Z"
-    },
-    {
-      "hash": "273bc1182e61",
-      "path": "examples/webawesome/progress-ring/h273bc1182e61",
-      "docPath": "content/docs/webawesome/progress-ring.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progress-ring/h273bc1182e61/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-ring_273bc1182e61.js",
-      "lastUpdated": "2025-11-08T14:06:49.562Z"
-    },
-    {
-      "hash": "78acd1975ef4",
-      "path": "examples/webawesome/progress-ring/h78acd1975ef4",
-      "docPath": "content/docs/webawesome/progress-ring.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progress-ring/h78acd1975ef4/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-ring_78acd1975ef4.js",
-      "lastUpdated": "2025-11-08T14:06:49.562Z"
-    },
-    {
-      "hash": "dc70f88701b0",
-      "path": "examples/webawesome/progress-ring/hdc70f88701b0",
-      "docPath": "content/docs/webawesome/progress-ring.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progress-ring/hdc70f88701b0/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-ring_dc70f88701b0.js",
-      "lastUpdated": "2025-11-08T14:06:49.562Z"
     },
     {
       "hash": "f74baecc5187",
@@ -1487,118 +1047,6 @@
       "millBuildOutPath": "out/examples/webawesome/callout/hcefe47789553/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_callout_cefe47789553.js",
       "lastUpdated": "2025-11-08T14:06:50.321Z"
-    },
-    {
-      "hash": "7e1a950097a3",
-      "path": "examples/webawesome/progressBar/h7e1a950097a3",
-      "docPath": "content/docs/webawesome/progress-bar.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progressBar/h7e1a950097a3/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-bar_7e1a950097a3.js",
-      "lastUpdated": "2025-11-08T14:08:22.614Z"
-    },
-    {
-      "hash": "831790b46c18",
-      "path": "examples/webawesome/progressBar/h831790b46c18",
-      "docPath": "content/docs/webawesome/progress-bar.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progressBar/h831790b46c18/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-bar_831790b46c18.js",
-      "lastUpdated": "2025-11-08T14:08:22.614Z"
-    },
-    {
-      "hash": "6d746b38c078",
-      "path": "examples/webawesome/progressBar/h6d746b38c078",
-      "docPath": "content/docs/webawesome/progress-bar.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progressBar/h6d746b38c078/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-bar_6d746b38c078.js",
-      "lastUpdated": "2025-11-08T14:08:22.614Z"
-    },
-    {
-      "hash": "d9cf8b96439c",
-      "path": "examples/webawesome/progressBar/hd9cf8b96439c",
-      "docPath": "content/docs/webawesome/progress-bar.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progressBar/hd9cf8b96439c/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-bar_d9cf8b96439c.js",
-      "lastUpdated": "2025-11-08T14:08:22.614Z"
-    },
-    {
-      "hash": "1240628e3e9a",
-      "path": "examples/webawesome/progressBar/h1240628e3e9a",
-      "docPath": "content/docs/webawesome/progress-bar.mdx",
-      "millBuildOutPath": "out/examples/webawesome/progressBar/h1240628e3e9a/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_progress-bar_1240628e3e9a.js",
-      "lastUpdated": "2025-11-08T14:08:22.614Z"
-    },
-    {
-      "hash": "c3ac8ccc4418",
-      "path": "examples/webawesome/splitPanel/hc3ac8ccc4418",
-      "docPath": "content/docs/webawesome/split-panel.mdx",
-      "millBuildOutPath": "out/examples/webawesome/splitPanel/hc3ac8ccc4418/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_split-panel_c3ac8ccc4418.js",
-      "lastUpdated": "2025-11-08T14:08:22.934Z"
-    },
-    {
-      "hash": "c8bf193c8d03",
-      "path": "examples/webawesome/splitPanel/hc8bf193c8d03",
-      "docPath": "content/docs/webawesome/split-panel.mdx",
-      "millBuildOutPath": "out/examples/webawesome/splitPanel/hc8bf193c8d03/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_split-panel_c8bf193c8d03.js",
-      "lastUpdated": "2025-11-08T14:08:22.934Z"
-    },
-    {
-      "hash": "2f7d52e5ad58",
-      "path": "examples/webawesome/splitPanel/h2f7d52e5ad58",
-      "docPath": "content/docs/webawesome/split-panel.mdx",
-      "millBuildOutPath": "out/examples/webawesome/splitPanel/h2f7d52e5ad58/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_split-panel_2f7d52e5ad58.js",
-      "lastUpdated": "2025-11-08T14:08:22.934Z"
-    },
-    {
-      "hash": "4ea721e50b85",
-      "path": "examples/webawesome/splitPanel/h4ea721e50b85",
-      "docPath": "content/docs/webawesome/split-panel.mdx",
-      "millBuildOutPath": "out/examples/webawesome/splitPanel/h4ea721e50b85/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_split-panel_4ea721e50b85.js",
-      "lastUpdated": "2025-11-08T14:08:22.934Z"
-    },
-    {
-      "hash": "393089d8fed3",
-      "path": "examples/webawesome/splitPanel/h393089d8fed3",
-      "docPath": "content/docs/webawesome/split-panel.mdx",
-      "millBuildOutPath": "out/examples/webawesome/splitPanel/h393089d8fed3/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_split-panel_393089d8fed3.js",
-      "lastUpdated": "2025-11-08T14:08:22.934Z"
-    },
-    {
-      "hash": "3cb7042d1c6e",
-      "path": "examples/webawesome/splitPanel/h3cb7042d1c6e",
-      "docPath": "content/docs/webawesome/split-panel.mdx",
-      "millBuildOutPath": "out/examples/webawesome/splitPanel/h3cb7042d1c6e/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_split-panel_3cb7042d1c6e.js",
-      "lastUpdated": "2025-11-08T14:08:22.934Z"
-    },
-    {
-      "hash": "f38b3494dabd",
-      "path": "examples/webawesome/splitPanel/hf38b3494dabd",
-      "docPath": "content/docs/webawesome/split-panel.mdx",
-      "millBuildOutPath": "out/examples/webawesome/splitPanel/hf38b3494dabd/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_split-panel_f38b3494dabd.js",
-      "lastUpdated": "2025-11-08T14:08:22.934Z"
-    },
-    {
-      "hash": "13acc18688c5",
-      "path": "examples/webawesome/splitPanel/h13acc18688c5",
-      "docPath": "content/docs/webawesome/split-panel.mdx",
-      "millBuildOutPath": "out/examples/webawesome/splitPanel/h13acc18688c5/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_split-panel_13acc18688c5.js",
-      "lastUpdated": "2025-11-08T14:08:22.934Z"
-    },
-    {
-      "hash": "c8f365a53894",
-      "path": "examples/webawesome/splitPanel/hc8f365a53894",
-      "docPath": "content/docs/webawesome/split-panel.mdx",
-      "millBuildOutPath": "out/examples/webawesome/splitPanel/hc8f365a53894/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_split-panel_c8f365a53894.js",
-      "lastUpdated": "2025-11-08T14:08:22.934Z"
     },
     {
       "hash": "8c9bb08e1ca8",
@@ -1921,158 +1369,6 @@
       "lastUpdated": "2025-11-08T14:09:20.192Z"
     },
     {
-      "hash": "7889d2c303af",
-      "path": "examples/webawesome/copy-button/h7889d2c303af",
-      "docPath": "content/docs/webawesome/copy-button.mdx",
-      "millBuildOutPath": "out/examples/webawesome/copy-button/h7889d2c303af/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_copy-button_7889d2c303af.js",
-      "lastUpdated": "2025-11-08T14:09:20.277Z"
-    },
-    {
-      "hash": "c7112ccd3ffc",
-      "path": "examples/webawesome/copy-button/hc7112ccd3ffc",
-      "docPath": "content/docs/webawesome/copy-button.mdx",
-      "millBuildOutPath": "out/examples/webawesome/copy-button/hc7112ccd3ffc/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_copy-button_c7112ccd3ffc.js",
-      "lastUpdated": "2025-11-08T14:09:20.277Z"
-    },
-    {
-      "hash": "a6501b42ed01",
-      "path": "examples/webawesome/copy-button/ha6501b42ed01",
-      "docPath": "content/docs/webawesome/copy-button.mdx",
-      "millBuildOutPath": "out/examples/webawesome/copy-button/ha6501b42ed01/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_copy-button_a6501b42ed01.js",
-      "lastUpdated": "2025-11-08T14:09:20.277Z"
-    },
-    {
-      "hash": "59fa33c786e6",
-      "path": "examples/webawesome/copy-button/h59fa33c786e6",
-      "docPath": "content/docs/webawesome/copy-button.mdx",
-      "millBuildOutPath": "out/examples/webawesome/copy-button/h59fa33c786e6/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_copy-button_59fa33c786e6.js",
-      "lastUpdated": "2025-11-08T14:09:20.277Z"
-    },
-    {
-      "hash": "ae419e8c7045",
-      "path": "examples/webawesome/copy-button/hae419e8c7045",
-      "docPath": "content/docs/webawesome/copy-button.mdx",
-      "millBuildOutPath": "out/examples/webawesome/copy-button/hae419e8c7045/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_copy-button_ae419e8c7045.js",
-      "lastUpdated": "2025-11-08T14:09:20.277Z"
-    },
-    {
-      "hash": "a2b173be795e",
-      "path": "examples/webawesome/copy-button/ha2b173be795e",
-      "docPath": "content/docs/webawesome/copy-button.mdx",
-      "millBuildOutPath": "out/examples/webawesome/copy-button/ha2b173be795e/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_copy-button_a2b173be795e.js",
-      "lastUpdated": "2025-11-08T14:09:20.277Z"
-    },
-    {
-      "hash": "f5a144a26b25",
-      "path": "examples/webawesome/copy-button/hf5a144a26b25",
-      "docPath": "content/docs/webawesome/copy-button.mdx",
-      "millBuildOutPath": "out/examples/webawesome/copy-button/hf5a144a26b25/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_copy-button_f5a144a26b25.js",
-      "lastUpdated": "2025-11-08T14:09:20.277Z"
-    },
-    {
-      "hash": "aa2c9c05d20d",
-      "path": "examples/webawesome/copy-button/haa2c9c05d20d",
-      "docPath": "content/docs/webawesome/copy-button.mdx",
-      "millBuildOutPath": "out/examples/webawesome/copy-button/haa2c9c05d20d/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_copy-button_aa2c9c05d20d.js",
-      "lastUpdated": "2025-11-08T14:09:20.277Z"
-    },
-    {
-      "hash": "735c4e09cf67",
-      "path": "examples/webawesome/tree/h735c4e09cf67",
-      "docPath": "content/docs/webawesome/tree.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tree/h735c4e09cf67/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tree_735c4e09cf67.js",
-      "lastUpdated": "2025-11-08T14:09:20.333Z"
-    },
-    {
-      "hash": "a1c0c0b18322",
-      "path": "examples/webawesome/tree/ha1c0c0b18322",
-      "docPath": "content/docs/webawesome/tree.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tree/ha1c0c0b18322/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tree_a1c0c0b18322.js",
-      "lastUpdated": "2025-11-08T14:09:20.333Z"
-    },
-    {
-      "hash": "4c65ed34d2a9",
-      "path": "examples/webawesome/tree/h4c65ed34d2a9",
-      "docPath": "content/docs/webawesome/tree.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tree/h4c65ed34d2a9/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tree_4c65ed34d2a9.js",
-      "lastUpdated": "2025-11-08T14:09:20.333Z"
-    },
-    {
-      "hash": "e7807dd28efa",
-      "path": "examples/webawesome/tree/he7807dd28efa",
-      "docPath": "content/docs/webawesome/tree.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tree/he7807dd28efa/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tree_e7807dd28efa.js",
-      "lastUpdated": "2025-11-08T14:09:20.333Z"
-    },
-    {
-      "hash": "e8856ebde552",
-      "path": "examples/webawesome/tree/he8856ebde552",
-      "docPath": "content/docs/webawesome/tree.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tree/he8856ebde552/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tree_e8856ebde552.js",
-      "lastUpdated": "2025-11-08T14:09:20.333Z"
-    },
-    {
-      "hash": "3e853812af4b",
-      "path": "examples/webawesome/tree/h3e853812af4b",
-      "docPath": "content/docs/webawesome/tree.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tree/h3e853812af4b/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tree_3e853812af4b.js",
-      "lastUpdated": "2025-11-08T14:09:20.333Z"
-    },
-    {
-      "hash": "24b503e3c4bb",
-      "path": "examples/webawesome/tag/h24b503e3c4bb",
-      "docPath": "content/docs/webawesome/tag.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tag/h24b503e3c4bb/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tag_24b503e3c4bb.js",
-      "lastUpdated": "2025-11-08T14:09:20.401Z"
-    },
-    {
-      "hash": "1bf88316df2a",
-      "path": "examples/webawesome/tag/h1bf88316df2a",
-      "docPath": "content/docs/webawesome/tag.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tag/h1bf88316df2a/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tag_1bf88316df2a.js",
-      "lastUpdated": "2025-11-08T14:09:20.401Z"
-    },
-    {
-      "hash": "5c12776e7551",
-      "path": "examples/webawesome/tag/h5c12776e7551",
-      "docPath": "content/docs/webawesome/tag.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tag/h5c12776e7551/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tag_5c12776e7551.js",
-      "lastUpdated": "2025-11-08T14:09:20.401Z"
-    },
-    {
-      "hash": "c2d557af9a4f",
-      "path": "examples/webawesome/tag/hc2d557af9a4f",
-      "docPath": "content/docs/webawesome/tag.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tag/hc2d557af9a4f/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tag_c2d557af9a4f.js",
-      "lastUpdated": "2025-11-08T14:09:20.401Z"
-    },
-    {
-      "hash": "81884c94f40d",
-      "path": "examples/webawesome/tag/h81884c94f40d",
-      "docPath": "content/docs/webawesome/tag.mdx",
-      "millBuildOutPath": "out/examples/webawesome/tag/h81884c94f40d/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_tag_81884c94f40d.js",
-      "lastUpdated": "2025-11-08T14:09:20.401Z"
-    },
-    {
       "hash": "3796d4ae32f1",
       "path": "examples/webawesome/tab-group/h3796d4ae32f1",
       "docPath": "content/docs/webawesome/tab-group.mdx",
@@ -2127,14 +1423,6 @@
       "millBuildOutPath": "out/examples/webawesome/tab-group/h3b89aab144e1/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_tab-group_3b89aab144e1.js",
       "lastUpdated": "2025-11-08T14:09:20.435Z"
-    },
-    {
-      "hash": "6fb94f56b253",
-      "path": "examples/webawesome/resize-observer/h6fb94f56b253",
-      "docPath": "content/docs/webawesome/resize-observer.mdx",
-      "millBuildOutPath": "out/examples/webawesome/resize-observer/h6fb94f56b253/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_resize-observer_6fb94f56b253.js",
-      "lastUpdated": "2025-11-08T14:09:20.467Z"
     },
     {
       "hash": "fc47a208d0e0",
@@ -2367,118 +1655,6 @@
       "millBuildOutPath": "out/examples/webawesome/tooltip/h5a3877448f1f/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_tooltip_5a3877448f1f.js",
       "lastUpdated": "2025-11-08T14:09:20.702Z"
-    },
-    {
-      "hash": "e135e60bac41",
-      "path": "examples/webawesome/icon/he135e60bac41",
-      "docPath": "content/docs/webawesome/icon.mdx",
-      "millBuildOutPath": "out/examples/webawesome/icon/he135e60bac41/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_icon_e135e60bac41.js",
-      "lastUpdated": "2025-11-08T14:09:20.793Z"
-    },
-    {
-      "hash": "789982619cbc",
-      "path": "examples/webawesome/icon/h789982619cbc",
-      "docPath": "content/docs/webawesome/icon.mdx",
-      "millBuildOutPath": "out/examples/webawesome/icon/h789982619cbc/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_icon_789982619cbc.js",
-      "lastUpdated": "2025-11-08T14:09:20.793Z"
-    },
-    {
-      "hash": "d1b6346a0ad4",
-      "path": "examples/webawesome/icon/hd1b6346a0ad4",
-      "docPath": "content/docs/webawesome/icon.mdx",
-      "millBuildOutPath": "out/examples/webawesome/icon/hd1b6346a0ad4/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_icon_d1b6346a0ad4.js",
-      "lastUpdated": "2025-11-08T14:09:20.793Z"
-    },
-    {
-      "hash": "aaac009bd7b6",
-      "path": "examples/webawesome/icon/haaac009bd7b6",
-      "docPath": "content/docs/webawesome/icon.mdx",
-      "millBuildOutPath": "out/examples/webawesome/icon/haaac009bd7b6/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_icon_aaac009bd7b6.js",
-      "lastUpdated": "2025-11-08T14:09:20.793Z"
-    },
-    {
-      "hash": "c48577af0fdd",
-      "path": "examples/webawesome/icon/hc48577af0fdd",
-      "docPath": "content/docs/webawesome/icon.mdx",
-      "millBuildOutPath": "out/examples/webawesome/icon/hc48577af0fdd/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_icon_c48577af0fdd.js",
-      "lastUpdated": "2025-11-08T14:09:20.793Z"
-    },
-    {
-      "hash": "94cc8ff94027",
-      "path": "examples/webawesome/icon/h94cc8ff94027",
-      "docPath": "content/docs/webawesome/icon.mdx",
-      "millBuildOutPath": "out/examples/webawesome/icon/h94cc8ff94027/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_icon_94cc8ff94027.js",
-      "lastUpdated": "2025-11-08T14:09:20.793Z"
-    },
-    {
-      "hash": "80d5efffcf40",
-      "path": "examples/webawesome/icon/h80d5efffcf40",
-      "docPath": "content/docs/webawesome/icon.mdx",
-      "millBuildOutPath": "out/examples/webawesome/icon/h80d5efffcf40/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_icon_80d5efffcf40.js",
-      "lastUpdated": "2025-11-08T14:09:20.793Z"
-    },
-    {
-      "hash": "2e1bae3f07b5",
-      "path": "examples/webawesome/checkbox/h2e1bae3f07b5",
-      "docPath": "content/docs/webawesome/checkbox.mdx",
-      "millBuildOutPath": "out/examples/webawesome/checkbox/h2e1bae3f07b5/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_checkbox_2e1bae3f07b5.js",
-      "lastUpdated": "2025-11-08T14:09:20.872Z"
-    },
-    {
-      "hash": "a7c35a7052f0",
-      "path": "examples/webawesome/checkbox/ha7c35a7052f0",
-      "docPath": "content/docs/webawesome/checkbox.mdx",
-      "millBuildOutPath": "out/examples/webawesome/checkbox/ha7c35a7052f0/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_checkbox_a7c35a7052f0.js",
-      "lastUpdated": "2025-11-08T14:09:20.872Z"
-    },
-    {
-      "hash": "00c19792c874",
-      "path": "examples/webawesome/checkbox/h00c19792c874",
-      "docPath": "content/docs/webawesome/checkbox.mdx",
-      "millBuildOutPath": "out/examples/webawesome/checkbox/h00c19792c874/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_checkbox_00c19792c874.js",
-      "lastUpdated": "2025-11-08T14:09:20.872Z"
-    },
-    {
-      "hash": "fbda1c4b4557",
-      "path": "examples/webawesome/checkbox/hfbda1c4b4557",
-      "docPath": "content/docs/webawesome/checkbox.mdx",
-      "millBuildOutPath": "out/examples/webawesome/checkbox/hfbda1c4b4557/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_checkbox_fbda1c4b4557.js",
-      "lastUpdated": "2025-11-08T14:09:20.872Z"
-    },
-    {
-      "hash": "2134e3915cc3",
-      "path": "examples/webawesome/checkbox/h2134e3915cc3",
-      "docPath": "content/docs/webawesome/checkbox.mdx",
-      "millBuildOutPath": "out/examples/webawesome/checkbox/h2134e3915cc3/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_checkbox_2134e3915cc3.js",
-      "lastUpdated": "2025-11-08T14:09:20.872Z"
-    },
-    {
-      "hash": "6700859fdcb1",
-      "path": "examples/webawesome/checkbox/h6700859fdcb1",
-      "docPath": "content/docs/webawesome/checkbox.mdx",
-      "millBuildOutPath": "out/examples/webawesome/checkbox/h6700859fdcb1/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_checkbox_6700859fdcb1.js",
-      "lastUpdated": "2025-11-08T14:09:20.872Z"
-    },
-    {
-      "hash": "de8c32450638",
-      "path": "examples/webawesome/checkbox/hde8c32450638",
-      "docPath": "content/docs/webawesome/checkbox.mdx",
-      "millBuildOutPath": "out/examples/webawesome/checkbox/hde8c32450638/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/webawesome_checkbox_de8c32450638.js",
-      "lastUpdated": "2025-11-08T14:09:20.872Z"
     },
     {
       "hash": "ad5e4d6baf8c",
@@ -2743,6 +1919,830 @@
       "millBuildOutPath": "out/examples/webawesome/format-number/h65a6b7be4111/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_format-number_65a6b7be4111.js",
       "lastUpdated": "2025-11-08T14:09:21.460Z"
+    },
+    {
+      "hash": "bef28a293dc5",
+      "path": "examples/webawesome/mutation-observer/hbef28a293dc5",
+      "docPath": "content/docs/webawesome/mutation-observer.mdx",
+      "millBuildOutPath": "out/examples/webawesome/mutation-observer/hbef28a293dc5/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_mutation-observer_bef28a293dc5.js",
+      "lastUpdated": "2025-11-08T14:12:19.275Z"
+    },
+    {
+      "hash": "66ba2b0c39a9",
+      "path": "examples/webawesome/mutation-observer/h66ba2b0c39a9",
+      "docPath": "content/docs/webawesome/mutation-observer.mdx",
+      "millBuildOutPath": "out/examples/webawesome/mutation-observer/h66ba2b0c39a9/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_mutation-observer_66ba2b0c39a9.js",
+      "lastUpdated": "2025-11-08T14:12:19.275Z"
+    },
+    {
+      "hash": "458a6d4dbdfa",
+      "path": "examples/webawesome/card/h458a6d4dbdfa",
+      "docPath": "content/docs/webawesome/card.mdx",
+      "millBuildOutPath": "out/examples/webawesome/card/h458a6d4dbdfa/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_card_458a6d4dbdfa.js",
+      "lastUpdated": "2025-11-08T14:12:49.030Z"
+    },
+    {
+      "hash": "f43952a0f573",
+      "path": "examples/webawesome/card/hf43952a0f573",
+      "docPath": "content/docs/webawesome/card.mdx",
+      "millBuildOutPath": "out/examples/webawesome/card/hf43952a0f573/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_card_f43952a0f573.js",
+      "lastUpdated": "2025-11-08T14:12:49.030Z"
+    },
+    {
+      "hash": "ddc4edf1f69a",
+      "path": "examples/webawesome/card/hddc4edf1f69a",
+      "docPath": "content/docs/webawesome/card.mdx",
+      "millBuildOutPath": "out/examples/webawesome/card/hddc4edf1f69a/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_card_ddc4edf1f69a.js",
+      "lastUpdated": "2025-11-08T14:12:49.030Z"
+    },
+    {
+      "hash": "247a101e1a4e",
+      "path": "examples/webawesome/card/h247a101e1a4e",
+      "docPath": "content/docs/webawesome/card.mdx",
+      "millBuildOutPath": "out/examples/webawesome/card/h247a101e1a4e/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_card_247a101e1a4e.js",
+      "lastUpdated": "2025-11-08T14:12:49.030Z"
+    },
+    {
+      "hash": "747d7f24e65d",
+      "path": "examples/webawesome/card/h747d7f24e65d",
+      "docPath": "content/docs/webawesome/card.mdx",
+      "millBuildOutPath": "out/examples/webawesome/card/h747d7f24e65d/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_card_747d7f24e65d.js",
+      "lastUpdated": "2025-11-08T14:12:49.030Z"
+    },
+    {
+      "hash": "c891bfa9d9e4",
+      "path": "examples/webawesome/card/hc891bfa9d9e4",
+      "docPath": "content/docs/webawesome/card.mdx",
+      "millBuildOutPath": "out/examples/webawesome/card/hc891bfa9d9e4/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_card_c891bfa9d9e4.js",
+      "lastUpdated": "2025-11-08T14:12:49.030Z"
+    },
+    {
+      "hash": "2e1bae3f07b5",
+      "path": "examples/webawesome/checkbox/h2e1bae3f07b5",
+      "docPath": "content/docs/webawesome/checkbox.mdx",
+      "millBuildOutPath": "out/examples/webawesome/checkbox/h2e1bae3f07b5/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_checkbox_2e1bae3f07b5.js",
+      "lastUpdated": "2025-11-08T14:13:31.685Z"
+    },
+    {
+      "hash": "a7c35a7052f0",
+      "path": "examples/webawesome/checkbox/ha7c35a7052f0",
+      "docPath": "content/docs/webawesome/checkbox.mdx",
+      "millBuildOutPath": "out/examples/webawesome/checkbox/ha7c35a7052f0/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_checkbox_a7c35a7052f0.js",
+      "lastUpdated": "2025-11-08T14:13:31.685Z"
+    },
+    {
+      "hash": "00c19792c874",
+      "path": "examples/webawesome/checkbox/h00c19792c874",
+      "docPath": "content/docs/webawesome/checkbox.mdx",
+      "millBuildOutPath": "out/examples/webawesome/checkbox/h00c19792c874/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_checkbox_00c19792c874.js",
+      "lastUpdated": "2025-11-08T14:13:31.685Z"
+    },
+    {
+      "hash": "fbda1c4b4557",
+      "path": "examples/webawesome/checkbox/hfbda1c4b4557",
+      "docPath": "content/docs/webawesome/checkbox.mdx",
+      "millBuildOutPath": "out/examples/webawesome/checkbox/hfbda1c4b4557/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_checkbox_fbda1c4b4557.js",
+      "lastUpdated": "2025-11-08T14:13:31.685Z"
+    },
+    {
+      "hash": "2134e3915cc3",
+      "path": "examples/webawesome/checkbox/h2134e3915cc3",
+      "docPath": "content/docs/webawesome/checkbox.mdx",
+      "millBuildOutPath": "out/examples/webawesome/checkbox/h2134e3915cc3/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_checkbox_2134e3915cc3.js",
+      "lastUpdated": "2025-11-08T14:13:31.685Z"
+    },
+    {
+      "hash": "6700859fdcb1",
+      "path": "examples/webawesome/checkbox/h6700859fdcb1",
+      "docPath": "content/docs/webawesome/checkbox.mdx",
+      "millBuildOutPath": "out/examples/webawesome/checkbox/h6700859fdcb1/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_checkbox_6700859fdcb1.js",
+      "lastUpdated": "2025-11-08T14:13:31.685Z"
+    },
+    {
+      "hash": "0be08f024e9b",
+      "path": "examples/webawesome/checkbox/h0be08f024e9b",
+      "docPath": "content/docs/webawesome/checkbox.mdx",
+      "millBuildOutPath": "out/examples/webawesome/checkbox/h0be08f024e9b/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_checkbox_0be08f024e9b.js",
+      "lastUpdated": "2025-11-08T14:13:31.685Z"
+    },
+    {
+      "hash": "7889d2c303af",
+      "path": "examples/webawesome/copy-button/h7889d2c303af",
+      "docPath": "content/docs/webawesome/copy-button.mdx",
+      "millBuildOutPath": "out/examples/webawesome/copy-button/h7889d2c303af/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_copy-button_7889d2c303af.js",
+      "lastUpdated": "2025-11-08T14:13:36.204Z"
+    },
+    {
+      "hash": "c7112ccd3ffc",
+      "path": "examples/webawesome/copy-button/hc7112ccd3ffc",
+      "docPath": "content/docs/webawesome/copy-button.mdx",
+      "millBuildOutPath": "out/examples/webawesome/copy-button/hc7112ccd3ffc/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_copy-button_c7112ccd3ffc.js",
+      "lastUpdated": "2025-11-08T14:13:36.204Z"
+    },
+    {
+      "hash": "a6501b42ed01",
+      "path": "examples/webawesome/copy-button/ha6501b42ed01",
+      "docPath": "content/docs/webawesome/copy-button.mdx",
+      "millBuildOutPath": "out/examples/webawesome/copy-button/ha6501b42ed01/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_copy-button_a6501b42ed01.js",
+      "lastUpdated": "2025-11-08T14:13:36.204Z"
+    },
+    {
+      "hash": "de1319e1dacc",
+      "path": "examples/webawesome/copy-button/hde1319e1dacc",
+      "docPath": "content/docs/webawesome/copy-button.mdx",
+      "millBuildOutPath": "out/examples/webawesome/copy-button/hde1319e1dacc/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_copy-button_de1319e1dacc.js",
+      "lastUpdated": "2025-11-08T14:13:36.204Z"
+    },
+    {
+      "hash": "ae419e8c7045",
+      "path": "examples/webawesome/copy-button/hae419e8c7045",
+      "docPath": "content/docs/webawesome/copy-button.mdx",
+      "millBuildOutPath": "out/examples/webawesome/copy-button/hae419e8c7045/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_copy-button_ae419e8c7045.js",
+      "lastUpdated": "2025-11-08T14:13:36.204Z"
+    },
+    {
+      "hash": "a2b173be795e",
+      "path": "examples/webawesome/copy-button/ha2b173be795e",
+      "docPath": "content/docs/webawesome/copy-button.mdx",
+      "millBuildOutPath": "out/examples/webawesome/copy-button/ha2b173be795e/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_copy-button_a2b173be795e.js",
+      "lastUpdated": "2025-11-08T14:13:36.204Z"
+    },
+    {
+      "hash": "f5a144a26b25",
+      "path": "examples/webawesome/copy-button/hf5a144a26b25",
+      "docPath": "content/docs/webawesome/copy-button.mdx",
+      "millBuildOutPath": "out/examples/webawesome/copy-button/hf5a144a26b25/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_copy-button_f5a144a26b25.js",
+      "lastUpdated": "2025-11-08T14:13:36.204Z"
+    },
+    {
+      "hash": "aa2c9c05d20d",
+      "path": "examples/webawesome/copy-button/haa2c9c05d20d",
+      "docPath": "content/docs/webawesome/copy-button.mdx",
+      "millBuildOutPath": "out/examples/webawesome/copy-button/haa2c9c05d20d/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_copy-button_aa2c9c05d20d.js",
+      "lastUpdated": "2025-11-08T14:13:36.204Z"
+    },
+    {
+      "hash": "e135e60bac41",
+      "path": "examples/webawesome/icon/he135e60bac41",
+      "docPath": "content/docs/webawesome/icon.mdx",
+      "millBuildOutPath": "out/examples/webawesome/icon/he135e60bac41/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_icon_e135e60bac41.js",
+      "lastUpdated": "2025-11-08T14:14:12.552Z"
+    },
+    {
+      "hash": "789982619cbc",
+      "path": "examples/webawesome/icon/h789982619cbc",
+      "docPath": "content/docs/webawesome/icon.mdx",
+      "millBuildOutPath": "out/examples/webawesome/icon/h789982619cbc/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_icon_789982619cbc.js",
+      "lastUpdated": "2025-11-08T14:14:12.552Z"
+    },
+    {
+      "hash": "51da8c97cdce",
+      "path": "examples/webawesome/icon/h51da8c97cdce",
+      "docPath": "content/docs/webawesome/icon.mdx",
+      "millBuildOutPath": "out/examples/webawesome/icon/h51da8c97cdce/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_icon_51da8c97cdce.js",
+      "lastUpdated": "2025-11-08T14:14:12.552Z"
+    },
+    {
+      "hash": "195c433b0ec3",
+      "path": "examples/webawesome/icon/h195c433b0ec3",
+      "docPath": "content/docs/webawesome/icon.mdx",
+      "millBuildOutPath": "out/examples/webawesome/icon/h195c433b0ec3/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_icon_195c433b0ec3.js",
+      "lastUpdated": "2025-11-08T14:14:12.552Z"
+    },
+    {
+      "hash": "c48577af0fdd",
+      "path": "examples/webawesome/icon/hc48577af0fdd",
+      "docPath": "content/docs/webawesome/icon.mdx",
+      "millBuildOutPath": "out/examples/webawesome/icon/hc48577af0fdd/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_icon_c48577af0fdd.js",
+      "lastUpdated": "2025-11-08T14:14:12.552Z"
+    },
+    {
+      "hash": "94cc8ff94027",
+      "path": "examples/webawesome/icon/h94cc8ff94027",
+      "docPath": "content/docs/webawesome/icon.mdx",
+      "millBuildOutPath": "out/examples/webawesome/icon/h94cc8ff94027/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_icon_94cc8ff94027.js",
+      "lastUpdated": "2025-11-08T14:14:12.552Z"
+    },
+    {
+      "hash": "80d5efffcf40",
+      "path": "examples/webawesome/icon/h80d5efffcf40",
+      "docPath": "content/docs/webawesome/icon.mdx",
+      "millBuildOutPath": "out/examples/webawesome/icon/h80d5efffcf40/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_icon_80d5efffcf40.js",
+      "lastUpdated": "2025-11-08T14:14:12.552Z"
+    },
+    {
+      "hash": "dffe91fc00f2",
+      "path": "examples/webawesome/split-panel/hdffe91fc00f2",
+      "docPath": "content/docs/webawesome/split-panel.mdx",
+      "millBuildOutPath": "out/examples/webawesome/split-panel/hdffe91fc00f2/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_split-panel_dffe91fc00f2.js",
+      "lastUpdated": "2025-11-08T14:15:18.435Z"
+    },
+    {
+      "hash": "d3699701f6c9",
+      "path": "examples/webawesome/split-panel/hd3699701f6c9",
+      "docPath": "content/docs/webawesome/split-panel.mdx",
+      "millBuildOutPath": "out/examples/webawesome/split-panel/hd3699701f6c9/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_split-panel_d3699701f6c9.js",
+      "lastUpdated": "2025-11-08T14:15:18.435Z"
+    },
+    {
+      "hash": "07c0a2ccc8cc",
+      "path": "examples/webawesome/split-panel/h07c0a2ccc8cc",
+      "docPath": "content/docs/webawesome/split-panel.mdx",
+      "millBuildOutPath": "out/examples/webawesome/split-panel/h07c0a2ccc8cc/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_split-panel_07c0a2ccc8cc.js",
+      "lastUpdated": "2025-11-08T14:15:18.435Z"
+    },
+    {
+      "hash": "ba09b14af114",
+      "path": "examples/webawesome/split-panel/hba09b14af114",
+      "docPath": "content/docs/webawesome/split-panel.mdx",
+      "millBuildOutPath": "out/examples/webawesome/split-panel/hba09b14af114/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_split-panel_ba09b14af114.js",
+      "lastUpdated": "2025-11-08T14:15:18.435Z"
+    },
+    {
+      "hash": "ef29b7aa73e8",
+      "path": "examples/webawesome/split-panel/hef29b7aa73e8",
+      "docPath": "content/docs/webawesome/split-panel.mdx",
+      "millBuildOutPath": "out/examples/webawesome/split-panel/hef29b7aa73e8/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_split-panel_ef29b7aa73e8.js",
+      "lastUpdated": "2025-11-08T14:15:18.435Z"
+    },
+    {
+      "hash": "e0cc36c8bda9",
+      "path": "examples/webawesome/split-panel/he0cc36c8bda9",
+      "docPath": "content/docs/webawesome/split-panel.mdx",
+      "millBuildOutPath": "out/examples/webawesome/split-panel/he0cc36c8bda9/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_split-panel_e0cc36c8bda9.js",
+      "lastUpdated": "2025-11-08T14:15:18.435Z"
+    },
+    {
+      "hash": "a590cf812259",
+      "path": "examples/webawesome/split-panel/ha590cf812259",
+      "docPath": "content/docs/webawesome/split-panel.mdx",
+      "millBuildOutPath": "out/examples/webawesome/split-panel/ha590cf812259/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_split-panel_a590cf812259.js",
+      "lastUpdated": "2025-11-08T14:15:18.435Z"
+    },
+    {
+      "hash": "0e614c0fdf19",
+      "path": "examples/webawesome/split-panel/h0e614c0fdf19",
+      "docPath": "content/docs/webawesome/split-panel.mdx",
+      "millBuildOutPath": "out/examples/webawesome/split-panel/h0e614c0fdf19/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_split-panel_0e614c0fdf19.js",
+      "lastUpdated": "2025-11-08T14:15:18.435Z"
+    },
+    {
+      "hash": "6cbeca3031b9",
+      "path": "examples/webawesome/split-panel/h6cbeca3031b9",
+      "docPath": "content/docs/webawesome/split-panel.mdx",
+      "millBuildOutPath": "out/examples/webawesome/split-panel/h6cbeca3031b9/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_split-panel_6cbeca3031b9.js",
+      "lastUpdated": "2025-11-08T14:15:18.435Z"
+    },
+    {
+      "hash": "d848ea79d649",
+      "path": "examples/webawesome/popover/hd848ea79d649",
+      "docPath": "content/docs/webawesome/popover.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popover/hd848ea79d649/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popover_d848ea79d649.js",
+      "lastUpdated": "2025-11-08T14:15:50.586Z"
+    },
+    {
+      "hash": "abd27ae5525e",
+      "path": "examples/webawesome/popover/habd27ae5525e",
+      "docPath": "content/docs/webawesome/popover.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popover/habd27ae5525e/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popover_abd27ae5525e.js",
+      "lastUpdated": "2025-11-08T14:15:50.586Z"
+    },
+    {
+      "hash": "34ae789a7154",
+      "path": "examples/webawesome/popover/h34ae789a7154",
+      "docPath": "content/docs/webawesome/popover.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popover/h34ae789a7154/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popover_34ae789a7154.js",
+      "lastUpdated": "2025-11-08T14:15:50.586Z"
+    },
+    {
+      "hash": "2ea338c99156",
+      "path": "examples/webawesome/popover/h2ea338c99156",
+      "docPath": "content/docs/webawesome/popover.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popover/h2ea338c99156/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popover_2ea338c99156.js",
+      "lastUpdated": "2025-11-08T14:15:50.586Z"
+    },
+    {
+      "hash": "44faa0fff7c4",
+      "path": "examples/webawesome/popover/h44faa0fff7c4",
+      "docPath": "content/docs/webawesome/popover.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popover/h44faa0fff7c4/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popover_44faa0fff7c4.js",
+      "lastUpdated": "2025-11-08T14:15:50.586Z"
+    },
+    {
+      "hash": "604cad26e46b",
+      "path": "examples/webawesome/popover/h604cad26e46b",
+      "docPath": "content/docs/webawesome/popover.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popover/h604cad26e46b/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popover_604cad26e46b.js",
+      "lastUpdated": "2025-11-08T14:15:50.586Z"
+    },
+    {
+      "hash": "b59f3bb366e0",
+      "path": "examples/webawesome/popover/hb59f3bb366e0",
+      "docPath": "content/docs/webawesome/popover.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popover/hb59f3bb366e0/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popover_b59f3bb366e0.js",
+      "lastUpdated": "2025-11-08T14:15:50.586Z"
+    },
+    {
+      "hash": "f700911a7769",
+      "path": "examples/webawesome/popover/hf700911a7769",
+      "docPath": "content/docs/webawesome/popover.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popover/hf700911a7769/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popover_f700911a7769.js",
+      "lastUpdated": "2025-11-08T14:15:50.586Z"
+    },
+    {
+      "hash": "2ca1e87e700b",
+      "path": "examples/webawesome/popup/h2ca1e87e700b",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h2ca1e87e700b/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_2ca1e87e700b.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "395de7147635",
+      "path": "examples/webawesome/popup/h395de7147635",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h395de7147635/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_395de7147635.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "82352ef9a5c5",
+      "path": "examples/webawesome/popup/h82352ef9a5c5",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h82352ef9a5c5/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_82352ef9a5c5.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "490f0f0ff954",
+      "path": "examples/webawesome/popup/h490f0f0ff954",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h490f0f0ff954/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_490f0f0ff954.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "391b671d1321",
+      "path": "examples/webawesome/popup/h391b671d1321",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h391b671d1321/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_391b671d1321.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "db7fdfdfbeec",
+      "path": "examples/webawesome/popup/hdb7fdfdfbeec",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/hdb7fdfdfbeec/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_db7fdfdfbeec.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "a9c44ecc6411",
+      "path": "examples/webawesome/popup/ha9c44ecc6411",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/ha9c44ecc6411/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_a9c44ecc6411.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "972731a703d2",
+      "path": "examples/webawesome/popup/h972731a703d2",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h972731a703d2/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_972731a703d2.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "97c1881490ff",
+      "path": "examples/webawesome/popup/h97c1881490ff",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h97c1881490ff/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_97c1881490ff.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "3ddc6a1c04a7",
+      "path": "examples/webawesome/popup/h3ddc6a1c04a7",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h3ddc6a1c04a7/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_3ddc6a1c04a7.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "f193495df2d4",
+      "path": "examples/webawesome/popup/hf193495df2d4",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/hf193495df2d4/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_f193495df2d4.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "36f0d23930bf",
+      "path": "examples/webawesome/popup/h36f0d23930bf",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h36f0d23930bf/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_36f0d23930bf.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "2adb6c64f4be",
+      "path": "examples/webawesome/popup/h2adb6c64f4be",
+      "docPath": "content/docs/webawesome/popup.mdx",
+      "millBuildOutPath": "out/examples/webawesome/popup/h2adb6c64f4be/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_popup_2adb6c64f4be.js",
+      "lastUpdated": "2025-11-08T14:16:14.263Z"
+    },
+    {
+      "hash": "7e1a950097a3",
+      "path": "examples/webawesome/progress-bar/h7e1a950097a3",
+      "docPath": "content/docs/webawesome/progress-bar.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-bar/h7e1a950097a3/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-bar_7e1a950097a3.js",
+      "lastUpdated": "2025-11-08T14:16:19.622Z"
+    },
+    {
+      "hash": "831790b46c18",
+      "path": "examples/webawesome/progress-bar/h831790b46c18",
+      "docPath": "content/docs/webawesome/progress-bar.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-bar/h831790b46c18/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-bar_831790b46c18.js",
+      "lastUpdated": "2025-11-08T14:16:19.622Z"
+    },
+    {
+      "hash": "6d746b38c078",
+      "path": "examples/webawesome/progress-bar/h6d746b38c078",
+      "docPath": "content/docs/webawesome/progress-bar.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-bar/h6d746b38c078/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-bar_6d746b38c078.js",
+      "lastUpdated": "2025-11-08T14:16:19.622Z"
+    },
+    {
+      "hash": "49dd1606dc16",
+      "path": "examples/webawesome/progress-bar/h49dd1606dc16",
+      "docPath": "content/docs/webawesome/progress-bar.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-bar/h49dd1606dc16/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-bar_49dd1606dc16.js",
+      "lastUpdated": "2025-11-08T14:16:19.622Z"
+    },
+    {
+      "hash": "1240628e3e9a",
+      "path": "examples/webawesome/progress-bar/h1240628e3e9a",
+      "docPath": "content/docs/webawesome/progress-bar.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-bar/h1240628e3e9a/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-bar_1240628e3e9a.js",
+      "lastUpdated": "2025-11-08T14:16:19.622Z"
+    },
+    {
+      "hash": "eac226d5dfda",
+      "path": "examples/webawesome/progress-ring/heac226d5dfda",
+      "docPath": "content/docs/webawesome/progress-ring.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-ring/heac226d5dfda/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-ring_eac226d5dfda.js",
+      "lastUpdated": "2025-11-08T14:16:24.142Z"
+    },
+    {
+      "hash": "637972da112e",
+      "path": "examples/webawesome/progress-ring/h637972da112e",
+      "docPath": "content/docs/webawesome/progress-ring.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-ring/h637972da112e/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-ring_637972da112e.js",
+      "lastUpdated": "2025-11-08T14:16:24.142Z"
+    },
+    {
+      "hash": "273bc1182e61",
+      "path": "examples/webawesome/progress-ring/h273bc1182e61",
+      "docPath": "content/docs/webawesome/progress-ring.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-ring/h273bc1182e61/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-ring_273bc1182e61.js",
+      "lastUpdated": "2025-11-08T14:16:24.142Z"
+    },
+    {
+      "hash": "78acd1975ef4",
+      "path": "examples/webawesome/progress-ring/h78acd1975ef4",
+      "docPath": "content/docs/webawesome/progress-ring.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-ring/h78acd1975ef4/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-ring_78acd1975ef4.js",
+      "lastUpdated": "2025-11-08T14:16:24.142Z"
+    },
+    {
+      "hash": "5aeaddbda008",
+      "path": "examples/webawesome/progress-ring/h5aeaddbda008",
+      "docPath": "content/docs/webawesome/progress-ring.mdx",
+      "millBuildOutPath": "out/examples/webawesome/progress-ring/h5aeaddbda008/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_progress-ring_5aeaddbda008.js",
+      "lastUpdated": "2025-11-08T14:16:24.142Z"
+    },
+    {
+      "hash": "b8e470491a88",
+      "path": "examples/webawesome/rating/hb8e470491a88",
+      "docPath": "content/docs/webawesome/rating.mdx",
+      "millBuildOutPath": "out/examples/webawesome/rating/hb8e470491a88/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_rating_b8e470491a88.js",
+      "lastUpdated": "2025-11-08T14:16:35.883Z"
+    },
+    {
+      "hash": "03142aff903c",
+      "path": "examples/webawesome/rating/h03142aff903c",
+      "docPath": "content/docs/webawesome/rating.mdx",
+      "millBuildOutPath": "out/examples/webawesome/rating/h03142aff903c/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_rating_03142aff903c.js",
+      "lastUpdated": "2025-11-08T14:16:35.883Z"
+    },
+    {
+      "hash": "f49c51ad3423",
+      "path": "examples/webawesome/rating/hf49c51ad3423",
+      "docPath": "content/docs/webawesome/rating.mdx",
+      "millBuildOutPath": "out/examples/webawesome/rating/hf49c51ad3423/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_rating_f49c51ad3423.js",
+      "lastUpdated": "2025-11-08T14:16:35.883Z"
+    },
+    {
+      "hash": "10687674578e",
+      "path": "examples/webawesome/rating/h10687674578e",
+      "docPath": "content/docs/webawesome/rating.mdx",
+      "millBuildOutPath": "out/examples/webawesome/rating/h10687674578e/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_rating_10687674578e.js",
+      "lastUpdated": "2025-11-08T14:16:35.883Z"
+    },
+    {
+      "hash": "848b1da1e840",
+      "path": "examples/webawesome/rating/h848b1da1e840",
+      "docPath": "content/docs/webawesome/rating.mdx",
+      "millBuildOutPath": "out/examples/webawesome/rating/h848b1da1e840/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_rating_848b1da1e840.js",
+      "lastUpdated": "2025-11-08T14:16:35.883Z"
+    },
+    {
+      "hash": "4e607433963a",
+      "path": "examples/webawesome/rating/h4e607433963a",
+      "docPath": "content/docs/webawesome/rating.mdx",
+      "millBuildOutPath": "out/examples/webawesome/rating/h4e607433963a/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_rating_4e607433963a.js",
+      "lastUpdated": "2025-11-08T14:16:35.883Z"
+    },
+    {
+      "hash": "1756ff0e42d4",
+      "path": "examples/webawesome/rating/h1756ff0e42d4",
+      "docPath": "content/docs/webawesome/rating.mdx",
+      "millBuildOutPath": "out/examples/webawesome/rating/h1756ff0e42d4/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_rating_1756ff0e42d4.js",
+      "lastUpdated": "2025-11-08T14:16:35.883Z"
+    },
+    {
+      "hash": "073cfec922aa",
+      "path": "examples/webawesome/rating/h073cfec922aa",
+      "docPath": "content/docs/webawesome/rating.mdx",
+      "millBuildOutPath": "out/examples/webawesome/rating/h073cfec922aa/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_rating_073cfec922aa.js",
+      "lastUpdated": "2025-11-08T14:16:35.883Z"
+    },
+    {
+      "hash": "62d146018c28",
+      "path": "examples/webawesome/rating/h62d146018c28",
+      "docPath": "content/docs/webawesome/rating.mdx",
+      "millBuildOutPath": "out/examples/webawesome/rating/h62d146018c28/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_rating_62d146018c28.js",
+      "lastUpdated": "2025-11-08T14:16:35.883Z"
+    },
+    {
+      "hash": "57457355c4c1",
+      "path": "examples/webawesome/resize-observer/h57457355c4c1",
+      "docPath": "content/docs/webawesome/resize-observer.mdx",
+      "millBuildOutPath": "out/examples/webawesome/resize-observer/h57457355c4c1/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_resize-observer_57457355c4c1.js",
+      "lastUpdated": "2025-11-08T14:16:41.188Z"
+    },
+    {
+      "hash": "832b803e95d1",
+      "path": "examples/webawesome/slider/h832b803e95d1",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/h832b803e95d1/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_832b803e95d1.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "54040307f78a",
+      "path": "examples/webawesome/slider/h54040307f78a",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/h54040307f78a/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_54040307f78a.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "310dd46f54a3",
+      "path": "examples/webawesome/slider/h310dd46f54a3",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/h310dd46f54a3/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_310dd46f54a3.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "e296ae1308d4",
+      "path": "examples/webawesome/slider/he296ae1308d4",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/he296ae1308d4/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_e296ae1308d4.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "487df72ec71e",
+      "path": "examples/webawesome/slider/h487df72ec71e",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/h487df72ec71e/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_487df72ec71e.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "68312b0a3a4c",
+      "path": "examples/webawesome/slider/h68312b0a3a4c",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/h68312b0a3a4c/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_68312b0a3a4c.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "8cc90648be96",
+      "path": "examples/webawesome/slider/h8cc90648be96",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/h8cc90648be96/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_8cc90648be96.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "d62ff92ec1fb",
+      "path": "examples/webawesome/slider/hd62ff92ec1fb",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/hd62ff92ec1fb/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_d62ff92ec1fb.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "153e8f22d8ea",
+      "path": "examples/webawesome/slider/h153e8f22d8ea",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/h153e8f22d8ea/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_153e8f22d8ea.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "4fc889ee51d8",
+      "path": "examples/webawesome/slider/h4fc889ee51d8",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/h4fc889ee51d8/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_4fc889ee51d8.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "dd8fb3cc989f",
+      "path": "examples/webawesome/slider/hdd8fb3cc989f",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/hdd8fb3cc989f/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_dd8fb3cc989f.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "33cfbb2936cb",
+      "path": "examples/webawesome/slider/h33cfbb2936cb",
+      "docPath": "content/docs/webawesome/slider.mdx",
+      "millBuildOutPath": "out/examples/webawesome/slider/h33cfbb2936cb/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_slider_33cfbb2936cb.js",
+      "lastUpdated": "2025-11-08T14:16:46.264Z"
+    },
+    {
+      "hash": "e6ad1a6e2636",
+      "path": "examples/webawesome/tag/he6ad1a6e2636",
+      "docPath": "content/docs/webawesome/tag.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tag/he6ad1a6e2636/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tag_e6ad1a6e2636.js",
+      "lastUpdated": "2025-11-08T14:16:50.827Z"
+    },
+    {
+      "hash": "d165439a3735",
+      "path": "examples/webawesome/tag/hd165439a3735",
+      "docPath": "content/docs/webawesome/tag.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tag/hd165439a3735/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tag_d165439a3735.js",
+      "lastUpdated": "2025-11-08T14:16:50.827Z"
+    },
+    {
+      "hash": "31f0381445f0",
+      "path": "examples/webawesome/tag/h31f0381445f0",
+      "docPath": "content/docs/webawesome/tag.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tag/h31f0381445f0/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tag_31f0381445f0.js",
+      "lastUpdated": "2025-11-08T14:16:50.827Z"
+    },
+    {
+      "hash": "1253258ba739",
+      "path": "examples/webawesome/tag/h1253258ba739",
+      "docPath": "content/docs/webawesome/tag.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tag/h1253258ba739/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tag_1253258ba739.js",
+      "lastUpdated": "2025-11-08T14:16:50.827Z"
+    },
+    {
+      "hash": "5c91d6095d8d",
+      "path": "examples/webawesome/tag/h5c91d6095d8d",
+      "docPath": "content/docs/webawesome/tag.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tag/h5c91d6095d8d/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tag_5c91d6095d8d.js",
+      "lastUpdated": "2025-11-08T14:16:50.827Z"
+    },
+    {
+      "hash": "735c4e09cf67",
+      "path": "examples/webawesome/tree/h735c4e09cf67",
+      "docPath": "content/docs/webawesome/tree.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tree/h735c4e09cf67/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tree_735c4e09cf67.js",
+      "lastUpdated": "2025-11-08T14:16:55.378Z"
+    },
+    {
+      "hash": "a1c0c0b18322",
+      "path": "examples/webawesome/tree/ha1c0c0b18322",
+      "docPath": "content/docs/webawesome/tree.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tree/ha1c0c0b18322/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tree_a1c0c0b18322.js",
+      "lastUpdated": "2025-11-08T14:16:55.378Z"
+    },
+    {
+      "hash": "18209957d0c4",
+      "path": "examples/webawesome/tree/h18209957d0c4",
+      "docPath": "content/docs/webawesome/tree.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tree/h18209957d0c4/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tree_18209957d0c4.js",
+      "lastUpdated": "2025-11-08T14:16:55.378Z"
+    },
+    {
+      "hash": "e7807dd28efa",
+      "path": "examples/webawesome/tree/he7807dd28efa",
+      "docPath": "content/docs/webawesome/tree.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tree/he7807dd28efa/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tree_e7807dd28efa.js",
+      "lastUpdated": "2025-11-08T14:16:55.378Z"
+    },
+    {
+      "hash": "e8856ebde552",
+      "path": "examples/webawesome/tree/he8856ebde552",
+      "docPath": "content/docs/webawesome/tree.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tree/he8856ebde552/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tree_e8856ebde552.js",
+      "lastUpdated": "2025-11-08T14:16:55.378Z"
+    },
+    {
+      "hash": "3e853812af4b",
+      "path": "examples/webawesome/tree/h3e853812af4b",
+      "docPath": "content/docs/webawesome/tree.mdx",
+      "millBuildOutPath": "out/examples/webawesome/tree/h3e853812af4b/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/webawesome_tree_3e853812af4b.js",
+      "lastUpdated": "2025-11-08T14:16:55.378Z"
     }
   ]
 }
