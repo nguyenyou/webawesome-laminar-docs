@@ -116,17 +116,18 @@ export const applyTemplate = (ctx: TemplateContext): string => {
   
   return `package ${packageName}
   
-  import org.scalajs.dom
-  import com.raquo.laminar.api.L.*
-  import doc.*
-  import io.github.nguyenyou.webawesome.laminar.*
+import org.scalajs.dom
+import com.raquo.laminar.api.L.*
+import doc.*
+import io.github.nguyenyou.webawesome.laminar.*
 
-  @main def app = {
-    val container = dom.document.querySelector("#root")
-    render(container, {
+@main 
+def app = {
+  val container = dom.document.querySelector("#root")
+  render(container, {
 ${indentCode(ctx.userCode, 6)}
-    })
-  }
+  })
+}
   `;
 };
 
@@ -157,17 +158,18 @@ ${indentCode(examplesArgs, 2)}
   
   return `package ${packageName}
   
-  import org.scalajs.dom
-  import com.raquo.laminar.api.L.*
-  import doc.*
-  import io.github.nguyenyou.webawesome.laminar.*
+import org.scalajs.dom
+import com.raquo.laminar.api.L.*
+import doc.*
+import io.github.nguyenyou.webawesome.laminar.*
 
-  @main def app = {
-    val container = dom.document.querySelector("#root")
-    render(container, {
+@main 
+def app = {
+  val container = dom.document.querySelector("#root")
+  render(container, {
 ${indentCode(examplesCall, 6)}
-    })
-  }
+  })
+}
   `;
 };
 

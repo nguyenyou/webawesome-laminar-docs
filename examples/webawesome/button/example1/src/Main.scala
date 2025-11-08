@@ -1,13 +1,14 @@
 package examples.webawesome.button.example1
   
-  import org.scalajs.dom
-  import com.raquo.laminar.api.L.*
-  import doc.*
-  import io.github.nguyenyou.webawesome.laminar.*
+import org.scalajs.dom
+import com.raquo.laminar.api.L.*
+import doc.*
+import io.github.nguyenyou.webawesome.laminar.*
 
-  @main def app = {
-    val container = dom.document.querySelector("#root")
-    render(container, {
+@main 
+def app = {
+  val container = dom.document.querySelector("#root")
+  render(container, {
       Examples(
         Button(_.variant.brand)("Brand"),
         Button(_.variant.danger)("Danger"),
@@ -15,6 +16,6 @@ package examples.webawesome.button.example1
         Button(_.variant.success)("Success"),
         Button(_.variant.warning)("Warning"),
       )
-    })
-  }
+  })
+}
   
