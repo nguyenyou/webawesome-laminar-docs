@@ -8,7 +8,7 @@ export const Preview = ({ code }: { code: string }) => {
   const srcDoc = `<html>
 <head>
 <link href="//use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet" />
-<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css" />
+<link href="//cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0/dist-cdn/styles/themes/default.min.css" rel="stylesheet" />
 <base target=_blank>
 </head>
 <body style='overflow: hidden'>
