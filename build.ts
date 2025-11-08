@@ -123,7 +123,7 @@ async function main() {
     });
 
     // Wait for all builds to complete
-    await Promise.allSettled(buildPromises);
+    await Promise.all(buildPromises);
 
     // Calculate and display timing
     const endTime = performance.now();
