@@ -28,11 +28,11 @@ export const Preview = ({
   const displayCode = userCode || "";
 
   return (
-    <Tabs items={["Preview", "Code"]} className="w-full">
+    <Tabs items={["Preview", "Code"]}>
       <Tab value="Preview" className="w-full">
         <Frame
           title="Custom Frame"
-          className="outline-none w-full rounded-lg bg-fd-background"
+          className="outline-none rounded-lg bg-fd-background w-full h-(--height)"
           srcDoc={srcDoc}
         ></Frame>
       </Tab>
