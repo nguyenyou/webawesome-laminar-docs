@@ -9,10 +9,12 @@ import io.github.nguyenyou.webawesome.laminar.*
 def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
-      Examples(
-        Button(_.size.small)("Small"),
-        Button(_.size.medium)("Medium"),
-        Button(_.size.large)("Large"),
+      div(
+        Examples(
+          Button(_.size.small)("Small"),
+          Button(_.size.medium)("Medium"),
+          Button(_.size.large)("Large"),
+        )
       )
   })
 }

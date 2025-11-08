@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { parseTopLevelExpressions } from "./millModulePlugin";
+import { parseTopLevelExpressions, applyExamplesTemplate } from "./millModulePlugin";
 
 // Empty/whitespace inputs
 test("should return empty array for empty string", () => {
@@ -274,5 +274,148 @@ Button(_.appearance.plain, _.variant.neutral)(
   Icon(_.name := "house", _.label := "Home")()
 )`,
   ]);
+});
+
+// Tests for applyExamplesTemplate with grouping
+test("applyExamplesTemplate should wrap single group in div with Examples", () => {
+  const code = `Button(_.variant.brand)("Brand")
+Button(_.variant.danger)("Danger")
+Button(_.variant.neutral)("Neutral")`;
+  const result = applyExamplesTemplate({
+    prefix: "test/button",
+    hash: "test123",
+    userCode: code,
+  });
+  
+  expect(result).toContain("div(");
+  expect(result).toContain("Examples(");
+  expect(result).toContain('Button(_.variant.brand)("Brand")');
+  expect(result).toContain('Button(_.variant.danger)("Danger")');
+  expect(result).toContain('Button(_.variant.neutral)("Neutral")');
+  // Should have only one Examples call
+  const examplesMatches = result.match(/Examples\(/g);
+  expect(examplesMatches?.length).toBe(1);
+});
+
+test("applyExamplesTemplate should group expressions by blank lines", () => {
+  const code = `Button(_.appearance.accent, _.variant.neutral)("Accent")
+Button(_.appearance.filled, _.variant.neutral)("Filled")
+
+Button(_.appearance.accent, _.variant.brand)("Accent")
+Button(_.appearance.filled, _.variant.brand)("Filled")`;
+  const result = applyExamplesTemplate({
+    prefix: "test/button",
+    hash: "test123",
+    userCode: code,
+  });
+  
+  expect(result).toContain("div(");
+  // Should have two Examples calls
+  const examplesMatches = result.match(/Examples\(/g);
+  expect(examplesMatches?.length).toBe(2);
+  // First group should contain neutral variant buttons
+  expect(result).toContain('Button(_.appearance.accent, _.variant.neutral)("Accent")');
+  expect(result).toContain('Button(_.appearance.filled, _.variant.neutral)("Filled")');
+  // Second group should contain brand variant buttons
+  expect(result).toContain('Button(_.appearance.accent, _.variant.brand)("Accent")');
+  expect(result).toContain('Button(_.appearance.filled, _.variant.brand)("Filled")');
+});
+
+test("applyExamplesTemplate should handle Appearance section with 5 groups", () => {
+  const code = `Button(_.appearance.accent, _.variant.neutral)("Accent")
+Button(_.appearance.filledOutlined, _.variant.neutral)("Filled + Outlined")
+Button(_.appearance.filled, _.variant.neutral)("Filled")
+Button(_.appearance.outlined, _.variant.neutral)("Outlined")
+Button(_.appearance := "plain", _.variant := "neutral")("Plain")
+
+Button(_.appearance.accent, _.variant.brand)("Accent")
+Button(_.appearance.filledOutlined, _.variant.brand)("Filled + Outlined")
+Button(_.appearance.filled, _.variant.brand)("Filled")
+Button(_.appearance.outlined, _.variant.brand)("Outlined")
+Button(_.appearance.plain, _.variant.brand)("Plain")
+
+Button(_.appearance.accent, _.variant.success)("Accent")
+Button(_.appearance.filledOutlined, _.variant.success)("Filled + Outlined")
+Button(_.appearance.filled, _.variant.success)("Filled")
+Button(_.appearance.outlined, _.variant.success)("Outlined")
+Button(_.appearance.plain, _.variant.success)("Plain")
+
+Button(_.appearance.accent, _.variant.warning)("Accent")
+Button(_.appearance.filledOutlined, _.variant.warning)("Filled + Outlined")
+Button(_.appearance.filled, _.variant.warning)("Filled")
+Button(_.appearance.outlined, _.variant.warning)("Outlined")
+Button(_.appearance.plain, _.variant.warning)("Plain")
+
+Button(_.appearance.accent, _.variant.danger)("Accent")
+Button(_.appearance.filledOutlined, _.variant.danger)("Filled + Outlined")
+Button(_.appearance.filled, _.variant.danger)("Filled")
+Button(_.appearance.outlined, _.variant.danger)("Outlined")
+Button(_.appearance.plain, _.variant.danger)("Plain")`;
+  const result = applyExamplesTemplate({
+    prefix: "webawesome/button",
+    hash: "test123",
+    userCode: code,
+  });
+  
+  expect(result).toContain("div(");
+  // Should have 5 Examples calls (one per group)
+  const examplesMatches = result.match(/Examples\(/g);
+  expect(examplesMatches?.length).toBe(5);
+  // Verify each group contains the correct buttons
+  expect(result).toContain('_.variant.neutral');
+  expect(result).toContain('_.variant.brand');
+  expect(result).toContain('_.variant.success');
+  expect(result).toContain('_.variant.warning');
+  expect(result).toContain('_.variant.danger');
+});
+
+test("applyExamplesTemplate should not add trailing comma after last Examples call", () => {
+  const code = `Button(_.variant.brand)("Brand")
+
+Button(_.variant.danger)("Danger")`;
+  const result = applyExamplesTemplate({
+    prefix: "test/button",
+    hash: "test123",
+    userCode: code,
+  });
+  
+  // Extract the div content between div( and )
+  const divStart = result.indexOf("div(");
+  const divEnd = result.lastIndexOf(")");
+  expect(divStart).not.toBe(-1);
+  expect(divEnd).not.toBe(-1);
+  
+  // Find all Examples( occurrences
+  const examplesMatches = [...result.matchAll(/Examples\(/g)];
+  expect(examplesMatches.length).toBe(2);
+  
+  // Check that first Examples call ends with comma
+  const firstExamplesEnd = result.indexOf("),", examplesMatches[0].index!);
+  expect(firstExamplesEnd).not.toBe(-1);
+  
+  // Check that second Examples call does NOT have trailing comma before closing div
+  const secondExamplesStart = examplesMatches[1].index!;
+  const secondExamplesEnd = result.indexOf(")", secondExamplesStart);
+  const afterSecondExamples = result.substring(secondExamplesEnd, divEnd);
+  // Should not have comma immediately after second Examples closing paren
+  expect(afterSecondExamples.trim()).not.toMatch(/^,\s*$/);
+});
+
+test("applyExamplesTemplate should handle single expression per group", () => {
+  const code = `Button(_.variant.brand)("Brand")
+
+Button(_.variant.danger)("Danger")
+
+Button(_.variant.neutral)("Neutral")`;
+  const result = applyExamplesTemplate({
+    prefix: "test/button",
+    hash: "test123",
+    userCode: code,
+  });
+  
+  // Should have 3 Examples calls (one per group)
+  const examplesMatches = result.match(/Examples\(/g);
+  expect(examplesMatches?.length).toBe(3);
+  expect(result).toContain("div(");
 });
 

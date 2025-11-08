@@ -9,13 +9,15 @@ import io.github.nguyenyou.webawesome.laminar.*
 def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
-      Examples(
-        Button(_.href := "https://example.com/")("Link"),
-        Button(_.href := "https://example.com/", _.target := "_blank")("Link with target"),
-        Button(
-          _.href     := "/assets/images/logo.svg",
-          _.download := "shoelace.svg"
-        )("Download"),
+      div(
+        Examples(
+          Button(_.href := "https://example.com/")("Link"),
+          Button(_.href := "https://example.com/", _.target := "_blank")("Link with target"),
+          Button(
+            _.href     := "/assets/images/logo.svg",
+            _.download := "shoelace.svg"
+          )("Download"),
+        )
       )
   })
 }

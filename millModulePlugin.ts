@@ -218,6 +218,62 @@ export const parseTopLevelExpressions = (code: string): string[] => {
 };
 
 /**
+ * Group expressions by blank lines (2+ consecutive newlines).
+ * Returns an array of groups, where each group is an array of expressions.
+ */
+const groupExpressionsByBlankLines = (code: string, expressions: string[]): string[][] => {
+  if (expressions.length === 0) {
+    return [];
+  }
+
+  const groups: string[][] = [];
+  let currentGroup: string[] = [];
+  let prevExprEnd = 0;
+
+  for (let i = 0; i < expressions.length; i++) {
+    const expr = expressions[i];
+    
+    // Find the expression in the code starting from where the previous expression ended
+    const exprStart = code.indexOf(expr, prevExprEnd);
+    if (exprStart === -1) {
+      // If we can't find it, just add to current group
+      currentGroup.push(expr);
+      continue;
+    }
+
+    // Check if there's a blank line (2+ consecutive newlines) between previous and current expression
+    if (i > 0) {
+      const betweenExpressions = code.substring(prevExprEnd, exprStart);
+      // Check if there are 2+ consecutive newlines (blank line)
+      const hasBlankLine = /\n\s*\n/.test(betweenExpressions);
+      
+      if (hasBlankLine) {
+        // Start a new group
+        if (currentGroup.length > 0) {
+          groups.push(currentGroup);
+        }
+        currentGroup = [expr];
+      } else {
+        // Continue current group
+        currentGroup.push(expr);
+      }
+    } else {
+      // First expression, start first group
+      currentGroup.push(expr);
+    }
+
+    prevExprEnd = exprStart + expr.length;
+  }
+
+  // Add the last group
+  if (currentGroup.length > 0) {
+    groups.push(currentGroup);
+  }
+
+  return groups.length > 0 ? groups : [expressions];
+};
+
+/**
  * Apply examples template: converts newline-separated code into comma-separated arguments
  * wrapped in Examples(...) call. Only adds commas between complete top-level expressions,
  * preserving nested structures.
@@ -230,14 +286,31 @@ export const applyExamplesTemplate = (ctx: TemplateContext): string => {
   // Parse into top-level expressions (preserving nested structure)
   const expressions = parseTopLevelExpressions(userCode);
   
-  // Join expressions with commas, preserving their internal structure
-  const examplesArgs = expressions
-    .map(expr => expr.endsWith(",") ? expr : `${expr},`)
+  // Group expressions by blank lines
+  const groups = groupExpressionsByBlankLines(userCode, expressions);
+  
+  // Create Examples() call for each group
+  const examplesCalls = groups.map(group => {
+    // Join expressions in group with commas, preserving their internal structure
+    const examplesArgs = group
+      .map(expr => expr.endsWith(",") ? expr : `${expr},`)
+      .join("\n");
+    
+    return `Examples(
+${indentCode(examplesArgs, 2)}
+)`;
+  });
+  
+  // Wrap all Examples() calls in div()
+  const divArgs = examplesCalls
+    .map((call, index) => {
+      // Add comma after each call except the last one
+      return index < examplesCalls.length - 1 ? `${call},` : call;
+    })
     .join("\n");
   
-  // Wrap in Examples(...) call
-  const examplesCall = `Examples(
-${indentCode(examplesArgs, 2)}
+  const divCall = `div(
+${indentCode(divArgs, 2)}
 )`;
   
   return `package ${packageName}
@@ -251,7 +324,7 @@ import io.github.nguyenyou.webawesome.laminar.*
 def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
-${indentCode(examplesCall, 6)}
+${indentCode(divCall, 6)}
   })
 }
   `;
