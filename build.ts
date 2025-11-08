@@ -70,6 +70,16 @@ function discoverExamples(workspaceRoot: string): ExampleEntry[] {
   return examples;
 }
 
+/**
+ * Format duration in milliseconds to a human-readable string
+ * @param durationMs Duration in milliseconds
+ * @returns Formatted string like "0.5 seconds" or "2.3 seconds"
+ */
+function formatDuration(durationMs: number): string {
+  const seconds = durationMs / 1000;
+  return `${seconds.toFixed(1)} seconds`;
+}
+
 async function main() {
   const workspaceRoot = process.cwd();
 
@@ -87,6 +97,10 @@ async function main() {
     if (!existsSync(outputDir)) {
       mkdirSync(outputDir, { recursive: true });
     }
+
+    // Start timing
+    const startTime = performance.now();
+    const fileCount = examples.length;
 
     // Build all examples in parallel
     const buildPromises = examples.map(async (example) => {
@@ -110,12 +124,17 @@ async function main() {
 
     // Wait for all builds to complete
     await Promise.allSettled(buildPromises);
+
+    // Calculate and display timing
+    const endTime = performance.now();
+    const durationMs = endTime - startTime;
+    const durationStr = formatDuration(durationMs);
+    
+    console.log(`\Bundle ${fileCount} examples in ${durationStr}`);
   } catch (error) {
     console.error('Error building examples:', error);
     return;
   }
-
-  console.log('\nBuild complete!');
 }
 
 main().catch(console.error);
