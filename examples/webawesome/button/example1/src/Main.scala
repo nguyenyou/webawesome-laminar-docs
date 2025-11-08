@@ -9,13 +9,11 @@ import io.github.nguyenyou.webawesome.laminar.*
 def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
-      Examples(
-        Button(_.variant.brand)("Brand"),
-        Button(_.variant.danger)("Danger"),
-        Button(_.variant.neutral)("Neutral"),
-        Button(_.variant.success)("Success"),
-        Button(_.variant.warning)("Warning"),
-      )
+      Button(
+        _.onClick --> Observer[dom.MouseEvent] { event =>
+          dom.window.alert(s"Clicked at clientX ${event.clientX}, clientY ${event.clientY}")
+        }
+      )("Button")
   })
 }
   

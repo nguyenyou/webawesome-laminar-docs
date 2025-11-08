@@ -10,18 +10,11 @@ def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
       Examples(
-        Button(_.appearance.accent, _.variant.neutral)(
-          Icon(_.name := "house", _.label := "Home")()
-        ),
-        Button(_.appearance.filled, _.variant.neutral)(
-          Icon(_.name := "house", _.label := "Home")()
-        ),
-        Button(_.appearance.outlined, _.variant.neutral)(
-          Icon(_.name := "house", _.label := "Home")()
-        ),
-        Button(_.appearance.plain, _.variant.neutral)(
-          Icon(_.name := "house", _.label := "Home")()
-        ),
+        Button(_.variant.brand)("Brand"),
+        Button(_.variant.danger)("Danger"),
+        Button(_.variant.neutral)("Neutral"),
+        Button(_.variant.success)("Success"),
+        Button(_.variant.warning)("Warning"),
       )
   })
 }
