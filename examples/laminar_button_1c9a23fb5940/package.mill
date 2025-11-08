@@ -1,0 +1,3 @@
+package build.examples.laminar_button_1c9a23fb5940
+
+object `package` extends build.ExampleModule

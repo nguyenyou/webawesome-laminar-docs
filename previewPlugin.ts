@@ -8,13 +8,10 @@ import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync
 import { createHash } from "crypto";
 
 /**
- * Generate a short hash from file path, position, and code content for stable identifiers
+ * Generate a short hash from code content for stable identifiers
  */
-const hashCode = (filePath: string, line: number | null, column: number | null, code: string): string => {
-  // Build hash input: filePath:line:column:code
-  const positionStr = line !== null && column !== null ? `${line}:${column}` : '';
-  const hashInput = `${filePath}:${positionStr}:${code}`;
-  const hash = createHash("sha256").update(hashInput).digest("hex");
+const hashCode = (code: string): string => {
+  const hash = createHash("sha256").update(code).digest("hex");
   return hash.substring(0, 12); // Use first 12 characters for readability
 };
 
@@ -618,12 +615,8 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
           return;
         }
         
-        // Get position information for hash calculation
-        const line = node.position?.start?.line ?? null;
-        const column = node.position?.start?.column ?? null;
-        
-        // Generate hash from file path, position, and code content
-        const hash = hashCode(docsFilePath, line, column, node.value || "");
+        // Generate hash from code content only
+        const hash = hashCode(node.value || "");
         examplePrefixHashes.push({ prefix, hash });
         
         // Store node information for second pass transformation
