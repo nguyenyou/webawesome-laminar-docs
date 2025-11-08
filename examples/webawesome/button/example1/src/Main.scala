@@ -13,7 +13,7 @@ package examples.webawesome.button.example1
         Button(_.variant.danger)("Danger"),
         Button(_.variant.neutral)("Neutral"),
         Button(_.variant.success)("Success"),
-        Button(_.variant.warning)("Warning")
+        Button(_.variant.warning)("Warning"),
       )
     })
   }

@@ -1,15 +1,17 @@
 ---
 title: Button
 description: Button
-lastUpdated: 2025-11-08T05:26:49.649Z
+lastUpdated: 2025-11-08T05:39:26.231Z
 ---
 
-```scala preview
-Examples(
-  Button(_.variant.brand)("Brand"),
-  Button(_.variant.danger)("Danger"),
-  Button(_.variant.neutral)("Neutral"),
-  Button(_.variant.success)("Success"),
-  Button(_.variant.warning)("Warning")
-)
+## Variants
+
+Use the `variant` attribute to set the button's semantic variant.
+
+```scala examples
+Button(_.variant.brand)("Brand")
+Button(_.variant.danger)("Danger")
+Button(_.variant.neutral)("Neutral")
+Button(_.variant.success)("Success")
+Button(_.variant.warning)("Warning")
 ```

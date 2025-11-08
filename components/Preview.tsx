@@ -22,7 +22,7 @@ export const Preview = ({ code }: { code: string }) => {
   return (
     <Frame
       title="Custom Frame"
-      style={{ border: "1px solid #ccc", maxWidth: "800px", width: "100%" }}
+      style={{ border: "1px solid #ccc", width: "100%", borderRadius: "8px" }}
       srcDoc={srcDoc}
     ></Frame>
   );

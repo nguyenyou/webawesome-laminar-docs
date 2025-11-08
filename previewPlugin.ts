@@ -83,6 +83,20 @@ const indentCode = (code: string, spaces: number = 4): string => {
 };
 
 /**
+ * Extract template type from code block meta
+ * Returns "preview" by default, or "examples" if specified
+ */
+const extractTemplateType = (meta: string | null | undefined): "preview" | "examples" => {
+  if (!meta) {
+    return "preview";
+  }
+  if (meta.includes("examples")) {
+    return "examples";
+  }
+  return "preview";
+};
+
+/**
  * Generate package.mill content for a Mill module
  */
 const createPackageMillContent = (packageName: string): string => {
@@ -114,6 +128,64 @@ ${indentCode(ctx.userCode, 6)}
     })
   }
   `;
+};
+
+/**
+ * Apply examples template: converts newline-separated code into comma-separated arguments
+ * wrapped in Examples(...) call
+ */
+export const applyExamplesTemplate = (ctx: TemplateContext): string => {
+  const packageName = ctx.modulePathParts.length > 0
+    ? `examples.${ctx.modulePathParts.join(".")}.example${ctx.number}`
+    : `examples.example${ctx.number}`;
+  
+  // Split by newlines, filter empty/whitespace lines, trim each line
+  const lines = ctx.userCode
+    .split("\n")
+    .map(line => line.trim())
+    .filter(line => line.length > 0);
+  
+  // Join lines with commas and proper indentation
+  const examplesArgs = lines
+    .map(line => line.endsWith(",") ? line : `${line},`)
+    .join("\n");
+  
+  // Wrap in Examples(...) call
+  const examplesCall = `Examples(
+${indentCode(examplesArgs, 2)}
+)`;
+  
+  return `package ${packageName}
+  
+  import org.scalajs.dom
+  import com.raquo.laminar.api.L.*
+  import doc.*
+  import io.github.nguyenyou.webawesome.laminar.*
+
+  @main def app = {
+    val container = dom.document.querySelector("#root")
+    render(container, {
+${indentCode(examplesCall, 6)}
+    })
+  }
+  `;
+};
+
+/**
+ * Apply template based on template type
+ * Switches between different template implementations
+ */
+const applyTemplateByType = (
+  templateType: "preview" | "examples",
+  ctx: TemplateContext
+): string => {
+  switch (templateType) {
+    case "examples":
+      return applyExamplesTemplate(ctx);
+    case "preview":
+    default:
+      return applyTemplate(ctx);
+  }
 };
 
 /**
@@ -153,7 +225,8 @@ const generateExampleModule = (
   examplesPath: string,
   exampleNumber: number,
   scalaCode: string,
-  workspaceRoot: string
+  workspaceRoot: string,
+  templateType: "preview" | "examples" = "preview"
 ): void => {
   const modulePathParts = getModulePathParts(examplesPath, workspaceRoot);
   const exampleDir = join(examplesPath, `example${exampleNumber}`);
@@ -170,7 +243,7 @@ const generateExampleModule = (
     userCode: scalaCode,
     modulePathParts: modulePathParts,
   };
-  const scalaSource = applyTemplate(templateContext);
+  const scalaSource = applyTemplateByType(templateType, templateContext);
   writeFileSync(mainScalaPath, scalaSource);
   
   // Generate package.mill
@@ -395,8 +468,11 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
     
     visit(tree, "code", (node, index, parent) => {
       if (node.lang && node.lang === "scala") {
-        // Only process code blocks with "preview" meta
-        if (!node.meta?.includes("preview")) {
+        // Extract template type from meta (defaults to "preview")
+        const templateType = extractTemplateType(node.meta);
+        
+        // Only process code blocks with "preview" or "examples" meta
+        if (!node.meta?.includes("preview") && !node.meta?.includes("examples")) {
           return;
         }
         
@@ -431,10 +507,11 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
             examplesPath,
             exampleCounter,
             node.value || "",
-            workspaceRoot
+            workspaceRoot,
+            templateType
           );
         } catch (error) {
-          console.error(`Failed to generate module for Scala preview:`, error);
+          console.error(`Failed to generate module for Scala ${templateType}:`, error);
         }
       }
     });
