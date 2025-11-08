@@ -81,46 +81,35 @@ async function main() {
     return;
   }
 
-  console.log(`Found ${examples.length} example(s) to build:`);
-  examples.forEach(ex => {
-    console.log(`  - ${ex.entrypoint} -> ${ex.outputPath}`);
-  });
-
   try {
-    // Build each example individually with its own banner
-    for (const example of examples) {
-      // Ensure output directory exists
-      const outputDir = path.dirname(example.outputPath);
-      if (!existsSync(outputDir)) {
-        mkdirSync(outputDir, { recursive: true });
-      }
+    // Ensure output directory exists for all examples
+    const outputDir = path.join(workspaceRoot, 'examples-build');
+    if (!existsSync(outputDir)) {
+      mkdirSync(outputDir, { recursive: true });
+    }
 
-      // Create banner comment with example counter
-      const banner = `// Example counter: ${example.counter}\n`;
-
-      // Build with banner
+    // Build all examples in parallel
+    const buildPromises = examples.map(async (example) => {
       const result = await Bun.build({
         entrypoints: [example.entrypoint],
         target: 'browser',
         format: 'esm',
         minify: true,
-        banner: banner,
       });
 
       if (!result.success) {
-        console.error(`Failed to build ${example.entrypoint}:`, result.logs);
-        continue;
+        throw new Error(`Build failed for ${example.entrypoint}: ${JSON.stringify(result.logs)}`);
       }
 
       if (result.outputs.length === 0) {
-        console.warn(`No output generated for ${example.entrypoint}`);
-        continue;
+        throw new Error(`No output generated for ${example.entrypoint}`);
       }
 
-      // Write bundled output (banner is already included)
       await Bun.write(example.outputPath, result.outputs[0]);
-      console.log(`✓ Built: ${example.outputPath} (counter: ${example.counter})`);
-    }
+    });
+
+    // Wait for all builds to complete
+    await Promise.allSettled(buildPromises);
   } catch (error) {
     console.error('Error building examples:', error);
     return;
