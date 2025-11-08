@@ -3,12 +3,10 @@ import { visit } from "unist-util-visit";
 import type { Plugin } from "unified";
 import type { Root } from "mdast";
 import { join, relative } from "path";
-import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync } from "fs";
+import { mkdirSync, writeFileSync, existsSync } from "fs";
 import {
   normalizePath,
   extractHierarchicalPathSegments,
-  type ExampleInfo,
-  type ExamplesJson,
   type TemplateContext,
 } from "./previewUtils";
 
@@ -463,93 +461,6 @@ const generateExampleModule = (
   writeFileSync(packageMillPath, createPackageMillContent(packageName));
 };
 
-/**
- * Get mill build out path for an example
- * e.g., out/examples/webawesome/button/example1/fullLinkJS.dest/main.js
- */
-const getMillBuildOutPath = (
-  pathSegments: string[],
-  counter: number,
-  workspaceRoot: string
-): string => {
-  const exampleName = `example${counter}`;
-  // Use camelCase segments for directory paths (matches package names per Mill convention)
-  const hierarchicalPath = joinHierarchicalPathCamelCase(pathSegments);
-  const pathParts = ["out", "examples", hierarchicalPath, exampleName, "fullLinkJS.dest", "main.js"];
-  return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
-};
-
-/**
- * Get example directory path relative to workspace root
- * e.g., examples/webawesome/button/example1
- */
-const getExampleDirectoryPath = (
-  pathSegments: string[],
-  counter: number,
-  workspaceRoot: string
-): string => {
-  const exampleName = `example${counter}`;
-  // Use camelCase segments for directory paths (matches package names per Mill convention)
-  const hierarchicalPath = joinHierarchicalPathCamelCase(pathSegments);
-  const pathParts = ["examples", hierarchicalPath, exampleName];
-  return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
-};
-
-/**
- * Get example builds path relative to workspace root
- * Uses flat structure for builds: examples-build/webawesome_button_example1.js
- * Converts path segments to camelCase before joining with underscores
- */
-const getExampleBuildsPath = (
-  pathSegments: string[],
-  counter: number,
-  workspaceRoot: string
-): string => {
-  // Convert segments to camelCase and join with underscores for build file name
-  const camelCaseSegments = pathSegments.map(toCamelCase);
-  const flattenedPrefix = camelCaseSegments.join("_");
-  const pathParts = ["examples-build", `${flattenedPrefix}_example${counter}.js`];
-  return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
-};
-
-/**
- * Read existing examples.json file
- */
-const readExamplesJson = (workspaceRoot: string): ExamplesJson => {
-  const examplesJsonPath = join(workspaceRoot, "examples.json");
-  
-  if (!existsSync(examplesJsonPath)) {
-    return { examples: [] };
-  }
-  
-  try {
-    const content = readFileSync(examplesJsonPath, "utf-8");
-    const parsed = JSON.parse(content) as ExamplesJson;
-    // Handle migration from old nested structure
-    if (!parsed.examples || !Array.isArray(parsed.examples)) {
-      return { examples: [] };
-    }
-    return parsed;
-  } catch (error) {
-    console.warn(`Failed to read examples.json:`, error);
-    return { examples: [] };
-  }
-};
-
-/**
- * Write examples.json file
- */
-const writeExamplesJson = (workspaceRoot: string, data: ExamplesJson): void => {
-  const examplesJsonPath = join(workspaceRoot, "examples.json");
-  
-  try {
-    const content = JSON.stringify(data, null, 2);
-    writeFileSync(examplesJsonPath, content, "utf-8");
-  } catch (error) {
-    console.error(`Failed to write examples.json:`, error);
-  }
-};
-
 interface MillModulePluginOptions {}
 
 export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => {
@@ -563,19 +474,11 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
     // Use file.cwd as the workspace root (current working directory)
     const workspaceRoot = file.cwd || process.cwd();
 
-    // Load existing examples.json
-    const examplesJson = readExamplesJson(workspaceRoot);
-
     // Get docs file path relative to workspace root
     const docsFilePath = normalizePath(relative(workspaceRoot, filePath));
     
     // Extract hierarchical path segments from doc file path
     const pathSegments = extractHierarchicalPathSegments(docsFilePath);
-
-    // Track example path segments/counter combinations
-    const examplePathCounters: Array<{ pathSegments: string[]; counter: number }> = [];
-    const exampleInfos: ExampleInfo[] = [];
-    const currentTimestamp = new Date().toISOString();
     
     // Counter for examples in this MDX file (starts at 1)
     let exampleCounter = 1;
@@ -592,21 +495,6 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
         
         // Use sequential counter for this example
         const counter = exampleCounter++;
-        examplePathCounters.push({ pathSegments, counter });
-        
-        // Collect example metadata
-        const examplePath = getExampleDirectoryPath(pathSegments, counter, workspaceRoot);
-        const millBuildOutPath = getMillBuildOutPath(pathSegments, counter, workspaceRoot);
-        const exampleBuildsPath = getExampleBuildsPath(pathSegments, counter, workspaceRoot);
-        
-        exampleInfos.push({
-          counter,
-          path: examplePath,
-          docPath: docsFilePath,
-          millBuildOutPath: millBuildOutPath,
-          exampleBuildsPath: exampleBuildsPath,
-          lastUpdated: currentTimestamp,
-        });
         
         try {
           generateExampleModule(
@@ -621,18 +509,6 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
         }
       }
     });
-
-    // Update examples.json with new examples
-    // Filter out existing examples from this doc file
-    const existingExamples = examplesJson.examples.filter(
-      ex => ex.docPath !== docsFilePath
-    );
-    
-    // Add new examples from current doc file
-    const updatedExamples = [...existingExamples, ...exampleInfos];
-    
-    // Write updated examples.json
-    writeExamplesJson(workspaceRoot, { examples: updatedExamples });
   };
 };
 

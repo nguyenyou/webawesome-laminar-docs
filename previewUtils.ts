@@ -73,22 +73,6 @@ export const readCompiledJsFile = (filePath: string): string | null => {
   }
 };
 
-/**
- * JSON Structure Types
- */
-export interface ExampleInfo {
-  counter: number; // Sequential counter for example identification (per MDX file)
-  path: string; // Example directory path relative to workspace root
-  docPath: string; // Docs file path relative to workspace root
-  millBuildOutPath: string; // Mill build output path relative to workspace root
-  exampleBuildsPath: string; // examples-build path relative to workspace root
-  lastUpdated: string; // ISO timestamp string
-}
-
-export type ExamplesJson = {
-  examples: ExampleInfo[];
-};
-
 export interface TemplateContext {
   prefix: string;
   counter: number;

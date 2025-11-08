@@ -1,143 +1,106 @@
 import path from 'path';
-import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync } from 'fs';
-import type { ExampleInfo, ExamplesJson } from './previewUtils';
+import { existsSync, mkdirSync, readdirSync } from 'fs';
 
 interface ExampleEntry {
   entrypoint: string; // Absolute path to mill build output main.js
   outputPath: string; // Absolute path to examples-build output
-  exampleInfo: ExampleInfo;
+  counter: number; // Example counter number
 }
 
 /**
- * Extract all examples from the ExamplesJson structure
- * ExamplesJson uses a flat array, but paths reflect hierarchical directory structure
+ * Discover examples by scanning the filesystem
+ * Scans out/examples/ directory recursively to find all example{N}/fullLinkJS.dest/main.js files
  */
-function extractExamples(
-  json: ExamplesJson,
-  workspaceRoot: string
-): ExampleEntry[] {
+function discoverExamples(workspaceRoot: string): ExampleEntry[] {
   const examples: ExampleEntry[] = [];
+  const outExamplesPath = path.join(workspaceRoot, 'out', 'examples');
 
-  if (!json.examples || !Array.isArray(json.examples)) {
+  if (!existsSync(outExamplesPath)) {
     return examples;
   }
 
-  for (const exampleInfo of json.examples) {
-    const entrypoint = path.join(workspaceRoot, exampleInfo.millBuildOutPath);
-    const outputPath = path.join(workspaceRoot, exampleInfo.exampleBuildsPath);
-
-    examples.push({
-      entrypoint,
-      outputPath,
-      exampleInfo,
-    });
-  }
-
-  return examples;
-}
-
-/**
- * Read examples.json file
- */
-function readExamplesJson(workspaceRoot: string): ExamplesJson | null {
-  const examplesJsonPath = path.join(workspaceRoot, 'examples.json');
-
-  if (!existsSync(examplesJsonPath)) {
-    console.warn('examples.json not found. Run the dev server or build process first to generate it.');
-    return null;
-  }
-
-  try {
-    const content = readFileSync(examplesJsonPath, 'utf-8');
-    const parsed = JSON.parse(content) as ExamplesJson;
-    // Handle migration from old nested structure
-    if (!parsed.examples || !Array.isArray(parsed.examples)) {
-      console.warn('examples.json has invalid structure. Expected { examples: ExampleInfo[] }');
-      return null;
+  /**
+   * Recursively scan directory for example directories
+   */
+  function scanDirectory(dirPath: string, pathSegments: string[]): void {
+    if (!existsSync(dirPath)) {
+      return;
     }
-    return parsed;
-  } catch (error) {
-    console.error(`Failed to read examples.json:`, error);
-    return null;
+
+    try {
+      const entries = readdirSync(dirPath, { withFileTypes: true });
+
+      for (const entry of entries) {
+        const fullPath = path.join(dirPath, entry.name);
+
+        // Check if this is an example{N} directory
+        const exampleMatch = entry.name.match(/^example(\d+)$/);
+        if (entry.isDirectory() && exampleMatch) {
+          const counter = parseInt(exampleMatch[1], 10);
+          const mainJsPath = path.join(fullPath, 'fullLinkJS.dest', 'main.js');
+
+          // Check if main.js exists
+          if (existsSync(mainJsPath)) {
+            // Derive output path: examples-build/{category}_{component}_example{N}.js
+            const camelCaseSegments = pathSegments.map(segment => segment); // Already camelCase from directory names
+            const flattenedPrefix = camelCaseSegments.join('_');
+            const outputPath = path.join(
+              workspaceRoot,
+              'examples-build',
+              `${flattenedPrefix}_example${counter}.js`
+            );
+
+            examples.push({
+              entrypoint: mainJsPath,
+              outputPath,
+              counter,
+            });
+          }
+        } else if (entry.isDirectory()) {
+          // Recursively scan subdirectories
+          scanDirectory(fullPath, [...pathSegments, entry.name]);
+        }
+      }
+    } catch (error) {
+      console.warn(`Failed to scan directory ${dirPath}:`, error);
+    }
   }
+
+  scanDirectory(outExamplesPath, []);
+  return examples;
 }
 
 async function main() {
   const workspaceRoot = process.cwd();
 
-  // Read examples.json
-  const examplesJson = readExamplesJson(workspaceRoot);
-  
-  if (!examplesJson) {
-    console.log('No examples.json found. Run the dev server or build process first to generate it.');
-    return;
-  }
-
-  // Extract all examples from examples.json
-  const examples = extractExamples(examplesJson, workspaceRoot);
+  // Discover examples by scanning filesystem
+  const examples = discoverExamples(workspaceRoot);
 
   if (examples.length === 0) {
-    console.log('No examples found to build.');
+    console.log('No examples found to build. Run mill build first to generate example outputs.');
     return;
   }
 
-  // Filter examples to only those with valid mill build outputs
-  const validExamples = examples.filter(ex => {
-    if (!existsSync(ex.entrypoint)) {
-      console.warn(`Mill build output not found: ${ex.entrypoint}. Skipping.`);
-      return false;
-    }
-    return true;
-  });
-
-  if (validExamples.length === 0) {
-    console.log('No valid examples to build (all mill build outputs are missing).');
-    return;
-  }
-
-  console.log(`Found ${validExamples.length} example(s) to build:`);
-  validExamples.forEach(ex => {
+  console.log(`Found ${examples.length} example(s) to build:`);
+  examples.forEach(ex => {
     console.log(`  - ${ex.entrypoint} -> ${ex.outputPath}`);
   });
 
-  // Collect all entrypoints and create mappings
-  const entrypoints = validExamples.map(ex => ex.entrypoint);
-  const entrypointToOutputPath = new Map<string, string>();
-  const entrypointToDocPath = new Map<string, string>();
-  const entrypointToCounter = new Map<string, number>();
-
-  for (const example of validExamples) {
-    entrypointToOutputPath.set(example.entrypoint, example.outputPath);
-    entrypointToDocPath.set(example.entrypoint, example.exampleInfo.docPath);
-    entrypointToCounter.set(example.entrypoint, example.exampleInfo.counter);
-  }
-
-  // Track which markdown files need to be updated
-  const markdownFilesToUpdate = new Set<string>();
-
   try {
     // Build each example individually with its own banner
-    for (const entrypoint of entrypoints) {
-      const outputPath = entrypointToOutputPath.get(entrypoint);
-      const counter = entrypointToCounter.get(entrypoint);
-
-      if (!outputPath) {
-        console.warn(`No output path found for entrypoint: ${entrypoint}`);
-        continue;
-      }
-
+    for (const example of examples) {
       // Ensure output directory exists
-      const outputDir = path.dirname(outputPath);
+      const outputDir = path.dirname(example.outputPath);
       if (!existsSync(outputDir)) {
         mkdirSync(outputDir, { recursive: true });
       }
 
       // Create banner comment with example counter
-      const banner = counter !== undefined ? `// Example counter: ${counter}\n` : '';
+      const banner = `// Example counter: ${example.counter}\n`;
 
       // Build with banner
       const result = await Bun.build({
-        entrypoints: [entrypoint],
+        entrypoints: [example.entrypoint],
         target: 'browser',
         format: 'esm',
         minify: true,
@@ -145,24 +108,18 @@ async function main() {
       });
 
       if (!result.success) {
-        console.error(`Failed to build ${entrypoint}:`, result.logs);
+        console.error(`Failed to build ${example.entrypoint}:`, result.logs);
         continue;
       }
 
       if (result.outputs.length === 0) {
-        console.warn(`No output generated for ${entrypoint}`);
+        console.warn(`No output generated for ${example.entrypoint}`);
         continue;
       }
 
       // Write bundled output (banner is already included)
-      await Bun.write(outputPath, result.outputs[0]);
-      console.log(`✓ Built: ${outputPath}${counter !== undefined ? ` (counter: ${counter})` : ''}`);
-
-      // Track markdown file for update
-      const docPath = entrypointToDocPath.get(entrypoint);
-      if (docPath) {
-        markdownFilesToUpdate.add(docPath);
-      }
+      await Bun.write(example.outputPath, result.outputs[0]);
+      console.log(`✓ Built: ${example.outputPath} (counter: ${example.counter})`);
     }
   } catch (error) {
     console.error('Error building examples:', error);
