@@ -1,7 +1,7 @@
 ---
 title: Button
 description: Button
-lastUpdated: 2025-11-08T05:54:56.454Z
+lastUpdated: 2025-11-08T06:31:19.604Z
 ---
 
 ## Variants
@@ -14,4 +14,23 @@ Button(_.variant.danger)("Danger")
 Button(_.variant.neutral)("Neutral")
 Button(_.variant.success)("Success")
 Button(_.variant.warning)("Warning")
+```
+
+## Icon Buttons
+
+When only an icon is slotted into the `label` slot, the button becomes an icon button. In this case, it's important to give the icon a label for users with assistive devices. Icon buttons can use any appearance or variant.
+
+```scala examples
+Button(_.appearance.accent, _.variant.neutral)(
+  Icon(_.name := "house", _.label := "Home")()
+)
+Button(_.appearance.filled, _.variant.neutral)(
+  Icon(_.name := "house", _.label := "Home")()
+)
+Button(_.appearance.outlined, _.variant.neutral)(
+  Icon(_.name := "house", _.label := "Home")()
+)
+Button(_.appearance.plain, _.variant.neutral)(
+  Icon(_.name := "house", _.label := "Home")()
+)
 ```

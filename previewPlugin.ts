@@ -144,24 +144,163 @@ ${indentCode(userCode, 6)}
 };
 
 /**
+ * Parse Scala code to identify complete top-level expressions
+ * by tracking parentheses depth. Only splits at top-level boundaries,
+ * preserving nested structures.
+ */
+export const parseTopLevelExpressions = (code: string): string[] => {
+  if (!code.trim()) {
+    return [];
+  }
+
+  const expressions: string[] = [];
+  let currentExpression = "";
+  let depth = 0;
+  let i = 0;
+  let inString = false;
+  let stringChar: string | null = null;
+  let inSingleLineComment = false;
+  let inMultiLineComment = false;
+
+  while (i < code.length) {
+    const char = code[i];
+    const prevChar = i > 0 ? code[i - 1] : null;
+    const nextChar = i < code.length - 1 ? code[i + 1] : null;
+
+    // Handle string literals
+    if (!inSingleLineComment && !inMultiLineComment) {
+      if (char === '"' || char === "'" || char === '`') {
+        // Check if this quote is escaped by counting backslashes
+        let backslashCount = 0;
+        let j = i - 1;
+        while (j >= 0 && code[j] === '\\') {
+          backslashCount++;
+          j--;
+        }
+        // If even number of backslashes (or zero), the quote is not escaped
+        const isEscaped = backslashCount % 2 === 1;
+        
+        if (!isEscaped) {
+          if (!inString) {
+            inString = true;
+            stringChar = char;
+          } else if (char === stringChar) {
+            inString = false;
+            stringChar = null;
+          }
+        }
+        currentExpression += char;
+        i++;
+        continue;
+      }
+    }
+
+    // Handle comments
+    if (!inString) {
+      if (char === '/' && nextChar === '/') {
+        inSingleLineComment = true;
+        currentExpression += char;
+        i++;
+        continue;
+      }
+      if (inSingleLineComment && char === '\n') {
+        inSingleLineComment = false;
+        currentExpression += char;
+        i++;
+        continue;
+      }
+      if (char === '/' && nextChar === '*') {
+        inMultiLineComment = true;
+        currentExpression += char;
+        i++;
+        continue;
+      }
+      if (inMultiLineComment && char === '*' && nextChar === '/') {
+        inMultiLineComment = false;
+        currentExpression += char;
+        if (nextChar) {
+          currentExpression += nextChar;
+        }
+        i += 2;
+        continue;
+      }
+    }
+
+    // Skip processing inside comments or strings
+    if (inString || inSingleLineComment || inMultiLineComment) {
+      currentExpression += char;
+      i++;
+      continue;
+    }
+
+    // Track parentheses depth
+    if (char === '(') {
+      depth++;
+      currentExpression += char;
+    } else if (char === ')') {
+      depth--;
+      currentExpression += char;
+      
+      // When depth returns to 0, we have a complete top-level expression
+      if (depth === 0) {
+        // Check if this is followed by another opening paren (curried call)
+        // by looking ahead past whitespace
+        let lookAhead = i + 1;
+        while (lookAhead < code.length && /\s/.test(code[lookAhead])) {
+          lookAhead++;
+        }
+        const isCurriedCall = lookAhead < code.length && code[lookAhead] === '(';
+        
+        // Only split if it's not a curried call
+        if (!isCurriedCall) {
+          // Preserve the expression as-is (including internal whitespace/newlines)
+          // Only trim if it's completely empty
+          if (currentExpression.trim().length > 0) {
+            expressions.push(currentExpression);
+          }
+          currentExpression = "";
+          // Skip whitespace after the expression
+          i++;
+          while (i < code.length && /\s/.test(code[i])) {
+            i++;
+          }
+          continue;
+        }
+        // If it's a curried call, continue building the expression
+      }
+    } else {
+      currentExpression += char;
+    }
+
+    i++;
+  }
+
+  // Handle any remaining expression (in case of unclosed parentheses or incomplete code)
+  if (currentExpression.trim().length > 0) {
+    expressions.push(currentExpression);
+  }
+
+  return expressions;
+};
+
+/**
  * Apply examples template: converts newline-separated code into comma-separated arguments
- * wrapped in Examples(...) call
+ * wrapped in Examples(...) call. Only adds commas between complete top-level expressions,
+ * preserving nested structures.
  */
 export const applyExamplesTemplate = (ctx: TemplateContext): string => {
   const packageName = ctx.modulePathParts.length > 0
     ? `examples.${ctx.modulePathParts.join(".")}.example${ctx.number}`
     : `examples.example${ctx.number}`;
   
-  // Split by newlines, filter empty/whitespace lines, trim each line
   const userCode = ctx.userCode || "";
-  const lines = userCode
-    .split("\n")
-    .map(line => line.trim())
-    .filter(line => line.length > 0);
   
-  // Join lines with commas and proper indentation
-  const examplesArgs = lines
-    .map(line => line.endsWith(",") ? line : `${line},`)
+  // Parse into top-level expressions (preserving nested structure)
+  const expressions = parseTopLevelExpressions(userCode);
+  
+  // Join expressions with commas, preserving their internal structure
+  const examplesArgs = expressions
+    .map(expr => expr.endsWith(",") ? expr : `${expr},`)
     .join("\n");
   
   // Wrap in Examples(...) call
