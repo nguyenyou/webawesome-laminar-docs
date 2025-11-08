@@ -277,7 +277,7 @@ Button(_.appearance.plain, _.variant.neutral)(
 });
 
 // Tests for applyExamplesTemplate with grouping
-test("applyExamplesTemplate should wrap single group in div with Examples", () => {
+test("applyExamplesTemplate should wrap single group in ExampleGroups with Examples", () => {
   const code = `Button(_.variant.brand)("Brand")
 Button(_.variant.danger)("Danger")
 Button(_.variant.neutral)("Neutral")`;
@@ -287,7 +287,7 @@ Button(_.variant.neutral)("Neutral")`;
     userCode: code,
   });
   
-  expect(result).toContain("div(");
+  expect(result).toContain("ExampleGroups(");
   expect(result).toContain("Examples(");
   expect(result).toContain('Button(_.variant.brand)("Brand")');
   expect(result).toContain('Button(_.variant.danger)("Danger")');
@@ -309,7 +309,7 @@ Button(_.appearance.filled, _.variant.brand)("Filled")`;
     userCode: code,
   });
   
-  expect(result).toContain("div(");
+  expect(result).toContain("ExampleGroups(");
   // Should have two Examples calls
   const examplesMatches = result.match(/Examples\(/g);
   expect(examplesMatches?.length).toBe(2);
@@ -357,7 +357,7 @@ Button(_.appearance.plain, _.variant.danger)("Plain")`;
     userCode: code,
   });
   
-  expect(result).toContain("div(");
+  expect(result).toContain("ExampleGroups(");
   // Should have 5 Examples calls (one per group)
   const examplesMatches = result.match(/Examples\(/g);
   expect(examplesMatches?.length).toBe(5);
@@ -379,11 +379,11 @@ Button(_.variant.danger)("Danger")`;
     userCode: code,
   });
   
-  // Extract the div content between div( and )
-  const divStart = result.indexOf("div(");
-  const divEnd = result.lastIndexOf(")");
-  expect(divStart).not.toBe(-1);
-  expect(divEnd).not.toBe(-1);
+  // Extract the ExampleGroups content between ExampleGroups( and )
+  const exampleGroupsStart = result.indexOf("ExampleGroups(");
+  const exampleGroupsEnd = result.lastIndexOf(")");
+  expect(exampleGroupsStart).not.toBe(-1);
+  expect(exampleGroupsEnd).not.toBe(-1);
   
   // Find all Examples( occurrences
   const examplesMatches = [...result.matchAll(/Examples\(/g)];
@@ -393,10 +393,10 @@ Button(_.variant.danger)("Danger")`;
   const firstExamplesEnd = result.indexOf("),", examplesMatches[0].index!);
   expect(firstExamplesEnd).not.toBe(-1);
   
-  // Check that second Examples call does NOT have trailing comma before closing div
+  // Check that second Examples call does NOT have trailing comma before closing ExampleGroups
   const secondExamplesStart = examplesMatches[1].index!;
   const secondExamplesEnd = result.indexOf(")", secondExamplesStart);
-  const afterSecondExamples = result.substring(secondExamplesEnd, divEnd);
+  const afterSecondExamples = result.substring(secondExamplesEnd, exampleGroupsEnd);
   // Should not have comma immediately after second Examples closing paren
   expect(afterSecondExamples.trim()).not.toMatch(/^,\s*$/);
 });
@@ -416,6 +416,6 @@ Button(_.variant.neutral)("Neutral")`;
   // Should have 3 Examples calls (one per group)
   const examplesMatches = result.match(/Examples\(/g);
   expect(examplesMatches?.length).toBe(3);
-  expect(result).toContain("div(");
+  expect(result).toContain("ExampleGroups(");
 });
 

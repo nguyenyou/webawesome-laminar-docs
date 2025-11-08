@@ -9,7 +9,7 @@ import io.github.nguyenyou.webawesome.laminar.*
 def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
-      div(
+      ExampleGroups(
         Examples(
           Button(_.variant.brand, _.disabled := true)("Brand"),
           Button(_.variant.danger, _.disabled := true)("Danger"),

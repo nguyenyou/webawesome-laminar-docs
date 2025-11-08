@@ -275,8 +275,8 @@ const groupExpressionsByBlankLines = (code: string, expressions: string[]): stri
 
 /**
  * Apply examples template: converts newline-separated code into comma-separated arguments
- * wrapped in Examples(...) call. Only adds commas between complete top-level expressions,
- * preserving nested structures.
+ * wrapped in Examples(...) calls, grouped by blank lines, and wrapped in ExampleGroups(...).
+ * Only adds commas between complete top-level expressions, preserving nested structures.
  */
 export const applyExamplesTemplate = (ctx: TemplateContext): string => {
   // ctx.prefix is now the hierarchical path joined with "/"
@@ -301,16 +301,16 @@ ${indentCode(examplesArgs, 2)}
 )`;
   });
   
-  // Wrap all Examples() calls in div()
-  const divArgs = examplesCalls
+  // Wrap all Examples() calls in ExampleGroups()
+  const exampleGroupsArgs = examplesCalls
     .map((call, index) => {
       // Add comma after each call except the last one
       return index < examplesCalls.length - 1 ? `${call},` : call;
     })
     .join("\n");
   
-  const divCall = `div(
-${indentCode(divArgs, 2)}
+  const exampleGroupsCall = `ExampleGroups(
+${indentCode(exampleGroupsArgs, 2)}
 )`;
   
   return `package ${packageName}
@@ -324,7 +324,7 @@ import io.github.nguyenyou.webawesome.laminar.*
 def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
-${indentCode(divCall, 6)}
+${indentCode(exampleGroupsCall, 6)}
   })
 }
   `;

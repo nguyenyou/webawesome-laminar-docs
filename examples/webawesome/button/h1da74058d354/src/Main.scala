@@ -9,7 +9,7 @@ import io.github.nguyenyou.webawesome.laminar.*
 def app = {
   val container = dom.document.querySelector("#root")
   render(container, {
-      div(
+      ExampleGroups(
         Examples(
           Button(_.href := "https://example.com/")("Link"),
           Button(_.href := "https://example.com/", _.target := "_blank")("Link with target"),

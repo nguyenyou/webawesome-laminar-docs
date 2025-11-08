@@ -1,12 +1,20 @@
 {
   "examples": [
     {
+      "hash": "20bb86764572",
+      "path": "examples/react/button/h20bb86764572",
+      "docPath": "content/docs/react/button.mdx",
+      "millBuildOutPath": "out/examples/react/button/h20bb86764572/fullLinkJS.dest/main.js",
+      "exampleBuildsPath": "examples-build/react_button_20bb86764572.js",
+      "lastUpdated": "2025-11-08T13:26:39.992Z"
+    },
+    {
       "hash": "99144601b5e3",
       "path": "examples/laminar/button/h99144601b5e3",
       "docPath": "content/docs/laminar/button.mdx",
       "millBuildOutPath": "out/examples/laminar/button/h99144601b5e3/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/laminar_button_99144601b5e3.js",
-      "lastUpdated": "2025-11-08T13:24:18.379Z"
+      "lastUpdated": "2025-11-08T13:26:40.522Z"
     },
     {
       "hash": "2104538b40ef",
@@ -14,7 +22,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h2104538b40ef/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_2104538b40ef.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "78dc72cf2b51",
@@ -22,7 +30,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h78dc72cf2b51/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_78dc72cf2b51.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "a46fa6fe899f",
@@ -30,7 +38,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/ha46fa6fe899f/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_a46fa6fe899f.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "45c97ae8cb0e",
@@ -38,7 +46,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h45c97ae8cb0e/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_45c97ae8cb0e.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "5c0f197fe448",
@@ -46,7 +54,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h5c0f197fe448/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_5c0f197fe448.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "1da74058d354",
@@ -54,7 +62,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h1da74058d354/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_1da74058d354.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "0edde2ef8757",
@@ -62,7 +70,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h0edde2ef8757/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_0edde2ef8757.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "45c97ae8cb0e",
@@ -70,7 +78,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h45c97ae8cb0e/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_45c97ae8cb0e.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "7c93a450ba0c",
@@ -78,7 +86,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h7c93a450ba0c/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_7c93a450ba0c.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "2888a33cc3ec",
@@ -86,7 +94,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h2888a33cc3ec/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_2888a33cc3ec.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "8f168d7f2d17",
@@ -94,7 +102,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h8f168d7f2d17/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_8f168d7f2d17.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     },
     {
       "hash": "3bbad85eb7a5",
@@ -102,15 +110,7 @@
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/h3bbad85eb7a5/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome_button_3bbad85eb7a5.js",
-      "lastUpdated": "2025-11-08T13:24:18.625Z"
-    },
-    {
-      "hash": "20bb86764572",
-      "path": "examples/react/button/h20bb86764572",
-      "docPath": "content/docs/react/button.mdx",
-      "millBuildOutPath": "out/examples/react/button/h20bb86764572/fullLinkJS.dest/main.js",
-      "exampleBuildsPath": "examples-build/react_button_20bb86764572.js",
-      "lastUpdated": "2025-11-08T13:24:18.874Z"
+      "lastUpdated": "2025-11-08T13:26:40.691Z"
     }
   ]
 }
