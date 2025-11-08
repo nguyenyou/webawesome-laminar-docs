@@ -1,5 +1,6 @@
 import path from 'path';
-import { existsSync, mkdirSync, readdirSync } from 'fs';
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'fs';
+import * as esbuild from 'esbuild';
 
 interface ExampleEntry {
   entrypoint: string; // Absolute path to mill build output main.js
@@ -80,6 +81,78 @@ function formatDuration(durationMs: number): string {
   return `${seconds.toFixed(1)} seconds`;
 }
 
+/**
+ * Bundler type - function that bundles an entrypoint to an output path
+ */
+type BundlerFunction = (entrypoint: string, outputPath: string) => Promise<void>;
+
+/**
+ * Build using Bun bundler
+ */
+async function buildWithBun(entrypoint: string, outputPath: string): Promise<void> {
+  const result = await Bun.build({
+    entrypoints: [entrypoint],
+    target: 'browser',
+    format: 'esm',
+    minify: true,
+  });
+
+  if (!result.success) {
+    throw new Error(`Build failed for ${entrypoint}: ${JSON.stringify(result.logs)}`);
+  }
+
+  if (result.outputs.length === 0) {
+    throw new Error(`No output generated for ${entrypoint}`);
+  }
+
+  await Bun.write(outputPath, result.outputs[0]);
+}
+
+/**
+ * Build using esbuild bundler
+ */
+async function buildWithEsbuild(entrypoint: string, outputPath: string): Promise<void> {
+  const result = await esbuild.build({
+    entryPoints: [entrypoint],
+    bundle: true,
+    target: 'es2020', // Browser-compatible target (esbuild doesn't have 'browser' like bun)
+    format: 'esm',
+    minify: true,
+    outfile: outputPath, // Used for output structure, but we write manually
+    write: false, // We'll write manually
+  });
+
+  if (result.errors.length > 0) {
+    throw new Error(`Build failed for ${entrypoint}: ${JSON.stringify(result.errors)}`);
+  }
+
+  if (result.outputFiles.length === 0) {
+    throw new Error(`No output generated for ${entrypoint}`);
+  }
+
+  // Write the bundled output to the specified output path
+  writeFileSync(outputPath, result.outputFiles[0].contents);
+}
+
+/**
+ * Get the bundler function based on BUNDLER environment variable
+ * Defaults to 'bun' if not set or invalid value
+ */
+function getBundler(): BundlerFunction {
+  const bundlerEnv = process.env.BUNDLER?.toLowerCase();
+  
+  if (bundlerEnv === 'esbuild') {
+    return buildWithEsbuild;
+  }
+  
+  // Default to bun (also handles 'bun' explicitly or invalid values)
+  if (bundlerEnv && bundlerEnv !== 'bun') {
+    console.warn(`Invalid BUNDLER value "${process.env.BUNDLER}", defaulting to 'bun'`);
+  }
+  
+  return buildWithBun;
+}
+
 async function main() {
   const workspaceRoot = process.cwd();
 
@@ -90,6 +163,11 @@ async function main() {
     console.log('No examples found to build. Run mill build first to generate example outputs.');
     return;
   }
+
+  // Select bundler based on environment variable
+  const bundler = getBundler();
+  const bundlerName = process.env.BUNDLER?.toLowerCase() === 'esbuild' ? 'esbuild' : 'bun';
+  console.log(`Using bundler: ${bundlerName}`);
 
   try {
     // Ensure output directory exists for all examples
@@ -105,22 +183,7 @@ async function main() {
 
     // Build all examples in parallel
     const buildPromises = examples.map(async (example, index) => {
-      const result = await Bun.build({
-        entrypoints: [example.entrypoint],
-        target: 'browser',
-        format: 'esm',
-        minify: true,
-      });
-
-      if (!result.success) {
-        throw new Error(`Build failed for ${example.entrypoint}: ${JSON.stringify(result.logs)}`);
-      }
-
-      if (result.outputs.length === 0) {
-        throw new Error(`No output generated for ${example.entrypoint}`);
-      }
-
-      await Bun.write(example.outputPath, result.outputs[0]);
+      await bundler(example.entrypoint, example.outputPath);
       
       // Update and log progress (increment happens atomically in single-threaded JS)
       completedCount++;
