@@ -1,3 +1,0 @@
-package build.examples.webawesome.callout.h86bbcfd12d56
-
-object `package` extends build.ExampleModule

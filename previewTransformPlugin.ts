@@ -5,7 +5,6 @@ import type { Code, Root, Parent } from "mdast";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import { relative } from "path";
 import {
-  hashCode,
   normalizePath,
   extractHierarchicalPathSegments,
   getCompiledJsPath,
@@ -54,10 +53,13 @@ export const previewTransformPlugin: Plugin<[PreviewTransformPluginOptions?], Ro
     const previewNodes: Array<{
       node: Code;
       prefix: string;
-      hash: string;
+      counter: number;
       parent: Parent;
       index: number;
     }> = [];
+    
+    // Counter for examples in this MDX file (starts at 1, must match millModulePlugin)
+    let exampleCounter = 1;
     
     visit(tree, "code", (node, index, parent) => {
       if (node.lang && node.lang === "scala") {
@@ -66,15 +68,15 @@ export const previewTransformPlugin: Plugin<[PreviewTransformPluginOptions?], Ro
           return;
         }
         
-        // Generate hash from code content and meta (must match millModulePlugin)
-        const hash = hashCode(node.value || "", node.meta);
+        // Use sequential counter for this example (must match millModulePlugin order)
+        const counter = exampleCounter++;
         
         // Store node information for transformation
         if (parent && typeof index === "number") {
           previewNodes.push({
             node,
             prefix,
-            hash,
+            counter,
             parent: parent as Parent,
             index,
           });
@@ -83,9 +85,9 @@ export const previewTransformPlugin: Plugin<[PreviewTransformPluginOptions?], Ro
     });
 
     // Transform nodes to Preview components
-    for (const { node, prefix, hash, parent, index } of previewNodes) {
-      // Get built JS file path using prefix and hash
-      const compiledJsPath = getCompiledJsPath(prefix, hash, workspaceRoot);
+    for (const { node, prefix, counter, parent, index } of previewNodes) {
+      // Get built JS file path using prefix and counter
+      const compiledJsPath = getCompiledJsPath(prefix, counter, workspaceRoot);
       
       // Read built JS file content
       const jsContent = readCompiledJsFile(compiledJsPath);

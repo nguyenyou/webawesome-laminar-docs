@@ -1,3 +1,0 @@
-package build.examples.webawesome.tree.hd19f86be760d
-
-object `package` extends build.ExampleModule

@@ -1,0 +1,3 @@
+package build.examples.webawesome.select.example10
+
+object `package` extends build.ExampleModule

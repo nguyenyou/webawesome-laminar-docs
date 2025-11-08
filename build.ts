@@ -176,12 +176,12 @@ async function main() {
   const entrypoints = validExamples.map(ex => ex.entrypoint);
   const entrypointToOutputPath = new Map<string, string>();
   const entrypointToDocPath = new Map<string, string>();
-  const entrypointToHash = new Map<string, string>();
+  const entrypointToCounter = new Map<string, number>();
 
   for (const example of validExamples) {
     entrypointToOutputPath.set(example.entrypoint, example.outputPath);
     entrypointToDocPath.set(example.entrypoint, example.exampleInfo.docPath);
-    entrypointToHash.set(example.entrypoint, example.exampleInfo.hash);
+    entrypointToCounter.set(example.entrypoint, example.exampleInfo.counter);
   }
 
   // Track which markdown files need to be updated
@@ -191,7 +191,7 @@ async function main() {
     // Build each example individually with its own banner
     for (const entrypoint of entrypoints) {
       const outputPath = entrypointToOutputPath.get(entrypoint);
-      const hash = entrypointToHash.get(entrypoint);
+      const counter = entrypointToCounter.get(entrypoint);
 
       if (!outputPath) {
         console.warn(`No output path found for entrypoint: ${entrypoint}`);
@@ -204,8 +204,8 @@ async function main() {
         mkdirSync(outputDir, { recursive: true });
       }
 
-      // Create banner comment with example hash
-      const banner = hash ? `// Example hash: ${hash}\n` : '';
+      // Create banner comment with example counter
+      const banner = counter !== undefined ? `// Example counter: ${counter}\n` : '';
 
       // Build with banner
       const result = await Bun.build({
@@ -228,7 +228,7 @@ async function main() {
 
       // Write bundled output (banner is already included)
       await Bun.write(outputPath, result.outputs[0]);
-      console.log(`✓ Built: ${outputPath}${hash ? ` (hash: ${hash})` : ''}`);
+      console.log(`✓ Built: ${outputPath}${counter !== undefined ? ` (counter: ${counter})` : ''}`);
 
       // Track markdown file for update
       const docPath = entrypointToDocPath.get(entrypoint);
@@ -243,17 +243,17 @@ async function main() {
 
   // Update markdown files to trigger HMR
   // Update files sequentially with delays to avoid Turbopack panics
-  if (markdownFilesToUpdate.size > 0) {
-    console.log(`\nUpdating ${markdownFilesToUpdate.size} markdown file(s) to trigger HMR...`);
-    const docPaths = Array.from(markdownFilesToUpdate);
-    for (let i = 0; i < docPaths.length; i++) {
-      await updateMarkdownFile(docPaths[i], workspaceRoot);
-      // Add delay between updates to prevent concurrent file operations
-      if (i < docPaths.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 200));
-      }
-    }
-  }
+  // if (markdownFilesToUpdate.size > 0) {
+  //   console.log(`\nUpdating ${markdownFilesToUpdate.size} markdown file(s) to trigger HMR...`);
+  //   const docPaths = Array.from(markdownFilesToUpdate);
+  //   for (let i = 0; i < docPaths.length; i++) {
+  //     await updateMarkdownFile(docPaths[i], workspaceRoot);
+  //     // Add delay between updates to prevent concurrent file operations
+  //     if (i < docPaths.length - 1) {
+  //       await new Promise(resolve => setTimeout(resolve, 200));
+  //     }
+  //   }
+  // }
 
   console.log('\nBuild complete!');
 }

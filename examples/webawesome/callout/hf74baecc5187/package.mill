@@ -1,3 +1,0 @@
-package build.examples.webawesome.callout.hf74baecc5187
-
-object `package` extends build.ExampleModule

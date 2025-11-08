@@ -5,7 +5,6 @@ import type { Root } from "mdast";
 import { join, relative } from "path";
 import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync } from "fs";
 import {
-  hashCode,
   normalizePath,
   extractPrefixFromDocPath,
   extractHierarchicalPathSegments,
@@ -41,14 +40,14 @@ const joinHierarchicalPathCamelCase = (segments: string[]): string => {
 
 /**
  * Generate mill package name for a hierarchical example module
- * e.g., ["webawesome", "button"], "abc123" -> 'build.examples.webawesome.button.habc123'
+ * e.g., ["webawesome", "button"], 1 -> 'build.examples.webawesome.button.example1'
  * Converts hyphenated segments to camelCase for valid Scala package names
  */
-const getMillPackageName = (pathSegments: string[], hash: string): string => {
-  const hHash = `h${hash}`; // Prefix hash with "h" for valid package name
+const getMillPackageName = (pathSegments: string[], counter: number): string => {
+  const exampleName = `example${counter}`;
   const packageSegments = pathSegments.map(toCamelCase);
   const packagePath = packageSegments.join(".");
-  return `build.examples.${packagePath}.${hHash}`;
+  return `build.examples.${packagePath}.${exampleName}`;
 };
 
 /**
@@ -86,7 +85,7 @@ export const applyTemplate = (ctx: TemplateContext): string => {
   // Convert path segments to camelCase package names for valid Scala package names
   const pathSegments = ctx.prefix.split("/");
   const packageSegments = pathSegments.map(toCamelCase);
-  const packageName = `examples.${packageSegments.join(".")}.h${ctx.hash}`;
+  const packageName = `examples.${packageSegments.join(".")}.example${ctx.counter}`;
   const userCode = ctx.userCode || "";
   
   return `package ${packageName}
@@ -318,7 +317,7 @@ export const applyExamplesTemplate = (ctx: TemplateContext): string => {
   // Convert path segments to camelCase package names for valid Scala package names
   const pathSegments = ctx.prefix.split("/");
   const packageSegments = pathSegments.map(toCamelCase);
-  const packageName = `examples.${packageSegments.join(".")}.h${ctx.hash}`;
+  const packageName = `examples.${packageSegments.join(".")}.example${ctx.counter}`;
   const userCode = ctx.userCode || "";
   
   // Parse into top-level expressions (preserving nested structure)
@@ -425,12 +424,12 @@ const ensureParentModules = (workspaceRoot: string, pathSegments: string[]): voi
 
 /**
  * Generate an example module with package.mill and src/Main.scala
- * Uses hierarchical directory structure with camelCase: examples/{category}/{component}/h{hash}/
+ * Uses hierarchical directory structure with camelCase: examples/{category}/{component}/example{number}/
  * Directory names match package names per Mill convention
  */
 const generateExampleModule = (
   pathSegments: string[],
-  hash: string,
+  counter: number,
   scalaCode: string,
   workspaceRoot: string,
   templateType: "preview" | "examples" = "preview"
@@ -438,11 +437,11 @@ const generateExampleModule = (
   // Ensure parent modules exist
   ensureParentModules(workspaceRoot, pathSegments);
   
-  // Create hierarchical path: examples/webawesome/button/h{hash}
+  // Create hierarchical path: examples/webawesome/button/example1
   // Use camelCase segments for directory names (matches package names per Mill convention)
-  const hHash = `h${hash}`;
+  const exampleName = `example${counter}`;
   const hierarchicalPath = joinHierarchicalPathCamelCase(pathSegments);
-  const exampleDir = join(workspaceRoot, "examples", hierarchicalPath, hHash);
+  const exampleDir = join(workspaceRoot, "examples", hierarchicalPath, exampleName);
   const srcDir = join(exampleDir, "src");
   const mainScalaPath = join(srcDir, "Main.scala");
   const packageMillPath = join(exampleDir, "package.mill");
@@ -455,14 +454,14 @@ const generateExampleModule = (
   // Package names will be converted to camelCase in applyTemplate/applyExamplesTemplate
   const templateContext: TemplateContext = {
     prefix: hierarchicalPath,
-    hash: hash,
+    counter: counter,
     userCode: scalaCode,
   };
   const scalaSource = applyTemplateByType(templateType, templateContext);
   writeFileSync(mainScalaPath, scalaSource);
   
   // Generate package.mill
-  const packageName = getMillPackageName(pathSegments, hash);
+  const packageName = getMillPackageName(pathSegments, counter);
   writeFileSync(packageMillPath, createPackageMillContent(packageName));
 };
 
@@ -471,7 +470,7 @@ const generateExampleModule = (
  * Handles both old flat structure and new hierarchical structure
  */
 const cleanupOldExamplesRecursive = (
-  currentHashes: Set<string>,
+  currentCounters: Set<number>,
   docFilePath: string,
   examplesJson: ExamplesJson,
   currentPath: string,
@@ -488,45 +487,60 @@ const cleanupOldExamplesRecursive = (
       const entryPath = join(currentPath, entry.name);
       
       if (entry.isDirectory()) {
-        // Check if this is an old flat structure directory (format: "{prefix}_{hash}" or "hash_{hash}")
-        if (entry.name.includes("_") && !entry.name.startsWith("h")) {
-          // Old flat structure: extract hash and check if it should be removed
-          const lastUnderscoreIndex = entry.name.lastIndexOf("_");
-          if (lastUnderscoreIndex !== -1) {
-            const entryHash = entry.name.substring(lastUnderscoreIndex + 1);
+        // Check if this is a new counter-based directory (format: "example{N}")
+        if (entry.name.startsWith("example") && /^example\d+$/.test(entry.name)) {
+          const counterMatch = entry.name.match(/^example(\d+)$/);
+          if (counterMatch) {
+            const entryCounter = parseInt(counterMatch[1], 10);
             
-            // Check if this hash belongs to the current doc file
+            // Check if this counter belongs to the current doc file
             const examplesForCurrentDoc = examplesJson.examples.filter(
-              ex => ex.docPath === docFilePath && ex.hash === entryHash
+              ex => ex.docPath === docFilePath && ex.counter === entryCounter
             );
             
-            // Remove if it doesn't exist in current hashes
-            if (examplesForCurrentDoc.length > 0 && !currentHashes.has(entryHash)) {
+            // Remove if it doesn't exist in current counters
+            if (examplesForCurrentDoc.length > 0 && !currentCounters.has(entryCounter)) {
               rmSync(entryPath, { recursive: true, force: true });
               continue;
             }
           }
         }
-        // Check if this is an old "hash_" directory
-        else if (entry.name.startsWith("hash_")) {
-          const entryHash = entry.name.substring(5);
+        // Check if this is an old hash-based directory (format: "h{hash}")
+        else if (entry.name.startsWith("h") && entry.name.length > 1) {
+          // Old hash-based structure: remove it
           const examplesForCurrentDoc = examplesJson.examples.filter(
-            ex => ex.docPath === docFilePath && ex.hash === entryHash
+            ex => ex.docPath === docFilePath && ex.path.includes(entry.name)
           );
-          if (examplesForCurrentDoc.length > 0 && !currentHashes.has(entryHash)) {
+          if (examplesForCurrentDoc.length > 0) {
             rmSync(entryPath, { recursive: true, force: true });
             continue;
           }
         }
-        // Check if this is an old "example{N}" directory
-        else if (entry.name.startsWith("example") && !entry.name.includes("_")) {
-          rmSync(entryPath, { recursive: true, force: true });
-          continue;
+        // Check if this is an old flat structure directory (format: "{prefix}_{hash}" or "hash_{hash}")
+        else if (entry.name.includes("_") && !entry.name.startsWith("example")) {
+          // Old flat structure: remove it
+          const examplesForCurrentDoc = examplesJson.examples.filter(
+            ex => ex.docPath === docFilePath && ex.path.includes(entry.name)
+          );
+          if (examplesForCurrentDoc.length > 0) {
+            rmSync(entryPath, { recursive: true, force: true });
+            continue;
+          }
+        }
+        // Check if this is an old "hash_" directory
+        else if (entry.name.startsWith("hash_")) {
+          const examplesForCurrentDoc = examplesJson.examples.filter(
+            ex => ex.docPath === docFilePath && ex.path.includes(entry.name)
+          );
+          if (examplesForCurrentDoc.length > 0) {
+            rmSync(entryPath, { recursive: true, force: true });
+            continue;
+          }
         }
         // Otherwise, recursively process subdirectories (for hierarchical structure)
         else {
           cleanupOldExamplesRecursive(
-            currentHashes,
+            currentCounters,
             docFilePath,
             examplesJson,
             entryPath,
@@ -567,7 +581,7 @@ const cleanupOldExamplesRecursive = (
  * Handles migration from old flat structure
  */
 const cleanupOldExamples = (
-  currentPathHashes: Array<{ pathSegments: string[]; hash: string }>,
+  currentPathCounters: Array<{ pathSegments: string[]; counter: number }>,
   docFilePath: string,
   workspaceRoot: string,
   examplesJson: ExamplesJson
@@ -578,12 +592,12 @@ const cleanupOldExamples = (
     return;
   }
   
-  // Create a set of current hashes for quick lookup
-  const currentHashes = new Set(currentPathHashes.map(({ hash }) => hash));
+  // Create a set of current counters for quick lookup
+  const currentCounters = new Set(currentPathCounters.map(({ counter }) => counter));
   
   // Recursively clean up old examples
   cleanupOldExamplesRecursive(
-    currentHashes,
+    currentCounters,
     docFilePath,
     examplesJson,
     examplesPath,
@@ -593,50 +607,50 @@ const cleanupOldExamples = (
 
 /**
  * Get mill build out path for an example
- * e.g., out/examples/webawesome/button/habc123/fullLinkJS.dest/main.js
+ * e.g., out/examples/webawesome/button/example1/fullLinkJS.dest/main.js
  */
 const getMillBuildOutPath = (
   pathSegments: string[],
-  hash: string,
+  counter: number,
   workspaceRoot: string
 ): string => {
-  const hHash = `h${hash}`;
+  const exampleName = `example${counter}`;
   // Use camelCase segments for directory paths (matches package names per Mill convention)
   const hierarchicalPath = joinHierarchicalPathCamelCase(pathSegments);
-  const pathParts = ["out", "examples", hierarchicalPath, hHash, "fullLinkJS.dest", "main.js"];
+  const pathParts = ["out", "examples", hierarchicalPath, exampleName, "fullLinkJS.dest", "main.js"];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
 };
 
 /**
  * Get example directory path relative to workspace root
- * e.g., examples/webawesome/button/habc123
+ * e.g., examples/webawesome/button/example1
  */
 const getExampleDirectoryPath = (
   pathSegments: string[],
-  hash: string,
+  counter: number,
   workspaceRoot: string
 ): string => {
-  const hHash = `h${hash}`;
+  const exampleName = `example${counter}`;
   // Use camelCase segments for directory paths (matches package names per Mill convention)
   const hierarchicalPath = joinHierarchicalPathCamelCase(pathSegments);
-  const pathParts = ["examples", hierarchicalPath, hHash];
+  const pathParts = ["examples", hierarchicalPath, exampleName];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
 };
 
 /**
  * Get example builds path relative to workspace root
- * Uses flat structure for builds: examples-build/webawesomeButton_abc123.js
+ * Uses flat structure for builds: examples-build/webawesome_button_example1.js
  * Converts path segments to camelCase before joining with underscores
  */
 const getExampleBuildsPath = (
   pathSegments: string[],
-  hash: string,
+  counter: number,
   workspaceRoot: string
 ): string => {
   // Convert segments to camelCase and join with underscores for build file name
   const camelCaseSegments = pathSegments.map(toCamelCase);
   const flattenedPrefix = camelCaseSegments.join("_");
-  const pathParts = ["examples-build", `${flattenedPrefix}_${hash}.js`];
+  const pathParts = ["examples-build", `${flattenedPrefix}_example${counter}.js`];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
 };
 
@@ -700,10 +714,13 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
     // Extract hierarchical path segments from doc file path
     const pathSegments = extractHierarchicalPathSegments(docsFilePath);
 
-    // Track example path segments/hash combinations
-    const examplePathHashes: Array<{ pathSegments: string[]; hash: string }> = [];
+    // Track example path segments/counter combinations
+    const examplePathCounters: Array<{ pathSegments: string[]; counter: number }> = [];
     const exampleInfos: ExampleInfo[] = [];
     const currentTimestamp = new Date().toISOString();
+    
+    // Counter for examples in this MDX file (starts at 1)
+    let exampleCounter = 1;
     
     visit(tree, "code", (node) => {
       if (node.lang && node.lang === "scala") {
@@ -715,17 +732,17 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
           return;
         }
         
-        // Generate hash from code content and meta
-        const hash = hashCode(node.value || "", node.meta);
-        examplePathHashes.push({ pathSegments, hash });
+        // Use sequential counter for this example
+        const counter = exampleCounter++;
+        examplePathCounters.push({ pathSegments, counter });
         
         // Collect example metadata
-        const examplePath = getExampleDirectoryPath(pathSegments, hash, workspaceRoot);
-        const millBuildOutPath = getMillBuildOutPath(pathSegments, hash, workspaceRoot);
-        const exampleBuildsPath = getExampleBuildsPath(pathSegments, hash, workspaceRoot);
+        const examplePath = getExampleDirectoryPath(pathSegments, counter, workspaceRoot);
+        const millBuildOutPath = getMillBuildOutPath(pathSegments, counter, workspaceRoot);
+        const exampleBuildsPath = getExampleBuildsPath(pathSegments, counter, workspaceRoot);
         
         exampleInfos.push({
-          hash,
+          counter,
           path: examplePath,
           docPath: docsFilePath,
           millBuildOutPath: millBuildOutPath,
@@ -736,7 +753,7 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
         try {
           generateExampleModule(
             pathSegments,
-            hash,
+            counter,
             node.value || "",
             workspaceRoot,
             templateType
@@ -749,7 +766,7 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
 
     // Clean up old examples that are no longer in this MDX file
     // Only remove examples that belong to the current doc file
-    cleanupOldExamples(examplePathHashes, docsFilePath, workspaceRoot, examplesJson);
+    cleanupOldExamples(examplePathCounters, docsFilePath, workspaceRoot, examplesJson);
 
     // Update examples.json with new examples
     // Filter out existing examples from this doc file

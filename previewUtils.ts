@@ -99,14 +99,14 @@ export const joinHierarchicalPath = (segments: string[]): string => {
 
 /**
  * Get the built JavaScript file path for an example
- * e.g., examples-build/laminar_button_abc123.js
+ * e.g., examples-build/webawesome_button_example1.js
  */
 export const getCompiledJsPath = (
   prefix: string,
-  hash: string,
+  counter: number,
   workspaceRoot: string
 ): string => {
-  return join(workspaceRoot, "examples-build", `${prefix}_${hash}.js`);
+  return join(workspaceRoot, "examples-build", `${prefix}_example${counter}.js`);
 };
 
 /**
@@ -129,7 +129,7 @@ export const readCompiledJsFile = (filePath: string): string | null => {
  * JSON Structure Types
  */
 export interface ExampleInfo {
-  hash: string; // Content hash for stable identification
+  counter: number; // Sequential counter for example identification (per MDX file)
   path: string; // Example directory path relative to workspace root
   docPath: string; // Docs file path relative to workspace root
   millBuildOutPath: string; // Mill build output path relative to workspace root
@@ -143,7 +143,7 @@ export type ExamplesJson = {
 
 export interface TemplateContext {
   prefix: string;
-  hash: string;
+  counter: number;
   userCode: string;
 }
 

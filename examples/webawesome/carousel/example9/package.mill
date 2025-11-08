@@ -1,0 +1,3 @@
+package build.examples.webawesome.carousel.example9
+
+object `package` extends build.ExampleModule
