@@ -3,55 +3,11 @@ import { existsSync, readFileSync } from "fs";
 import { createHash } from "crypto";
 
 /**
- * Generate a short hash from code content and meta for stable identifiers
- */
-export const hashCode = (code: string, meta: string | null | undefined): string => {
-  const metaStr = meta || "";
-  const hashInput = `${code}:${metaStr}`;
-  const hash = createHash("sha256").update(hashInput).digest("hex");
-  return hash.substring(0, 12); // Use first 12 characters for readability
-};
-
-/**
  * Normalize path separators to forward slashes
  */
 export const normalizePath = (path: string | null | undefined): string => {
   if (!path) return "";
   return path.replace(/\\/g, "/");
-};
-
-/**
- * Extract prefix from doc file path for meaningful example directory names
- * e.g., content/docs/laminar/button.mdx -> laminar_button
- * @deprecated Use extractHierarchicalPathSegments for new hierarchical structure
- */
-export const extractPrefixFromDocPath = (docPath: string): string => {
-  let path = normalizePath(docPath);
-  
-  // Remove content/docs/ prefix if present
-  if (path.startsWith("content/docs/")) {
-    path = path.substring("content/docs/".length);
-  }
-  
-  // Remove .mdx extension
-  if (path.endsWith(".mdx")) {
-    path = path.substring(0, path.length - 4);
-  }
-  
-  // Replace path separators with underscores
-  path = path.replace(/\//g, "_");
-  
-  // Sanitize: remove any invalid characters for directory names
-  // Keep only alphanumeric, underscores, and hyphens
-  path = path.replace(/[^a-zA-Z0-9_-]/g, "_");
-  
-  // Remove consecutive underscores
-  path = path.replace(/_+/g, "_");
-  
-  // Remove leading/trailing underscores
-  path = path.replace(/^_+|_+$/g, "");
-  
-  return path || "example"; // Fallback to "example" if empty
 };
 
 /**
@@ -87,14 +43,6 @@ export const extractHierarchicalPathSegments = (docPath: string): string[] => {
   });
   
   return sanitizedSegments.length > 0 ? sanitizedSegments : ["example"];
-};
-
-/**
- * Join hierarchical path segments into a directory path
- * e.g., ["webawesome", "button"] -> "webawesome/button"
- */
-export const joinHierarchicalPath = (segments: string[]): string => {
-  return segments.join("/");
 };
 
 /**

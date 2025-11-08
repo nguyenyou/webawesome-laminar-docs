@@ -1,3 +1,0 @@
-package build.examples.webawesome.radioGroup.example2
-
-object `package` extends build.ExampleModule

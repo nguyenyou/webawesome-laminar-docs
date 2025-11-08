@@ -6,9 +6,7 @@ import { join, relative } from "path";
 import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync } from "fs";
 import {
   normalizePath,
-  extractPrefixFromDocPath,
   extractHierarchicalPathSegments,
-  joinHierarchicalPath,
   type ExampleInfo,
   type ExamplesJson,
   type TemplateContext,
@@ -466,146 +464,6 @@ const generateExampleModule = (
 };
 
 /**
- * Recursively clean up example modules that no longer exist
- * Handles both old flat structure and new hierarchical structure
- */
-const cleanupOldExamplesRecursive = (
-  currentCounters: Set<number>,
-  docFilePath: string,
-  examplesJson: ExamplesJson,
-  currentPath: string,
-  workspaceRoot: string
-): void => {
-  if (!existsSync(currentPath)) {
-    return;
-  }
-  
-  try {
-    const entries = readdirSync(currentPath, { withFileTypes: true });
-    
-    for (const entry of entries) {
-      const entryPath = join(currentPath, entry.name);
-      
-      if (entry.isDirectory()) {
-        // Check if this is a new counter-based directory (format: "example{N}")
-        if (entry.name.startsWith("example") && /^example\d+$/.test(entry.name)) {
-          const counterMatch = entry.name.match(/^example(\d+)$/);
-          if (counterMatch) {
-            const entryCounter = parseInt(counterMatch[1], 10);
-            
-            // Check if this counter belongs to the current doc file
-            const examplesForCurrentDoc = examplesJson.examples.filter(
-              ex => ex.docPath === docFilePath && ex.counter === entryCounter
-            );
-            
-            // Remove if it doesn't exist in current counters
-            if (examplesForCurrentDoc.length > 0 && !currentCounters.has(entryCounter)) {
-              rmSync(entryPath, { recursive: true, force: true });
-              continue;
-            }
-          }
-        }
-        // Check if this is an old hash-based directory (format: "h{hash}")
-        else if (entry.name.startsWith("h") && entry.name.length > 1) {
-          // Old hash-based structure: remove it
-          const examplesForCurrentDoc = examplesJson.examples.filter(
-            ex => ex.docPath === docFilePath && ex.path.includes(entry.name)
-          );
-          if (examplesForCurrentDoc.length > 0) {
-            rmSync(entryPath, { recursive: true, force: true });
-            continue;
-          }
-        }
-        // Check if this is an old flat structure directory (format: "{prefix}_{hash}" or "hash_{hash}")
-        else if (entry.name.includes("_") && !entry.name.startsWith("example")) {
-          // Old flat structure: remove it
-          const examplesForCurrentDoc = examplesJson.examples.filter(
-            ex => ex.docPath === docFilePath && ex.path.includes(entry.name)
-          );
-          if (examplesForCurrentDoc.length > 0) {
-            rmSync(entryPath, { recursive: true, force: true });
-            continue;
-          }
-        }
-        // Check if this is an old "hash_" directory
-        else if (entry.name.startsWith("hash_")) {
-          const examplesForCurrentDoc = examplesJson.examples.filter(
-            ex => ex.docPath === docFilePath && ex.path.includes(entry.name)
-          );
-          if (examplesForCurrentDoc.length > 0) {
-            rmSync(entryPath, { recursive: true, force: true });
-            continue;
-          }
-        }
-        // Otherwise, recursively process subdirectories (for hierarchical structure)
-        else {
-          cleanupOldExamplesRecursive(
-            currentCounters,
-            docFilePath,
-            examplesJson,
-            entryPath,
-            workspaceRoot
-          );
-          
-          // After recursive cleanup, check if directory is empty and remove it if so
-          // (but keep package.mill files)
-          try {
-            const remainingEntries = readdirSync(entryPath);
-            const hasOnlyPackageMill = remainingEntries.length === 1 && remainingEntries[0] === "package.mill";
-            if (remainingEntries.length === 0 || hasOnlyPackageMill) {
-              // Check if this directory has examples that belong to current doc
-              const relativePath = normalizePath(relative(workspaceRoot, entryPath));
-              const hasExamplesForDoc = examplesJson.examples.some(
-                ex => ex.docPath === docFilePath && ex.path.startsWith(relativePath)
-              );
-              if (!hasExamplesForDoc) {
-                rmSync(entryPath, { recursive: true, force: true });
-              }
-            }
-          } catch {
-            // Ignore errors when checking/removing directories
-          }
-        }
-      }
-    }
-  } catch (error) {
-    // Ignore errors during cleanup
-    console.warn(`Failed to cleanup old examples in ${currentPath}:`, error);
-  }
-};
-
-/**
- * Clean up example modules that no longer exist in the current MDX file
- * Works with hierarchical examples/ directory structure
- * Only removes examples that belong to the current doc file
- * Handles migration from old flat structure
- */
-const cleanupOldExamples = (
-  currentPathCounters: Array<{ pathSegments: string[]; counter: number }>,
-  docFilePath: string,
-  workspaceRoot: string,
-  examplesJson: ExamplesJson
-): void => {
-  const examplesPath = join(workspaceRoot, "examples");
-  
-  if (!existsSync(examplesPath)) {
-    return;
-  }
-  
-  // Create a set of current counters for quick lookup
-  const currentCounters = new Set(currentPathCounters.map(({ counter }) => counter));
-  
-  // Recursively clean up old examples
-  cleanupOldExamplesRecursive(
-    currentCounters,
-    docFilePath,
-    examplesJson,
-    examplesPath,
-    workspaceRoot
-  );
-}
-
-/**
  * Get mill build out path for an example
  * e.g., out/examples/webawesome/button/example1/fullLinkJS.dest/main.js
  */
@@ -763,10 +621,6 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
         }
       }
     });
-
-    // Clean up old examples that are no longer in this MDX file
-    // Only remove examples that belong to the current doc file
-    cleanupOldExamples(examplePathCounters, docsFilePath, workspaceRoot, examplesJson);
 
     // Update examples.json with new examples
     // Filter out existing examples from this doc file

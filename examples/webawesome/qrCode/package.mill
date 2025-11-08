@@ -1,3 +1,0 @@
-package build.examples.webawesome.qrCode
-
-object `package` extends build.ExampleModule

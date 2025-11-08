@@ -62,78 +62,6 @@ function readExamplesJson(workspaceRoot: string): ExamplesJson | null {
   }
 }
 
-/**
- * Update markdown file to trigger HMR by updating lastUpdated timestamp in frontmatter
- * Uses atomic write with retry logic to avoid Turbopack panics
- */
-async function updateMarkdownFile(docPath: string, workspaceRoot: string): Promise<void> {
-  const fullPath = path.join(workspaceRoot, docPath);
-
-  if (!existsSync(fullPath)) {
-    console.warn(`Markdown file not found: ${fullPath}`);
-    return;
-  }
-
-  const maxRetries = 3;
-  let retries = 0;
-
-  while (retries < maxRetries) {
-    try {
-      // Read file with a small delay to ensure file system is ready
-      await new Promise(resolve => setTimeout(resolve, 50));
-      
-      const content = readFileSync(fullPath, 'utf-8');
-      const timestamp = new Date().toISOString();
-
-      // Check if frontmatter exists
-      const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
-
-      let updatedContent: string;
-      if (frontmatterMatch) {
-        // Frontmatter exists, update or add lastUpdated field
-        let frontmatter = frontmatterMatch[1];
-        
-        // Check if lastUpdated already exists
-        if (frontmatter.match(/^lastUpdated:/m)) {
-          // Update existing lastUpdated
-          frontmatter = frontmatter.replace(/^lastUpdated:.*$/m, `lastUpdated: ${timestamp}`);
-        } else {
-          // Add lastUpdated at the end of frontmatter
-          frontmatter = frontmatter.trim() + `\nlastUpdated: ${timestamp}`;
-        }
-
-        updatedContent = content.replace(
-          /^---\n([\s\S]*?)\n---/,
-          `---\n${frontmatter}\n---`
-        );
-      } else {
-        // No frontmatter, add it at the beginning
-        updatedContent = `---\nlastUpdated: ${timestamp}\n---\n\n${content}`;
-      }
-
-      // Atomic write: write to temp file first, then rename
-      const tempPath = `${fullPath}.tmp`;
-      writeFileSync(tempPath, updatedContent, 'utf-8');
-      
-      // Small delay before rename to ensure write is complete
-      await new Promise(resolve => setTimeout(resolve, 10));
-      
-      // Use rename for atomic operation (works on most file systems)
-      renameSync(tempPath, fullPath);
-      
-      return; // Success
-    } catch (error: any) {
-      retries++;
-      if (retries >= maxRetries) {
-        console.error(`Failed to update markdown file ${fullPath} after ${maxRetries} attempts:`, error);
-        return;
-      }
-      // Exponential backoff
-      await new Promise(resolve => setTimeout(resolve, 100 * Math.pow(2, retries)));
-    }
-  }
-}
-
 async function main() {
   const workspaceRoot = process.cwd();
 
@@ -240,20 +168,6 @@ async function main() {
     console.error('Error building examples:', error);
     return;
   }
-
-  // Update markdown files to trigger HMR
-  // Update files sequentially with delays to avoid Turbopack panics
-  // if (markdownFilesToUpdate.size > 0) {
-  //   console.log(`\nUpdating ${markdownFilesToUpdate.size} markdown file(s) to trigger HMR...`);
-  //   const docPaths = Array.from(markdownFilesToUpdate);
-  //   for (let i = 0; i < docPaths.length; i++) {
-  //     await updateMarkdownFile(docPaths[i], workspaceRoot);
-  //     // Add delay between updates to prevent concurrent file operations
-  //     if (i < docPaths.length - 1) {
-  //       await new Promise(resolve => setTimeout(resolve, 200));
-  //     }
-  //   }
-  // }
 
   console.log('\nBuild complete!');
 }

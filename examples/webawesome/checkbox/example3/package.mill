@@ -1,3 +1,0 @@
-package build.examples.webawesome.checkbox.example3
-
-object `package` extends build.ExampleModule
