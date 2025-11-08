@@ -101,9 +101,10 @@ async function main() {
     // Start timing
     const startTime = performance.now();
     const fileCount = examples.length;
+    let completedCount = 0;
 
     // Build all examples in parallel
-    const buildPromises = examples.map(async (example) => {
+    const buildPromises = examples.map(async (example, index) => {
       const result = await Bun.build({
         entrypoints: [example.entrypoint],
         target: 'browser',
@@ -120,17 +121,25 @@ async function main() {
       }
 
       await Bun.write(example.outputPath, result.outputs[0]);
+      
+      // Update and log progress (increment happens atomically in single-threaded JS)
+      completedCount++;
+      const progressMsg = `[${completedCount}/${fileCount}] Bundling...`;
+      process.stdout.write(`\r${progressMsg.padEnd(50)}`);
     });
 
     // Wait for all builds to complete
     await Promise.all(buildPromises);
+    
+    // Clear the progress line and move to next line
+    process.stdout.write('\r' + ' '.repeat(50) + '\r');
 
     // Calculate and display timing
     const endTime = performance.now();
     const durationMs = endTime - startTime;
     const durationStr = formatDuration(durationMs);
     
-    console.log(`\Bundle ${fileCount} examples in ${durationStr}`);
+    console.log(`Bundled ${fileCount} examples in ${durationStr}`);
   } catch (error) {
     console.error('Error building examples:', error);
     return;
