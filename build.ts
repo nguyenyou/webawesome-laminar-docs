@@ -4,52 +4,26 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 /**
  * JSON Structure Types matching previewPlugin.ts
  */
-interface Position {
-  start: {
-    line: number;
-    column: number;
-    offset?: number;
-  };
-  end: {
-    line: number;
-    column: number;
-    offset?: number;
-  };
-}
-
 interface ExampleInfo {
   path: string; // Example directory path relative to workspace root
-  position: Position | null; // Position in source MDX file
+  docPath: string; // Docs file path relative to workspace root
   millBuildOutPath: string; // Mill build output path relative to workspace root
   exampleBuildsPath: string; // examples-build path relative to workspace root
   lastUpdated: string; // ISO timestamp string
 }
 
-interface ComponentInfo {
-  path: string; // Docs file path relative to workspace root
-  examples: ExampleInfo[];
-}
-
 type ExamplesJson = {
-  [category: string]: ExamplesJson | ComponentInfo;
+  examples: ExampleInfo[];
 };
 
 interface ExampleEntry {
   entrypoint: string; // Absolute path to mill build output main.js
   outputPath: string; // Absolute path to examples-build output
-  docPath: string; // Path to the MDX file relative to workspace root
   exampleInfo: ExampleInfo;
 }
 
 /**
- * Check if an object is a ComponentInfo (has 'path' and 'examples' properties)
- */
-function isComponentInfo(obj: ExamplesJson | ComponentInfo): obj is ComponentInfo {
-  return typeof obj === 'object' && obj !== null && 'path' in obj && 'examples' in obj && Array.isArray(obj.examples);
-}
-
-/**
- * Recursively extract all examples from the nested ExamplesJson structure
+ * Extract all examples from the flat ExamplesJson structure
  */
 function extractExamples(
   json: ExamplesJson,
@@ -57,29 +31,21 @@ function extractExamples(
 ): ExampleEntry[] {
   const examples: ExampleEntry[] = [];
 
-  function traverse(obj: ExamplesJson | ComponentInfo, currentPath: string[] = []): void {
-    if (isComponentInfo(obj)) {
-      // This is a ComponentInfo, extract all its examples
-      for (const exampleInfo of obj.examples) {
-        const entrypoint = path.join(workspaceRoot, exampleInfo.millBuildOutPath);
-        const outputPath = path.join(workspaceRoot, exampleInfo.exampleBuildsPath);
-
-        examples.push({
-          entrypoint,
-          outputPath,
-          docPath: obj.path,
-          exampleInfo,
-        });
-      }
-    } else {
-      // This is a nested ExamplesJson, continue traversing
-      for (const [key, value] of Object.entries(obj)) {
-        traverse(value, [...currentPath, key]);
-      }
-    }
+  if (!json.examples || !Array.isArray(json.examples)) {
+    return examples;
   }
 
-  traverse(json);
+  for (const exampleInfo of json.examples) {
+    const entrypoint = path.join(workspaceRoot, exampleInfo.millBuildOutPath);
+    const outputPath = path.join(workspaceRoot, exampleInfo.exampleBuildsPath);
+
+    examples.push({
+      entrypoint,
+      outputPath,
+      exampleInfo,
+    });
+  }
+
   return examples;
 }
 
@@ -96,7 +62,13 @@ function readExamplesJson(workspaceRoot: string): ExamplesJson | null {
 
   try {
     const content = readFileSync(examplesJsonPath, 'utf-8');
-    return JSON.parse(content) as ExamplesJson;
+    const parsed = JSON.parse(content) as ExamplesJson;
+    // Handle migration from old nested structure
+    if (!parsed.examples || !Array.isArray(parsed.examples)) {
+      console.warn('examples.json has invalid structure. Expected { examples: ExampleInfo[] }');
+      return null;
+    }
+    return parsed;
   } catch (error) {
     console.error(`Failed to read examples.json:`, error);
     return null;
@@ -161,7 +133,7 @@ async function main() {
     return;
   }
 
-  // Extract all examples from the nested structure
+  // Extract all examples from the flat structure
   const examples = extractExamples(examplesJson, workspaceRoot);
 
   if (examples.length === 0) {
@@ -195,7 +167,7 @@ async function main() {
 
   for (const example of validExamples) {
     entrypointToOutputPath.set(example.entrypoint, example.outputPath);
-    entrypointToDocPath.set(example.entrypoint, example.docPath);
+    entrypointToDocPath.set(example.entrypoint, example.exampleInfo.docPath);
   }
 
   // Track which markdown files need to be updated
