@@ -7,12 +7,28 @@ import { relative } from "path";
 import {
   hashCode,
   normalizePath,
-  extractPrefixFromDocPath,
+  extractHierarchicalPathSegments,
   getCompiledJsPath,
   readCompiledJsFile,
 } from "./previewUtils";
 
 interface PreviewTransformPluginOptions {}
+
+/**
+ * Convert hyphenated string to camelCase
+ * e.g., "zoomable-frame" -> "zoomableFrame"
+ * e.g., "button-group-item" -> "buttonGroupItem"
+ * Preserves strings without hyphens unchanged
+ */
+const toCamelCase = (str: string): string => {
+  if (!str.includes("-")) {
+    return str;
+  }
+  const parts = str.split("-");
+  return parts[0] + parts.slice(1).map(part => 
+    part.charAt(0).toUpperCase() + part.slice(1)
+  ).join("");
+};
 
 export const previewTransformPlugin: Plugin<[PreviewTransformPluginOptions?], Root> = () => {
   return (tree, file) => {
@@ -28,8 +44,11 @@ export const previewTransformPlugin: Plugin<[PreviewTransformPluginOptions?], Ro
     // Get docs file path relative to workspace root
     const docsFilePath = normalizePath(relative(workspaceRoot, filePath));
     
-    // Extract prefix from doc file path
-    const prefix = extractPrefixFromDocPath(docsFilePath);
+    // Extract hierarchical path segments and convert to camelCase format
+    // This matches the format used by millModulePlugin's getExampleBuildsPath
+    const pathSegments = extractHierarchicalPathSegments(docsFilePath);
+    const camelCaseSegments = pathSegments.map(toCamelCase);
+    const prefix = camelCaseSegments.join("_");
 
     // Track nodes for transformation
     const previewNodes: Array<{
