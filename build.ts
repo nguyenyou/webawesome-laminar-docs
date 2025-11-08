@@ -212,7 +212,7 @@ async function main() {
         entrypoints: [entrypoint],
         target: 'browser',
         format: 'esm',
-        minify: false,
+        minify: true,
         banner: banner,
       });
 
