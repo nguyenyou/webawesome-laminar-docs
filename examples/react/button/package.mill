@@ -1,3 +1,0 @@
-package build.examples.react.button
-
-object `package` extends build.ExampleModule

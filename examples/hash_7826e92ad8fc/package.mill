@@ -1,0 +1,3 @@
+package build.examples.hash_7826e92ad8fc
+
+object `package` extends build.ExampleModule

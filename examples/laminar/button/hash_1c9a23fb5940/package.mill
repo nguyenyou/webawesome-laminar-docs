@@ -1,3 +1,0 @@
-package build.examples.laminar.button.hash_1c9a23fb5940
-
-object `package` extends build.ExampleModule

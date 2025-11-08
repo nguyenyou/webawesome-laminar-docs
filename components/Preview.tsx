@@ -6,9 +6,11 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 export const Preview = ({
   code,
   userCode,
+  exampleHash
 }: {
   code: string;
   userCode?: string;
+  exampleHash?: string;
 }) => {
   const srcDoc = `<html>
 <head>
@@ -28,7 +30,9 @@ export const Preview = ({
   const displayCode = userCode || "";
 
   return (
-    <Tabs items={["Preview", "Code"]} className="w-full">
+    <div>
+      <div>Example Hash: {exampleHash}</div>
+      <Tabs items={["Preview", "Code"]} className="w-full">
       <Tab value="Preview" className="w-full">
         <Frame
           title="Custom Frame"
@@ -40,5 +44,7 @@ export const Preview = ({
         <DynamicCodeBlock code={displayCode} lang="scala" />
       </Tab>
     </Tabs>
+    </div>
+    
   );
 };

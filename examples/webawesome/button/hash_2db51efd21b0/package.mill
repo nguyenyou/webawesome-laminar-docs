@@ -1,3 +1,0 @@
-package build.examples.webawesome.button.hash_2db51efd21b0
-
-object `package` extends build.ExampleModule

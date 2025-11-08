@@ -1,3 +1,0 @@
-package build.examples.index
-
-object `package` extends build.ExampleModule
