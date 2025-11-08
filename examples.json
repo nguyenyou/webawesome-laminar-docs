@@ -5,21 +5,21 @@
       "docPath": "content/docs/react/button.mdx",
       "millBuildOutPath": "out/examples/react/button/example1/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/react/button/example1.js",
-      "lastUpdated": "2025-11-08T03:11:00.523Z"
+      "lastUpdated": "2025-11-08T03:14:48.660Z"
     },
     {
       "path": "examples/laminar/button/example1",
       "docPath": "content/docs/laminar/button.mdx",
       "millBuildOutPath": "out/examples/laminar/button/example1/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/laminar/button/example1.js",
-      "lastUpdated": "2025-11-08T03:11:00.525Z"
+      "lastUpdated": "2025-11-08T03:16:57.612Z"
     },
     {
       "path": "examples/webawesome/button/example1",
       "docPath": "content/docs/webawesome/button.mdx",
       "millBuildOutPath": "out/examples/webawesome/button/example1/fullLinkJS.dest/main.js",
       "exampleBuildsPath": "examples-build/webawesome/button/example1.js",
-      "lastUpdated": "2025-11-08T03:11:00.532Z"
+      "lastUpdated": "2025-11-08T03:16:57.614Z"
     }
   ]
 }
