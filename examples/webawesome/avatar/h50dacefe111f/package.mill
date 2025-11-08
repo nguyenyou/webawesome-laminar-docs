@@ -1,0 +1,3 @@
+package build.examples.webawesome.avatar.h50dacefe111f
+
+object `package` extends build.ExampleModule

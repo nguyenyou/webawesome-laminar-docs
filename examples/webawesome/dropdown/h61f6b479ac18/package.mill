@@ -1,0 +1,3 @@
+package build.examples.webawesome.dropdown.h61f6b479ac18
+
+object `package` extends build.ExampleModule

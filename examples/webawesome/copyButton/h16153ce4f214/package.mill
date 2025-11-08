@@ -1,0 +1,3 @@
+package build.examples.webawesome.copyButton.h16153ce4f214
+
+object `package` extends build.ExampleModule

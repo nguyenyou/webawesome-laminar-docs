@@ -1,0 +1,3 @@
+package build.examples.webawesome.card.h842471ae3e88
+
+object `package` extends build.ExampleModule

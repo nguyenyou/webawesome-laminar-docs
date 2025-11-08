@@ -1,6 +1,6 @@
 ---
 title: QrCode
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:11.757Z
 ---
 
 ## Basic
@@ -31,7 +31,7 @@ div(
 
 Use the `fill` and `background` attributes to modify the QR code's colors. You should always ensure good contrast for optimal compatibility with QR code scanners.
 
-```scala examples
+```scala preview
 QrCode(
   _.value      := "https://shoelace.style/",
   _.fill       := "deeppink",
@@ -43,7 +43,7 @@ QrCode(
 
 Use the `size` attribute to change the size of the QR code.
 
-```scala examples
+```scala preview
 QrCode(
   _.value := "https://shoelace.style/",
   _.size  := 64.0
@@ -54,7 +54,7 @@ QrCode(
 
 Create a rounded effect with the `radius` attribute.
 
-```scala examples
+```scala preview
 QrCode(
   _.value  := "https://shoelace.style/",
   _.radius := 0.5
@@ -65,7 +65,7 @@ QrCode(
 
 QR codes can be rendered with various levels of error correction that can be set using the `error-correction` attribute. This example generates four codes with the same value using different error correction levels.
 
-```scala examples
+```scala preview
 QrCode(
   _.value           := "https://shoelace.style/",
   _.errorCorrection := "L"

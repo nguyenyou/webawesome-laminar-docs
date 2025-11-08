@@ -1,6 +1,6 @@
 ---
 title: ProgressRing
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:23.367Z
 ---
 
 ## Basic
@@ -13,7 +13,7 @@ ProgressRing(_.value := 25)()
 
 Use the `--size` custom property to set the diameter of the progress ring.
 
-```scala examples
+```scala preview
 ProgressRing(
   _.value := 50,
   _.style := "--size: 200px;"
@@ -24,7 +24,7 @@ ProgressRing(
 
 Use the `--track-width` and `--indicator-width` custom properties to set the width of the progress ring's track and indicator.
 
-```scala examples
+```scala preview
 ProgressRing(
   _.value := 50,
   _.style := "--track-width: 6px; --indicator-width: 12px;"
@@ -35,7 +35,7 @@ ProgressRing(
 
 To change the color, use the `--track-color` and `--indicator-color` custom properties.
 
-```scala examples
+```scala preview
 ProgressRing(
   _.value := 50,
   _.style := "--track-color: pink; --indicator-color: deeppink;"
@@ -46,7 +46,7 @@ ProgressRing(
 
 Use the default slot to show a label inside the progress ring.
 
-```scala examples
+```scala preview
 val progressValue = Var(50.0)
 
 div(

@@ -1,0 +1,3 @@
+package build.examples.webawesome.scroller.h5b30a335d4eb
+
+object `package` extends build.ExampleModule

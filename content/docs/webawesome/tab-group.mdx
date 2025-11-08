@@ -1,6 +1,6 @@
 ---
 title: TabGroup
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:21.785Z
 ---
 
 ## Basic
@@ -39,7 +39,7 @@ TabGroup()(
 
 To make a tab active, set the `active` attribute to the name of the appropriate panel.
 
-```scala examples
+```scala preview
 TabGroup(_.active := "advanced")(
   Tab(_.panel := "general")("General"),
   Tab(_.panel := "custom")("Custom"),
@@ -54,7 +54,7 @@ TabGroup(_.active := "advanced")(
 
 Tabs can be shown on the bottom by setting `placement` to `bottom`.
 
-```scala examples
+```scala preview
 TabGroup(_.placement.bottom)(
   Tab(_.panel := "general")("General"),
   Tab(_.panel := "custom")("Custom"),
@@ -71,7 +71,7 @@ TabGroup(_.placement.bottom)(
 
 Tabs can be shown on the starting side by setting `placement` to `start`.
 
-```scala examples
+```scala preview
 TabGroup(_.placement.start)(
   Tab(_.panel := "general")("General"),
   Tab(_.panel := "custom")("Custom"),
@@ -88,7 +88,7 @@ TabGroup(_.placement.start)(
 
 Tabs can be shown on the ending side by setting `placement` to `end`.
 
-```scala examples
+```scala preview
 TabGroup(_.placement.end)(
   Tab(_.panel := "general")("General"),
   Tab(_.panel := "custom")("Custom"),
@@ -105,7 +105,7 @@ TabGroup(_.placement.end)(
 
 When there are more tabs than horizontal space allows, the nav will be scrollable.
 
-```scala examples
+```scala preview
 TabGroup()(
   Tab(_.panel := "tab-1")("Tab 1"),
   Tab(_.panel := "tab-2")("Tab 2"),
@@ -154,7 +154,7 @@ TabGroup()(
 
 When focused, keyboard users can press [[Left]] or [[Right]] to select the desired tab. By default, the corresponding tab panel will be shown immediately (automatic activation). You can change this behavior by setting `activation="manual"` which will require the user to press [[Space]] or [[Enter]] before showing the tab panel (manual activation).
 
-```scala examples
+```scala preview
 TabGroup(_.activation.manual)(
   Tab(_.panel := "general")("General"),
   Tab(_.panel := "custom")("Custom"),

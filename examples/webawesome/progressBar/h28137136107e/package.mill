@@ -1,0 +1,3 @@
+package build.examples.webawesome.progressBar.h28137136107e
+
+object `package` extends build.ExampleModule

@@ -1,6 +1,6 @@
 ---
 title: Slider
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:19.676Z
 ---
 
 ## Basic
@@ -27,7 +27,7 @@ Slider(
 
 Use the `label` attribute to give the slider an accessible label. For labels that contain HTML, use the `label` slot instead.
 
-```scala examples
+```scala preview
 Slider(
   _.label := "Volumn",
   _.min   := 0,
@@ -39,7 +39,7 @@ Slider(
 
 Add descriptive hint to a slider with the `hint` attribute. For hints that contain HTML, use the `hint` slot instead.
 
-```scala examples
+```scala preview
 Slider(
   _.label := "Volumn",
   _.hint  := "Controls the volume of the current song.",
@@ -53,7 +53,7 @@ Slider(
 
 Use the `with-tooltip` attribute to display a tooltip with the current value when the slider is focused or being dragged.
 
-```scala examples
+```scala preview
 Slider(
   _.label       := "Quality",
   _.name        := "quality",
@@ -69,7 +69,7 @@ Slider(
 
 Use the `min` and `max` attributes to define the slider's range, and the `step` attribute to control the increment between values.
 
-```scala examples
+```scala preview
 Slider(
   _.label       := "Between zero and one",
   _.hint        := "Controls the volume of the current song.",
@@ -85,7 +85,7 @@ Slider(
 
 Use the `with-markers` attribute to display visual indicators at each step increment. This works best with sliders that have a smaller range of values.
 
-```scala examples
+```scala preview
 Slider(
   _.label       := "Size",
   _.name        := "size",
@@ -100,7 +100,7 @@ Slider(
 
 Use the `reference` slot to add contextual labels below the slider. References are automatically spaced using `space-between`, making them easy to align with the start, center, and end positions.
 
-```scala examples
+```scala preview
 Slider(
   _.label       := "Speed",
   _.name        := "speed",
@@ -119,7 +119,7 @@ Slider(
 
 Set the `orientation` attribute to `vertical` to create a vertical slider. Vertical sliders automatically center themselves and fill the available vertical space.
 
-```scala examples
+```scala preview
 div(
   cls("flex gap-4"),
   Slider(
@@ -150,7 +150,7 @@ div(
 
 Control the slider's size using the `size` attribute. Valid options include `small`, `medium`, and `large`.
 
-```scala examples
+```scala preview
 Slider(
   _.label := "Small",
   _.size.small,
@@ -172,7 +172,7 @@ Slider(
 
 By default, the filled indicator extends from the minimum value to the current position. Use the `indicator-offset` attribute to change the starting point of this visual indicator.
 
-```scala examples
+```scala preview
 Slider(
   _.label           := "User Friendliness",
   _.hint            := "Did you find our product easy to use?",
@@ -193,7 +193,7 @@ Slider(
 
 Use the `disabled` attribute to disable a slider.
 
-```scala examples
+```scala preview
 Slider(
   _.label    := "Disabled",
   _.value    := "50",
@@ -205,7 +205,7 @@ Slider(
 
 Mark a slider as required using the `required` attribute. Users must interact with required sliders before the form can be submitted.
 
-```scala examples
+```scala preview
 Slider(
   _.label    := "Required slider",
   _.min      := 0,

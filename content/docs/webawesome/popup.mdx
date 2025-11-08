@@ -1,6 +1,6 @@
 ---
 title: Popup
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:15.722Z
 ---
 
 ## Basic
@@ -94,7 +94,7 @@ div(
 
 Popups are inactive and hidden until the `active` attribute is applied. Removing the attribute will tear down all positioning logic and listeners.
 
-```scala examples
+```scala preview
 val activeVar = Var(true)
 
 div(
@@ -130,7 +130,7 @@ div(
 
 By default, anchors are slotted into the popup using the `anchor` slot. If your anchor needs to live outside of the popup, you can pass the anchor's `id` to the `anchor` attribute.
 
-```scala examples
+```scala preview
 div(
   span(
     idAttr := "external-anchor",
@@ -159,7 +159,7 @@ div(
 
 Use the `placement` attribute to tell the popup the preferred placement of the popup. Note that the actual position will vary to ensure the panel remains in the viewport.
 
-```scala examples
+```scala preview
 val placementVar = Var[SharedTypes.Placement]("top")
 
 div(
@@ -209,7 +209,7 @@ div(
 
 Use the `distance` attribute to change the distance between the popup and its anchor. A positive value will move the popup further away and a negative value will move it closer.
 
-```scala examples
+```scala preview
 val distanceVar = Var(0.0)
 
 div(
@@ -251,7 +251,7 @@ div(
 
 The `skidding` attribute is similar to `distance`, but instead allows you to offset the popup along the anchor's axis. Both positive and negative values are allowed.
 
-```scala examples
+```scala preview
 val skiddingVar = Var(0.0)
 
 div(
@@ -293,7 +293,7 @@ div(
 
 Add an arrow to your popup with the `arrow` attribute. It's usually a good idea to set a `distance` to make room for the arrow. To adjust the arrow's color and size, use the `--arrow-color` and `--arrow-size` custom properties.
 
-```scala examples
+```scala preview
 val placementVar      = Var[SharedTypes.Placement]("top")
 val arrowPlacementVar = Var[PopupArrowPlacement]("anchor")
 val arrowVar          = Var(true)
@@ -377,7 +377,7 @@ div(
 
 When the popup doesn't have enough room in its preferred placement, it can automatically flip to keep it in view. To enable this, use the `flip` attribute. Scroll the container to see how the popup flips to prevent clipping.
 
-```scala examples
+```scala preview
 val flipVar = Var(true)
 
 div(
@@ -421,7 +421,7 @@ div(
 
 While using the `flip` attribute, you can customize the placement of the popup when the preferred placement doesn't have room. For this, use `flip-fallback-placements` and `flip-fallback-strategy`.
 
-```scala examples
+```scala preview
 div(
   div(
     position.relative,
@@ -460,7 +460,7 @@ div(
 
 When a popup is longer than its anchor, it risks overflowing. In this case, use the `shift` attribute to shift the popup along its axis and back into view.
 
-```scala examples
+```scala preview
 val shiftVar = Var(true)
 
 div(
@@ -503,7 +503,7 @@ div(
 
 Use the `auto-size` attribute to tell the popup to resize when necessary to prevent it from overflowing. Possible values are `horizontal`, `vertical`, and `both`.
 
-```scala examples
+```scala preview
 val autoSizeVar = Var(true)
 
 div(
@@ -551,7 +551,7 @@ div(
 
 When a gap exists between the anchor and the popup element, this option will add a "hover bridge" that fills the gap using an invisible element. This makes listening for events such as `mouseover` and `mouseout` more sane.
 
-```scala examples
+```scala preview
 val hoverBridgeVar = Var(true)
 val distanceVar    = Var(10.0)
 val skiddingVar    = Var(0.0)
@@ -618,7 +618,7 @@ div(
 
 In most cases, popups are anchored to an actual element. Sometimes, it can be useful to anchor them to a non-element. This example anchors a popup to the mouse cursor using a virtual element.
 
-```scala examples
+```scala preview
 val enabledVar = Var(false)
 Var(0.0)
 Var(0.0)

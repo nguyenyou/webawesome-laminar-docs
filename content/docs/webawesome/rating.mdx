@@ -1,6 +1,6 @@
 ---
 title: Rating
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:20.467Z
 ---
 
 ## Basic
@@ -13,7 +13,7 @@ Rating(_.label := "Rating")()
 
 Ratings are commonly identified contextually, so labels aren't displayed. However, you should always provide one for assistive devices using the `label` attribute.
 
-```scala examples
+```scala preview
 Rating(_.label := "Rate this component")()
 ```
 
@@ -21,7 +21,7 @@ Rating(_.label := "Rate this component")()
 
 Ratings are 0-5 by default. To change the maximum possible value, use the `max` attribute.
 
-```scala examples
+```scala preview
 Rating(_.label := "Rating", _.max := 3)()
 ```
 
@@ -29,7 +29,7 @@ Rating(_.label := "Rating", _.max := 3)()
 
 Use the `precision` attribute to let users select fractional ratings.
 
-```scala examples
+```scala preview
 Rating(_.label := "Rating", _.precision := 0.5, _.value := 2.5)()
 ```
 
@@ -37,7 +37,7 @@ Rating(_.label := "Rating", _.precision := 0.5, _.value := 2.5)()
 
 Use the `size` attribute to adjust the size of the rating.
 
-```scala examples
+```scala preview
 Rating(_.label := "Rating", _.size.small)()
 Rating(_.label := "Rating", _.size.medium)()
 Rating(_.label := "Rating", _.size.large)()
@@ -45,7 +45,7 @@ Rating(_.label := "Rating", _.size.large)()
 
 For more granular sizing, you can use the `font-size` property.
 
-```scala examples
+```scala preview
 Rating(
   _.label := "Rating",
   _.style := "font-size: 2rem;"
@@ -56,7 +56,7 @@ Rating(
 
 Use the `readonly` attribute to display a rating that users can't change.
 
-```scala examples
+```scala preview
 Rating(_.label := "Rating", _.readonly := true, _.value := 3)()
 ```
 
@@ -64,7 +64,7 @@ Rating(_.label := "Rating", _.readonly := true, _.value := 3)()
 
 Use the `disabled` attribute to disable the rating.
 
-```scala examples
+```scala preview
 Rating(_.label := "Rating", _.disabled := true, _.value := 3)()
 ```
 
@@ -74,7 +74,7 @@ Use the `wa-hover` event to detect when the user hovers over (or touch and drag)
 
 The event has a payload with `phase` and `value` properties. The `phase` property tells when hovering starts, moves to a new value, and ends. The `value` property tells what the rating's value would be if the user were to commit to the hovered value.
 
-```scala examples
+```scala preview
 val hoverText = Var("")
 val terms     = List("No rating", "Terrible", "Bad", "OK", "Good", "Excellent")
 

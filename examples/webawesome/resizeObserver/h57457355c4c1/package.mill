@@ -1,0 +1,3 @@
+package build.examples.webawesome.resizeObserver.h57457355c4c1
+
+object `package` extends build.ExampleModule

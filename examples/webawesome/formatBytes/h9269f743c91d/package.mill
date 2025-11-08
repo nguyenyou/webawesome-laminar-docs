@@ -1,0 +1,3 @@
+package build.examples.webawesome.formatBytes.h9269f743c91d
+
+object `package` extends build.ExampleModule

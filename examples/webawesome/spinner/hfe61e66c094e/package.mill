@@ -1,0 +1,3 @@
+package build.examples.webawesome.spinner.hfe61e66c094e
+
+object `package` extends build.ExampleModule

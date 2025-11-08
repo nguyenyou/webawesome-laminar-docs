@@ -1,6 +1,6 @@
 ---
 title: Tooltip
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:19.148Z
 ---
 
 ## Basic
@@ -20,7 +20,7 @@ div(
 
 Use the `placement` attribute to set the preferred placement of the tooltip.
 
-```scala examples
+```scala preview
 div(
   styleTag("""
     .tooltip-placement-example {
@@ -93,7 +93,7 @@ div(
 
 Set the `trigger` attribute to `click` to toggle the tooltip on click instead of hover.
 
-```scala examples
+```scala preview
 div(
   Tooltip(
     _.forId   := "toggle-button",
@@ -107,7 +107,7 @@ div(
 
 Tooltips can be controller programmatically by setting the `trigger` attribute to `manual`. Use the `open` attribute to control when the tooltip is shown.
 
-```scala examples
+```scala preview
 val openVar = Var(false)
 div(
   Button()(
@@ -130,7 +130,7 @@ div(
 
 You can control the size of tooltip arrows by overriding the `--wa-tooltip-arrow-size` design token. To remove them, set the value to `0` as shown below.
 
-```scala examples
+```scala preview
 div(
   Tooltip(
     _.forId := "no-arrow",
@@ -144,7 +144,7 @@ div(
 
 Use the default slot to create tooltips with HTML content. Tooltips are designed only for text and presentational elements. Avoid placing interactive content, such as buttons, links, and form controls, in a tooltip.
 
-```scala examples
+```scala preview
 div(
   Tooltip(
     _.forId := "rich-tooltip",
@@ -166,7 +166,7 @@ div(
 
 Use the `--max-width` custom property to change the width the tooltip can grow to before wrapping occurs.
 
-```scala examples
+```scala preview
 div(
   Tooltip(
     _.forId := "wrapping-tooltip",

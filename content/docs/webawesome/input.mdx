@@ -1,6 +1,6 @@
 ---
 title: Input
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:18.885Z
 ---
 
 ## Basic
@@ -17,7 +17,7 @@ Input(
 
 Use the `label` attribute to give the input an accessible label. For labels that contain HTML, use the `label` slot instead.
 
-```scala examples
+```scala preview
 Input(
   _.label := "What is your name?"
 )()
@@ -27,7 +27,7 @@ Input(
 
 Add descriptive hint to an input with the `hint` attribute. For hints that contain HTML, use the `hint` slot instead.
 
-```scala examples
+```scala preview
 Input(
   _.label := "Nickname",
   _.hint  := "What would you like people to call you?"
@@ -38,7 +38,7 @@ Input(
 
 Use the `placeholder` attribute to add a placeholder.
 
-```scala examples
+```scala preview
 Input(
   _.placeholder := "Type something"
 )()
@@ -48,7 +48,7 @@ Input(
 
 Add the `with-clear` attribute to add a clear button when the input has content.
 
-```scala examples
+```scala preview
 Input(
   _.placeholder := "Clearable",
   _.withClear   := true
@@ -59,7 +59,7 @@ Input(
 
 Add the `password-toggle` attribute to add a toggle button that will show the password when activated.
 
-```scala examples
+```scala preview
 Input(
   _.typ            := "password",
   _.placeholder    := "Password Toggle",
@@ -71,7 +71,7 @@ Input(
 
 Use the `appearance` attribute to change the input's visual appearance.
 
-```scala examples
+```scala preview
 Input(
   _.placeholder := "Type something",
   _.appearance.filled
@@ -82,7 +82,7 @@ Input(
 
 Use the `disabled` attribute to disable an input.
 
-```scala examples
+```scala preview
 Input(
   _.placeholder := "Disabled"
 )(
@@ -94,7 +94,7 @@ Input(
 
 Use the `size` attribute to change an input's size.
 
-```scala examples
+```scala preview
 Input(
   _.placeholder := "Small",
   _.size.small
@@ -113,7 +113,7 @@ Input(
 
 Use the `pill` attribute to give inputs rounded edges.
 
-```scala examples
+```scala preview
 Input(
   _.placeholder := "Small",
   _.size.small,
@@ -135,7 +135,7 @@ Input(
 
 The `type` attribute controls the type of input the browser renders.
 
-```scala examples
+```scala preview
 Input(
   _.typ.email,
   _.placeholder := "Email"
@@ -154,7 +154,7 @@ Input(
 
 Use the `start` and `end` slots to add presentational elements like `<wa-icon>` within the input.
 
-```scala examples
+```scala preview
 Input(
   _.placeholder := "Small",
   _.size.small,
@@ -179,7 +179,7 @@ Input(
 
 Use CSS parts to customize the way form controls are drawn. This example uses CSS grid to position the label to the left of the control, but the possible orientations are nearly endless. The same technique works for inputs, textareas, radio groups, and similar form controls.
 
-```scala examples
+```scala preview
 div(
   cls := "label-on-left",
   styleTag("""

@@ -1,6 +1,6 @@
 ---
 title: Copy Button
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:18.095Z
 ---
 
 ## Basic
@@ -15,7 +15,7 @@ CopyButton(
 
 Copy Buttons display feedback in a tooltip. You can customize the labels using the `copy-label`, `success-label`, and `error-label` attributes.
 
-```scala examples
+```scala preview
 CopyButton(
   _.value        := "Custom labels are easy",
   _.copyLabel    := "Click to copy",
@@ -28,7 +28,7 @@ CopyButton(
 
 Use the `copy-icon`, `success-icon`, and `error-icon` slots to customize the icons that get displayed for each state. You can use `<wa-icon>` or your own images.
 
-```scala examples
+```scala preview
 CopyButton(
   _.value := "Copied from a custom button",
   _.slots.copyIcon(Icon(_.name := "clipboard", _.variant := "regular")()),
@@ -42,7 +42,7 @@ CopyButton(
 Normally, the data that gets copied will come from the component's `value` attribute, but you can copy data from any element within the same document by providing its `id` to the `from` attribute.
 When using the `from` attribute, the element's `textContent` will be copied by default. Passing an attribute or property modifier will let you copy data from one of the element's attributes or properties instead.
 
-```scala examples
+```scala preview
 div(
   // Copies the span's textContent
   span(idAttr := "my-phone", "+1 (234) 456-7890"),
@@ -77,7 +77,7 @@ div(
 A copy error will occur if the value is an empty string, if the `from` attribute points to an id that doesn't exist, or if the browser rejects the operation for any reason. When this happens, the `wa-error` event will be emitted.
 This example demonstrates what happens when a copy error occurs. You can customize the error label and icon using the `error-label` attribute and the `error-icon` slot, respectively.
 
-```scala examples
+```scala preview
 CopyButton(_.from := "i-do-not-exist")()
 ```
 
@@ -85,7 +85,7 @@ CopyButton(_.from := "i-do-not-exist")()
 
 Copy buttons can be disabled by adding the `disabled` attribute.
 
-```scala examples
+```scala preview
 CopyButton(
   _.value    := "You can't copy me",
   _.disabled := true
@@ -96,7 +96,7 @@ CopyButton(
 
 A success indicator is briefly shown after copying. You can customize the length of time the indicator is shown using the `feedback-duration` attribute.
 
-```scala examples
+```scala preview
 CopyButton(
   _.value            := "Web Awesome rocks!",
   _.feedbackDuration := 250
@@ -107,7 +107,7 @@ CopyButton(
 
 You can customize the button to your liking with CSS.
 
-```scala examples
+```scala preview
 div(
   CopyButton(
     _.value := "I'm so stylish",

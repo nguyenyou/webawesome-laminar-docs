@@ -1,6 +1,6 @@
 ---
 title: Select
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:16.513Z
 ---
 
 ## Basic
@@ -24,7 +24,7 @@ Select(
 
 Use the `label` attribute to give the select an accessible label. For labels that contain HTML, use the `label` slot instead.
 
-```scala examples
+```scala preview
 Select(
   _.label := "Select one"
 )(
@@ -38,7 +38,7 @@ Select(
 
 Add descriptive hint to a select with the `hint` attribute. For hints that contain HTML, use the `hint` slot instead.
 
-```scala examples
+```scala preview
 Select(
   _.label := "Experience",
   _.hint  := "Please tell us your skill level."
@@ -53,7 +53,7 @@ Select(
 
 Use the `placeholder` attribute to add a placeholder.
 
-```scala examples
+```scala preview
 Select(
   _.placeholder := "Select one"
 )(
@@ -67,7 +67,7 @@ Select(
 
 Use the `with-clear` attribute to make the control clearable. The clear button only appears when an option is selected.
 
-```scala examples
+```scala preview
 Select(
   _.withClear := true,
   _.value     := "option-1"
@@ -82,7 +82,7 @@ Select(
 
 Use the `appearance` attribute to change the select's visual appearance.
 
-```scala examples
+```scala preview
 Select(
   _.appearance.filled
 )(
@@ -96,7 +96,7 @@ Select(
 
 Use the `pill` attribute to give selects rounded edges.
 
-```scala examples
+```scala preview
 Select(
   _.pill := true
 )(
@@ -110,7 +110,7 @@ Select(
 
 Use the `disabled` attribute to disable a select.
 
-```scala examples
+```scala preview
 Select(
   _.placeholder := "Disabled",
   _.disabled    := true
@@ -125,7 +125,7 @@ Select(
 
 To allow multiple options to be selected, use the `multiple` attribute. It's a good practice to use `with-clear` when this option is enabled. You can select multiple options by adding the `selected` attribute to individual options.
 
-```scala examples
+```scala preview
 Select(
   _.label     := "Select a Few",
   _.multiple  := true,
@@ -144,7 +144,7 @@ Select(
 
 Use the `selected` attribute on individual options to set the initial selection, similar to native HTML.
 
-```scala examples
+```scala preview
 Select()(
   UOption(_.value := "option-1", _.selected := true)("Option 1"),
   UOption(_.value := "option-2")("Option 2"),
@@ -155,7 +155,7 @@ Select()(
 
 For multiple selections, apply it to all selected options.
 
-```scala examples
+```scala preview
 Select(
   _.multiple  := true,
   _.withClear := true
@@ -171,7 +171,7 @@ Select(
 
 Use `<wa-divider>` to group listbox items visually. You can also use `<small>` to provide labels, but they won't be announced by most assistive devices.
 
-```scala examples
+```scala preview
 Select()(
   small("Section 1"),
   UOption(_.value := "option-1")("Option 1"),
@@ -189,7 +189,7 @@ Select()(
 
 Use the `size` attribute to change a select's size.
 
-```scala examples
+```scala preview
 Select(
   _.placeholder := "Small",
   _.size.small
@@ -220,7 +220,7 @@ Select(
 
 The preferred placement of the select's listbox can be set with the `placement` attribute. Note that the actual position may vary to ensure the panel remains in the viewport. Valid placements are `top` and `bottom`.
 
-```scala examples
+```scala preview
 Select(
   _.placement.top
 )(
@@ -234,7 +234,7 @@ Select(
 
 Use the `start` and `end` slots to add presentational elements like `<wa-icon>` within the combobox.
 
-```scala examples
+```scala preview
 Select(
   _.placeholder := "Small",
   _.size.small,

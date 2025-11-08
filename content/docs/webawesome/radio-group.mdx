@@ -1,6 +1,6 @@
 ---
 title: RadioGroup
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:18.622Z
 ---
 
 ## Basic
@@ -17,7 +17,7 @@ RadioGroup(_.label := "Select an option", _.name := "a", _.value := "1")(
 
 Add descriptive hint to a radio group with the `hint` attribute. For hints that contain HTML, use the `hint` slot instead.
 
-```scala examples
+```scala preview
 RadioGroup(
   _.label := "Select an option",
   _.hint  := "Choose the most appropriate option.",
@@ -34,7 +34,7 @@ RadioGroup(
 
 Set the `appearance` attribute to `button` on all radios to render a radio button group.
 
-```scala examples
+```scala preview
 RadioGroup(
   _.label := "Horizontal options",
   _.hint  := "Select an option that makes you proud.",
@@ -64,7 +64,7 @@ RadioGroup(
 
 To disable the entire radio group, add the `disabled` attribute to the radio group.
 
-```scala examples
+```scala preview
 RadioGroup(
   _.label    := "Select an option",
   _.disabled := true
@@ -77,7 +77,7 @@ RadioGroup(
 
 To disable individual options, add the `disabled` attribute to the respective options.
 
-```scala examples
+```scala preview
 RadioGroup(_.label := "Select an option")(
   Radio(_.value := "1")("Option 1"),
   Radio(_.value := "2", _.disabled := true)("Option 2"),
@@ -89,7 +89,7 @@ RadioGroup(_.label := "Select an option")(
 
 The default orientation for radio items is `vertical`. Set the `orientation` to `horizontal` to items on the same row.
 
-```scala examples
+```scala preview
 RadioGroup(
   _.label := "Select an option",
   _.hint  := "Choose the most appropriate option.",
@@ -107,7 +107,7 @@ RadioGroup(
 
 The size of Radios will be determined by the Radio Group's `size` attribute.
 
-```scala examples
+```scala preview
 RadioGroup(
   _.size.small
 )(
@@ -135,7 +135,7 @@ RadioGroup(
 
 Setting the `required` attribute to make selecting an option mandatory. If a value has not been selected, it will prevent the form from submitting and display an error message.
 
-```scala examples
+```scala preview
 form(
   onSubmit.preventDefault --> Observer[dom.Event] { _ =>
     dom.window.alert("All fields are valid!")

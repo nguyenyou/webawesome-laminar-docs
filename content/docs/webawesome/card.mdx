@@ -1,6 +1,6 @@
 ---
 title: Card
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:14.932Z
 ---
 
 ## Basic
@@ -34,7 +34,7 @@ Card(
 
 Basic cards aren't very exciting, but they can display any content you want them to.
 
-```scala examples
+```scala preview
 Card()(
   maxWidth.px(300),
   "This is just a basic card. No media, no header, and no footer. Just your content."
@@ -46,7 +46,7 @@ Card()(
 Headers can be used to display titles and more.
 If using SSR, you need to also use the `with-header` attribute to add a header to the card (if not, it is added automatically).
 
-```scala examples
+```scala preview
 Card(
   _.slots.header(
     div(
@@ -69,7 +69,7 @@ Card(
 Footers can be used to display actions, summaries, or other relevant content.
 If using SSR, you need to also use the `with-footer` attribute to add a footer to the card (if not, it is added automatically).
 
-```scala examples
+```scala preview
 Card(
   _.slots.footer(
     div(
@@ -89,7 +89,7 @@ Card(
 Card media is displayed atop the card and will stretch to fit.
 If using SSR, you need to also use the `with-media` attribute to add a media section to the card (if not, it is added automatically).
 
-```scala examples
+```scala preview
 Card(
   _.slots.media(
     img(
@@ -118,7 +118,7 @@ Card(
 
 Use the `appearance` attribute to change the card's visual appearance.
 
-```scala examples
+```scala preview
 Card(
   _.slots.media(
     img(

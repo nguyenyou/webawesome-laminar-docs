@@ -1,6 +1,6 @@
 ---
 title: ButtonGroup
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:17.832Z
 ---
 
 ## Basic
@@ -17,7 +17,7 @@ ButtonGroup(_.label := "Alignment")(
 
 Unless otherwise specified, the size of buttons will be determined by the Button Group's `size` attribute.
 
-```scala examples
+```scala preview
 ButtonGroup(_.size.small, _.label := "Alignment")(
   Button()("Left"),
   Button()("Center"),
@@ -39,7 +39,7 @@ ButtonGroup(_.size.large, _.label := "Alignment")(
 
 Set the `orientation` attribute to `vertical` to make a vertical button group.
 
-```scala examples
+```scala preview
 ButtonGroup(_.orientation.vertical, _.label := "Options")(
   maxWidth.px(120),
   Button(
@@ -61,7 +61,7 @@ ButtonGroup(_.orientation.vertical, _.label := "Options")(
 
 Theme buttons are supported through the button group's `variant` attribute.
 
-```scala examples
+```scala preview
 ButtonGroup(_.label := "Alignment", _.variant.brand)(
   Button()("Left"),
   Button()("Center"),
@@ -91,7 +91,7 @@ ButtonGroup(_.label := "Alignment", _.variant.danger)(
 
 You can still use the buttons' own `variant` attribute to override the inherited variant.
 
-```scala examples
+```scala preview
 ButtonGroup(_.label := "Alignment", _.variant.brand)(
   Button()("Left"),
   Button()("Center"),
@@ -103,7 +103,7 @@ ButtonGroup(_.label := "Alignment", _.variant.brand)(
 
 Pill buttons are supported through the button's `pill` attribute.
 
-```scala examples
+```scala preview
 ButtonGroup(_.label := "Alignment")(
   Button(_.size.small, _.pill := true)("Left"),
   Button(_.size.small, _.pill := true)("Center"),
@@ -125,7 +125,7 @@ ButtonGroup(_.label := "Alignment")(
 
 Dropdowns can be placed into button groups.
 
-```scala examples
+```scala preview
 ButtonGroup(_.label := "Example Button Group")(
   Button()("Button"),
   Dropdown(
@@ -146,7 +146,7 @@ ButtonGroup(_.label := "Example Button Group")(
 Create a split button using a button and a dropdown. Use a visually hidden label to ensure 
 the dropdown is accessible to users with assistive devices.
 
-```scala examples
+```scala preview
 ButtonGroup(_.label := "Example Button Group")(
   Button(_.variant.brand)("Save"),
   Dropdown(
@@ -168,7 +168,7 @@ ButtonGroup(_.label := "Example Button Group")(
 
 Buttons can be wrapped in tooltips to provide more detail when the user interacts with them.
 
-```scala examples
+```scala preview
 div(
   ButtonGroup(_.label := "Alignment")(
     Button(_.id := "button-left")("Left"),
@@ -185,7 +185,7 @@ div(
 
 Create interactive toolbars with button groups.
 
-```scala examples
+```scala preview
 div(
   styleTag(
     """

@@ -1,0 +1,3 @@
+package build.examples.webawesome.badge.heed8ac5aa4ca
+
+object `package` extends build.ExampleModule

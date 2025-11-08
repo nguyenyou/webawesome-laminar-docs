@@ -1,0 +1,3 @@
+package build.examples.webawesome.dialog.h9640daebbe6e
+
+object `package` extends build.ExampleModule

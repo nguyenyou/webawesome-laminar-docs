@@ -1,6 +1,6 @@
 ---
 title: Tag
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:14.668Z
 ---
 
 ## Basic
@@ -20,7 +20,7 @@ div(
 
 Use the `appearance` attribute to change a tag's visual appearance. The default appearance is `outlined filled`.
 
-```scala examples
+```scala preview
 div(
   cls("space-y-4"),
   p(
@@ -65,7 +65,7 @@ div(
 
 Use the `size` attribute to change a tag's size.
 
-```scala examples
+```scala preview
 div(
   cls("flex flex-wrap gap-2"),
   Tag(_.size.small)("Small"),
@@ -78,7 +78,7 @@ div(
 
 Use the `pill` attribute to give tags rounded edges.
 
-```scala examples
+```scala preview
 div(
   cls("flex flex-wrap gap-2"),
   Tag(_.size.small, _.pill := true)("Small"),
@@ -91,7 +91,7 @@ div(
 
 Use the `with-remove` attribute to add a remove button to the tag.
 
-```scala examples
+```scala preview
 div(
   div(
     cls("flex flex-wrap gap-2"),

@@ -1,6 +1,6 @@
 ---
 title: Tree
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:19.940Z
 ---
 
 ## Basic
@@ -21,7 +21,7 @@ Tree(_.selection.multiple)(
 
 ## Basic Tree
 
-```scala examples
+```scala preview
 Tree()(
   TreeItem()(
     "Deciduous",
@@ -57,7 +57,7 @@ The `selection` attribute lets you change the selection behavior of the tree.
 - Use `multiple` to allow the selection of multiple items.
 - Use `leaf` to only allow leaf nodes to be selected.
 
-```scala examples
+```scala preview
 val selectionMode = Var(TreeSelection.single.value)
 
 div(
@@ -100,7 +100,7 @@ div(
 
 Indent guides can be drawn by setting `--indent-guide-width`. You can also change the color, offset, and style, using `--indent-guide-color`, `--indent-guide-style`, and `--indent-guide-offset`, respectively.
 
-```scala examples
+```scala preview
 Tree(_.style := "--indent-guide-width: 1px")(
   TreeItem(_.expanded := true)(
     "Deciduous",
@@ -132,7 +132,7 @@ Tree(_.style := "--indent-guide-width: 1px")(
 
 Use the `expand-icon` and `collapse-icon` slots to change the expand and collapse icons, respectively. To disable the animation, override the `rotate` property on the `expand-button` part as shown below.
 
-```scala examples
+```scala preview
 div(
   styleTag("""
     .custom-icons wa-tree-item::part(expand-button) {
@@ -176,7 +176,7 @@ div(
 
 Decorative icons can be used before labels to provide hints for each node.
 
-```scala examples
+```scala preview
 Tree()(
   TreeItem(_.expanded := true)(
     Icon(_.name := "folder", _.variant := "regular")(),

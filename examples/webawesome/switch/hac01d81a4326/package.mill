@@ -1,0 +1,3 @@
+package build.examples.webawesome.switch.hac01d81a4326
+
+object `package` extends build.ExampleModule

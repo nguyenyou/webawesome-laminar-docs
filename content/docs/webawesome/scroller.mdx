@@ -1,6 +1,6 @@
 ---
 title: Scroller
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:14.404Z
 ---
 
 ## Basic
@@ -79,7 +79,7 @@ div(
 
 The scroller component automatically provides a scrollable container for any content that exceeds the available space. Simply add your content as children of the `<wa-scroller>` element, and it will handle the rest.
 
-```scala examples
+```scala preview
 Scroller()(
   div(
     width.px    := 1200,
@@ -121,7 +121,7 @@ Scroller()(
 
 Set the `orientation` attribute to `vertical` and provide a height to create a vertical scroller.
 
-```scala examples
+```scala preview
 Scroller(
   _.orientation.vertical
 )(
@@ -142,7 +142,7 @@ Scroller(
 
 Use the `without-shadow` attribute to remove the fading shadow effect at the edges of the scroller, which typically indicates more content is available.
 
-```scala examples
+```scala preview
 Scroller(
   _.withoutShadow := true
 )(
@@ -165,7 +165,7 @@ Scroller(
 
 Use the `without-scrollbar` attribute to hide the scrollbar while maintaining scroll functionality. This creates a cleaner visual appearance but may reduce usability on content that needs a clear scrolling indicator.
 
-```scala examples
+```scala preview
 Scroller(
   _.withoutScrollbar := true
 )(

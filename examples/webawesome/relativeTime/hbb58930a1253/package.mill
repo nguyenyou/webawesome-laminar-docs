@@ -1,0 +1,3 @@
+package build.examples.webawesome.relativeTime.hbb58930a1253
+
+object `package` extends build.ExampleModule

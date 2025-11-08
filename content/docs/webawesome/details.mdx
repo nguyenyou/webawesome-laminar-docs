@@ -1,6 +1,6 @@
 ---
 title: Details
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:24.420Z
 ---
 
 ## Basic
@@ -17,7 +17,7 @@ Details(
 
 Use the `disabled` attribute to prevent the details from expanding.
 
-```scala examples
+```scala preview
 Details(
   _.summary  := "Disabled",
   _.disabled := true
@@ -30,7 +30,7 @@ Details(
 
 Use the `expand-icon` and `collapse-icon` slots to change the expand and collapse icons, respectively.
 
-```scala examples
+```scala preview
 Details(
   _.summary := "Toggle Me",
   _.slots.expandIcon(Icon(_.name := "square-plus", _.variant := "regular")()),
@@ -44,7 +44,7 @@ Details(
 
 To use HTML in the summary, use the `summary` slot. Links and other interactive elements will still retain their behavior.
 
-```scala examples
+```scala preview
 Details(
   _.slots.summary(
     span(
@@ -62,7 +62,7 @@ Details(
 
 The details component automatically adapts to right-to-left languages.
 
-```scala examples
+```scala preview
 Details(
   _.summary := "تبديلني"
 )(
@@ -76,7 +76,7 @@ Details(
 
 Use the `appearance` attribute to change the element's visual appearance.
 
-```scala examples
+```scala preview
 Details(
   _.summary := "Outlined (default)"
 )(
@@ -107,7 +107,7 @@ Details(
 Use the `name` attribute to create accordion-like behavior where only one details element with the same name can be open at a time. 
 This matches the behavior of native `<details>` elements.
 
-```scala examples
+```scala preview
 Details(
   _.name    := "group-1",
   _.summary := "Section 1",

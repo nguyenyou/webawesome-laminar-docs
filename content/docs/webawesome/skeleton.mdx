@@ -1,6 +1,6 @@
 ---
 title: Skeleton
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:19.412Z
 ---
 
 ## Basic
@@ -57,7 +57,7 @@ div(
 
 There are two built-in effects, `sheen` and `pulse`. Effects are intentionally subtle, as they can be distracting when used extensively. The default is `none`, which displays a static, non-animated skeleton.
 
-```scala examples
+```scala preview
 Skeleton(_.effect.none)()
 Skeleton(_.effect.sheen)()
 Skeleton(_.effect.pulse)()
@@ -67,7 +67,7 @@ Skeleton(_.effect.pulse)()
 
 Use multiple skeletons and some clever styles to simulate paragraphs.
 
-```scala examples
+```scala preview
 div(
   cls := "skeleton-paragraphs",
   styleTag("""
@@ -99,7 +99,7 @@ div(
 
 Set a matching width and height to make a circle, square, or rounded avatar skeleton.
 
-```scala examples
+```scala preview
 div(
   styleTag("""
     .skeleton-avatars wa-skeleton {
@@ -130,7 +130,7 @@ div(
 
 Set a `border-radius` on the `indicator` part to make circles, squares, and rectangles. For more complex shapes, you can apply `clip-path` to the `indicator` part. Try Clippy if you need help generating custom shapes.
 
-```scala examples
+```scala preview
 div(
   cls := "skeleton-shapes",
   styleTag("""
@@ -192,7 +192,7 @@ div(
 
 Set the `--color` and `--sheen-color` custom properties to adjust the skeleton's color.
 
-```scala examples
+```scala preview
 Skeleton(
   _.effect.sheen
 )(

@@ -1,6 +1,6 @@
 ---
 title: Checkbox
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:15.986Z
 ---
 
 ## Basic
@@ -13,7 +13,7 @@ Checkbox()("Checkbox")
 
 Use the `checked` attribute to activate the checkbox.
 
-```scala examples
+```scala preview
 Checkbox(_.checked := true)("Checked")
 ```
 
@@ -21,7 +21,7 @@ Checkbox(_.checked := true)("Checked")
 
 Use the `indeterminate` attribute to make the checkbox indeterminate.
 
-```scala examples
+```scala preview
 Checkbox(_.indeterminate := true)("Indeterminate")
 ```
 
@@ -29,7 +29,7 @@ Checkbox(_.indeterminate := true)("Indeterminate")
 
 Use the `disabled` attribute to disable the checkbox.
 
-```scala examples
+```scala preview
 Checkbox(_.disabled := true)("Disabled")
 ```
 
@@ -37,7 +37,7 @@ Checkbox(_.disabled := true)("Disabled")
 
 Use the `size` attribute to change a checkbox's size.
 
-```scala examples
+```scala preview
 Checkbox(_.size.small)("Small")
 Checkbox(_.size.medium)("Medium")
 Checkbox(_.size.large)("Large")
@@ -47,7 +47,7 @@ Checkbox(_.size.large)("Large")
 
 Add descriptive hint to a checkbox with the `hint` attribute. For hints that contain HTML, use the `hint` slot instead.
 
-```scala examples
+```scala preview
 Checkbox(_.hint := "What should the user know about the checkbox?")("Label")
 ```
 
@@ -57,7 +57,7 @@ Use the `setCustomValidity()` method to set a custom validation message.
 This will prevent the form from submitting and make the browser display the error message you provide. 
 To clear the error, call this function with an empty string.
 
-```scala examples
+```scala preview
 form(
   cls("flex flex-col items-start gap-4"),
   Checkbox(

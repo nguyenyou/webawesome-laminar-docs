@@ -1,6 +1,6 @@
 ---
 title: Divider
-lastUpdated: 2025-01-27T00:00:00.000Z
+lastUpdated: 2025-11-08T14:43:21.522Z
 ---
 
 ## Basic
@@ -13,7 +13,7 @@ Divider()()
 
 Use the `--width` custom property to change the width of the divider.
 
-```scala examples
+```scala preview
 Divider(
   _.style := "--width: 4px;" // [!code highlight]
 )()
@@ -23,7 +23,7 @@ Divider(
 
 Use the `--color` custom property to change the color of the divider.
 
-```scala examples
+```scala preview
 Divider(
   _.style := "--color: tomato;" // [!code highlight]
 )()
@@ -33,7 +33,7 @@ Divider(
 
 Use the `--spacing` custom property to change the amount of space between the divider and it's neighboring elements.
 
-```scala examples
+```scala preview
 div(
   textAlign.center,
   "Above",
@@ -48,7 +48,7 @@ div(
 
 The default orientation for dividers is `horizontal`. Set `orientation` attribute to `vertical` to draw a vertical divider. The divider will span the full height of its container.
 
-```scala examples
+```scala preview
 div(
   display.flex,
   alignItems.center,
@@ -68,7 +68,7 @@ div(
 
 Use dividers in menus to visually group menu items.
 
-```scala examples
+```scala preview
 Dropdown(
   _.slots.trigger(
     Button(

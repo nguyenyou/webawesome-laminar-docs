@@ -1,0 +1,3 @@
+package build.examples.webawesome.tabGroup.hc1fdb579dc26
+
+object `package` extends build.ExampleModule

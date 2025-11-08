@@ -1,0 +1,3 @@
+package build.examples.webawesome.input.he516a395d39a
+
+object `package` extends build.ExampleModule
