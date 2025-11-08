@@ -6,7 +6,10 @@ package examples.laminar.button.example1
   @main def app = {
     val container = dom.document.querySelector("#root")
     render(container, {
-      div("Huhu")
+      div(
+        color := "blue",
+        "Hohohoho"
+      )
     })
   }
   
