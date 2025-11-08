@@ -1,0 +1,3 @@
+package build.examples.react
+
+object `package` extends build.ExampleModule
