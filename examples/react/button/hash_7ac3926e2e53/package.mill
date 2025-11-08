@@ -1,0 +1,3 @@
+package build.examples.react.button.hash_7ac3926e2e53
+
+object `package` extends build.ExampleModule
