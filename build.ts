@@ -1,6 +1,7 @@
 import path from 'path';
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'fs';
 import * as esbuild from 'esbuild';
+import { build as rolldownBuild } from 'rolldown';
 
 interface ExampleEntry {
   entrypoint: string; // Absolute path to mill build output main.js
@@ -135,6 +136,21 @@ async function buildWithEsbuild(entrypoint: string, outputPath: string): Promise
 }
 
 /**
+ * Build using rolldown bundler
+ */
+async function buildWithRolldown(entrypoint: string, outputPath: string): Promise<void> {
+  await rolldownBuild({
+    input: entrypoint,
+    output: {
+      file: outputPath,
+      format: 'esm',
+      minify: true,
+      inlineDynamicImports: true, // Required when using output.file with dynamic imports
+    },
+  });
+}
+
+/**
  * Get the bundler function based on BUNDLER environment variable
  * Defaults to 'bun' if not set or invalid value
  */
@@ -143,6 +159,10 @@ function getBundler(): BundlerFunction {
   
   if (bundlerEnv === 'esbuild') {
     return buildWithEsbuild;
+  }
+  
+  if (bundlerEnv === 'rolldown') {
+    return buildWithRolldown;
   }
   
   // Default to bun (also handles 'bun' explicitly or invalid values)
@@ -166,7 +186,10 @@ async function main() {
 
   // Select bundler based on environment variable
   const bundler = getBundler();
-  const bundlerName = process.env.BUNDLER?.toLowerCase() === 'esbuild' ? 'esbuild' : 'bun';
+  const bundlerEnv = process.env.BUNDLER?.toLowerCase();
+  const bundlerName = bundlerEnv === 'esbuild' ? 'esbuild' 
+    : bundlerEnv === 'rolldown' ? 'rolldown' 
+    : 'bun';
   console.log(`Using bundler: ${bundlerName}`);
 
   try {
