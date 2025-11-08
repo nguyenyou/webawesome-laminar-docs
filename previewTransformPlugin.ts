@@ -90,12 +90,7 @@ export const previewTransformPlugin: Plugin<[PreviewTransformPluginOptions?], Ro
             type: "mdxJsxAttribute",
             name: "userCode",
             value: node.value || "",
-          },
-          {
-            type: "mdxJsxAttribute",
-            name: "exampleHash",
-            value: hash,
-          },
+          }
         ],
         children: [],
       };
