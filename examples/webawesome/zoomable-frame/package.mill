@@ -1,0 +1,3 @@
+package build.examples.webawesome.zoomable-frame
+
+object `package` extends build.ExampleModule

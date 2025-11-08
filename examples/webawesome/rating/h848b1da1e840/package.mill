@@ -1,0 +1,3 @@
+package build.examples.webawesome.rating.h848b1da1e840
+
+object `package` extends build.ExampleModule

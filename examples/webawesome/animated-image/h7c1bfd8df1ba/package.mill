@@ -1,0 +1,3 @@
+package build.examples.webawesome.animated-image.h7c1bfd8df1ba
+
+object `package` extends build.ExampleModule

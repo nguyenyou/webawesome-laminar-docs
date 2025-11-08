@@ -1,0 +1,3 @@
+package build.examples.webawesome.popover.h3dfe2726821a
+
+object `package` extends build.ExampleModule

@@ -1,0 +1,3 @@
+package build.examples.webawesome.skeleton.h8f3571be5200
+
+object `package` extends build.ExampleModule

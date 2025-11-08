@@ -1,0 +1,3 @@
+package build.examples.webawesome.split-panel.h393089d8fed3
+
+object `package` extends build.ExampleModule

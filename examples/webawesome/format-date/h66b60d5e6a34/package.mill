@@ -1,0 +1,3 @@
+package build.examples.webawesome.format-date.h66b60d5e6a34
+
+object `package` extends build.ExampleModule

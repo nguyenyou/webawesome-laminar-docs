@@ -1,0 +1,3 @@
+package build.examples.webawesome.textarea.hb5d6bda96877
+
+object `package` extends build.ExampleModule

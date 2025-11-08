@@ -1,0 +1,3 @@
+package build.examples.webawesome.icon.haaac009bd7b6
+
+object `package` extends build.ExampleModule

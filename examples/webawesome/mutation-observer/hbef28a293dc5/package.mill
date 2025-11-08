@@ -1,0 +1,3 @@
+package build.examples.webawesome.mutation-observer.hbef28a293dc5
+
+object `package` extends build.ExampleModule

@@ -1,0 +1,45 @@
+---
+title: Spinner
+lastUpdated: 2025-01-27T00:00:00.000Z
+---
+
+## Basic
+
+```scala preview
+Spinner()()
+```
+
+## Size
+
+Spinners are sized based on the current font size. To change their size, set the `font-size` property on the spinner itself or on a parent element as shown below.
+
+```scala examples
+Spinner()()
+Spinner(
+  _.style := "font-size: 2rem;"
+)()
+Spinner(
+  _.style := "font-size: 3rem;"
+)()
+```
+
+## Track Width
+
+The width of the spinner's track can be changed by setting the `--track-width` custom property.
+
+```scala examples
+Spinner(
+  _.style := "font-size: 50px; --track-width: 10px;"
+)()
+```
+
+## Color
+
+The spinner's colors can be changed by setting the `--indicator-color` and `--track-color` custom properties.
+
+```scala examples
+Spinner(
+  _.style := "font-size: 3rem; --indicator-color: deeppink; --track-color: pink;"
+)()
+```
+

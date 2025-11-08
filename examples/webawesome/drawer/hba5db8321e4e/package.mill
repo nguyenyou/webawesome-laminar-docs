@@ -1,0 +1,3 @@
+package build.examples.webawesome.drawer.hba5db8321e4e
+
+object `package` extends build.ExampleModule

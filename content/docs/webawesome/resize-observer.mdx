@@ -1,0 +1,24 @@
+---
+title: Resize Observer
+lastUpdated: 2025-01-27T00:00:00.000Z
+---
+
+## Basic
+
+```scala preview
+div(
+  ResizeObserver(
+    _.onResize.map { event =>
+      dom.console.log(event.detail)
+    } --> Observer.empty
+  )(
+    div(
+      tw.flex.itemsCenter.justifyCenter.textCenter,
+      border  := "2px solid var(--wa-color-surface-border)",
+      padding := "4rem 2rem",
+      "Resize this box and watch the console 👉"
+    )
+  )
+)
+```
+

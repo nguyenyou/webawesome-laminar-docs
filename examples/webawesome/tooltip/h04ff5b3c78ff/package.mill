@@ -1,0 +1,3 @@
+package build.examples.webawesome.tooltip.h04ff5b3c78ff
+
+object `package` extends build.ExampleModule

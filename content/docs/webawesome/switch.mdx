@@ -1,0 +1,59 @@
+---
+title: Switch
+lastUpdated: 2025-01-27T00:00:00.000Z
+---
+
+## Basic
+
+```scala preview
+val checked = Var(true)
+Switch(
+  _.checked <-- checked,
+  _.onInput.mapToChecked --> checked
+)("Switch")
+```
+
+## Checked
+
+Use the `defaultChecked` attribute to activate the switch.
+
+```scala examples
+Switch(_.checked := true)("Switch")
+```
+
+## Disabled
+
+Use the `disabled` attribute to disable the switch.
+
+```scala examples
+Switch(_.disabled := true)("Switch")
+```
+
+## Size
+
+Use the `size` attribute to change a switch's size.
+
+```scala examples
+Switch(_.size.small)("Switch")
+Switch(_.size.medium)("Switch")
+Switch(_.size.large)("Switch")
+```
+
+## Hint
+
+Add descriptive hint to a switch with the `hint` attribute. For hints that contain HTML, use the `hint` slot instead.
+
+```scala examples
+Switch(_.hint := "What should the user know about the switch?")("Switch")
+```
+
+## Custom Styles
+
+Use the available custom properties to change how the switch is styled..
+
+```scala examples
+Switch(
+  _.style := "--width: 80px; --height: 40px; --thumb-size: 36px;"
+)("Really big")
+```
+
