@@ -8,10 +8,12 @@ import { mkdirSync, writeFileSync, readdirSync, rmSync, existsSync, readFileSync
 import { createHash } from "crypto";
 
 /**
- * Generate a short hash from code content for stable identifiers
+ * Generate a short hash from code content and meta for stable identifiers
  */
-const hashCode = (code: string): string => {
-  const hash = createHash("sha256").update(code).digest("hex");
+const hashCode = (code: string, meta: string | null | undefined): string => {
+  const metaStr = meta || "";
+  const hashInput = `${code}:${metaStr}`;
+  const hash = createHash("sha256").update(hashInput).digest("hex");
   return hash.substring(0, 12); // Use first 12 characters for readability
 };
 
@@ -615,8 +617,8 @@ export const previewPlugin: Plugin<[PreviewPluginOptions?], Root> = () => {
           return;
         }
         
-        // Generate hash from code content only
-        const hash = hashCode(node.value || "");
+        // Generate hash from code content and meta
+        const hash = hashCode(node.value || "", node.meta);
         examplePrefixHashes.push({ prefix, hash });
         
         // Store node information for second pass transformation
