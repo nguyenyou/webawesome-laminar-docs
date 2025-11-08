@@ -1,72 +1,168 @@
 import path from 'path';
-import { readdirSync, existsSync, statSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+
+/**
+ * JSON Structure Types matching previewPlugin.ts
+ */
+interface Position {
+  start: {
+    line: number;
+    column: number;
+    offset?: number;
+  };
+  end: {
+    line: number;
+    column: number;
+    offset?: number;
+  };
+}
+
+interface ExampleInfo {
+  path: string; // Example directory path relative to workspace root
+  position: Position | null; // Position in source MDX file
+  millBuildOutPath: string; // Mill build output path relative to workspace root
+  exampleBuildsPath: string; // examples-build path relative to workspace root
+  lastUpdated: string; // ISO timestamp string
+}
+
+interface ComponentInfo {
+  path: string; // Docs file path relative to workspace root
+  examples: ExampleInfo[];
+}
+
+type ExamplesJson = {
+  [category: string]: ExamplesJson | ComponentInfo;
+};
 
 interface ExampleEntry {
-  entrypoint: string;
-  outputPath: string;
-  docName: string;
-  exampleName: string;
+  entrypoint: string; // Absolute path to mill build output main.js
+  outputPath: string; // Absolute path to examples-build output
+  docPath: string; // Path to the MDX file relative to workspace root
+  exampleInfo: ExampleInfo;
 }
 
 /**
- * Recursively find all main.js files in the out/examples/autogen directory
+ * Check if an object is a ComponentInfo (has 'path' and 'examples' properties)
  */
-function findExamples(outDir: string, baseDir: string = ''): ExampleEntry[] {
+function isComponentInfo(obj: ExamplesJson | ComponentInfo): obj is ComponentInfo {
+  return typeof obj === 'object' && obj !== null && 'path' in obj && 'examples' in obj && Array.isArray(obj.examples);
+}
+
+/**
+ * Recursively extract all examples from the nested ExamplesJson structure
+ */
+function extractExamples(
+  json: ExamplesJson,
+  workspaceRoot: string
+): ExampleEntry[] {
   const examples: ExampleEntry[] = [];
-  const fullPath = path.join(outDir, baseDir);
 
-  if (!existsSync(fullPath)) {
-    return examples;
-  }
-
-  const entries = readdirSync(fullPath);
-
-  for (const entry of entries) {
-    const entryPath = path.join(fullPath, entry);
-    const relativePath = baseDir ? path.join(baseDir, entry) : entry;
-    const stat = statSync(entryPath);
-
-    if (stat.isDirectory()) {
-      // Check if this directory contains main.js (it's an example directory)
-      const mainJsPath = path.join(entryPath, 'fullLinkJS.dest', 'main.js');
-      if (existsSync(mainJsPath)) {
-        // Extract full path structure preserving all intermediate directories
-        // relativePath format: {docName}/{intermediate}/example{number}
-        const parts = relativePath.split(path.sep);
-        const exampleName = parts[parts.length - 1]; // e.g., "example1" (last part)
-        const pathParts = parts.slice(0, -1); // All parts except the last (example name)
-
-        // Construct output path preserving full structure: examples-build/{pathParts}/example{N}.js
-        const outputPath = pathParts.length > 0
-          ? path.join('examples-build', ...pathParts, `${exampleName}.js`)
-          : path.join('examples-build', `${exampleName}.js`);
+  function traverse(obj: ExamplesJson | ComponentInfo, currentPath: string[] = []): void {
+    if (isComponentInfo(obj)) {
+      // This is a ComponentInfo, extract all its examples
+      for (const exampleInfo of obj.examples) {
+        const entrypoint = path.join(workspaceRoot, exampleInfo.millBuildOutPath);
+        const outputPath = path.join(workspaceRoot, exampleInfo.exampleBuildsPath);
 
         examples.push({
-          entrypoint: mainJsPath,
+          entrypoint,
           outputPath,
-          docName: pathParts[0] || '', // First part for backward compatibility
-          exampleName,
+          docPath: obj.path,
+          exampleInfo,
         });
-      } else {
-        // Continue searching in subdirectories (docName directories)
-        examples.push(...findExamples(outDir, relativePath));
+      }
+    } else {
+      // This is a nested ExamplesJson, continue traversing
+      for (const [key, value] of Object.entries(obj)) {
+        traverse(value, [...currentPath, key]);
       }
     }
   }
 
+  traverse(json);
   return examples;
 }
 
-async function main() {
-  const outDir = './out/examples';
-  
-  if (!existsSync(outDir)) {
-    console.log('No examples found. Run mill build first.');
+/**
+ * Read examples.json file
+ */
+function readExamplesJson(workspaceRoot: string): ExamplesJson | null {
+  const examplesJsonPath = path.join(workspaceRoot, 'examples.json');
+
+  if (!existsSync(examplesJsonPath)) {
+    console.warn('examples.json not found. Run the dev server or build process first to generate it.');
+    return null;
+  }
+
+  try {
+    const content = readFileSync(examplesJsonPath, 'utf-8');
+    return JSON.parse(content) as ExamplesJson;
+  } catch (error) {
+    console.error(`Failed to read examples.json:`, error);
+    return null;
+  }
+}
+
+/**
+ * Update markdown file to trigger HMR by updating lastUpdated timestamp in frontmatter
+ */
+function updateMarkdownFile(docPath: string, workspaceRoot: string): void {
+  const fullPath = path.join(workspaceRoot, docPath);
+
+  if (!existsSync(fullPath)) {
+    console.warn(`Markdown file not found: ${fullPath}`);
     return;
   }
 
-  // Find all examples
-  const examples = findExamples(outDir);
+  try {
+    const content = readFileSync(fullPath, 'utf-8');
+    const timestamp = new Date().toISOString();
+
+    // Check if frontmatter exists
+    const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+
+    if (frontmatterMatch) {
+      // Frontmatter exists, update or add lastUpdated field
+      let frontmatter = frontmatterMatch[1];
+      
+      // Check if lastUpdated already exists
+      if (frontmatter.match(/^lastUpdated:/m)) {
+        // Update existing lastUpdated
+        frontmatter = frontmatter.replace(/^lastUpdated:.*$/m, `lastUpdated: ${timestamp}`);
+      } else {
+        // Add lastUpdated at the end of frontmatter
+        frontmatter = frontmatter.trim() + `\nlastUpdated: ${timestamp}`;
+      }
+
+      const updatedContent = content.replace(
+        /^---\n([\s\S]*?)\n---/,
+        `---\n${frontmatter}\n---`
+      );
+
+      writeFileSync(fullPath, updatedContent, 'utf-8');
+    } else {
+      // No frontmatter, add it at the beginning
+      const updatedContent = `---\nlastUpdated: ${timestamp}\n---\n\n${content}`;
+      writeFileSync(fullPath, updatedContent, 'utf-8');
+    }
+  } catch (error) {
+    console.error(`Failed to update markdown file ${fullPath}:`, error);
+  }
+}
+
+async function main() {
+  const workspaceRoot = process.cwd();
+
+  // Read examples.json
+  const examplesJson = readExamplesJson(workspaceRoot);
+  
+  if (!examplesJson) {
+    console.log('No examples.json found. Run the dev server or build process first to generate it.');
+    return;
+  }
+
+  // Extract all examples from the nested structure
+  const examples = extractExamples(examplesJson, workspaceRoot);
 
   if (examples.length === 0) {
     console.log('No examples found to build.');
@@ -78,9 +174,18 @@ async function main() {
     console.log(`  - ${ex.entrypoint} -> ${ex.outputPath}`);
   });
 
+  // Track which markdown files need to be updated
+  const markdownFilesToUpdate = new Set<string>();
+
   // Build each example
   for (const example of examples) {
     try {
+      // Check if mill build output exists
+      if (!existsSync(example.entrypoint)) {
+        console.warn(`Mill build output not found: ${example.entrypoint}. Skipping.`);
+        continue;
+      }
+
       const result = await Bun.build({
         entrypoints: [example.entrypoint],
         target: 'browser',
@@ -104,9 +209,17 @@ async function main() {
         await Bun.write(example.outputPath, output);
         console.log(`✓ Built: ${example.outputPath}`);
       }
+
+      // Track markdown file for update
+      markdownFilesToUpdate.add(example.docPath);
     } catch (error) {
       console.error(`Error building ${example.entrypoint}:`, error);
     }
+  }
+
+  // Update markdown files to trigger HMR
+  for (const docPath of markdownFilesToUpdate) {
+    updateMarkdownFile(docPath, workspaceRoot);
   }
 
   console.log('\nBuild complete!');

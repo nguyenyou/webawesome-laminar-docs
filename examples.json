@@ -19,7 +19,7 @@
           },
           "millBuildOutPath": "out/examples/react/button/example1/fullLinkJS.dest/main.js",
           "exampleBuildsPath": "examples-build/react/button/example1.js",
-          "lastUpdated": "2025-11-08T02:51:32.065Z"
+          "lastUpdated": "2025-11-08T02:55:16.388Z"
         }
       ]
     }
@@ -39,12 +39,12 @@
             "end": {
               "line": 5,
               "column": 4,
-              "offset": 61
+              "offset": 35
             }
           },
           "millBuildOutPath": "out/examples/laminar/button/example1/fullLinkJS.dest/main.js",
           "exampleBuildsPath": "examples-build/laminar/button/example1.js",
-          "lastUpdated": "2025-11-08T02:51:32.071Z"
+          "lastUpdated": "2025-11-08T02:55:16.388Z"
         }
       ]
     }
@@ -69,7 +69,7 @@
           },
           "millBuildOutPath": "out/examples/webawesome/button/example1/fullLinkJS.dest/main.js",
           "exampleBuildsPath": "examples-build/webawesome/button/example1.js",
-          "lastUpdated": "2025-11-08T02:51:32.107Z"
+          "lastUpdated": "2025-11-08T02:55:16.382Z"
         }
       ]
     }
