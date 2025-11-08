@@ -8,17 +8,21 @@ import {
   hashCode,
   normalizePath,
   extractPrefixFromDocPath,
+  extractHierarchicalPathSegments,
+  joinHierarchicalPath,
   type ExampleInfo,
   type ExamplesJson,
   type TemplateContext,
 } from "./previewUtils";
 
 /**
- * Generate mill package name for a hash-based example module
- * e.g., laminar_button_abc123 -> 'build.examples.laminar_button_abc123'
+ * Generate mill package name for a hierarchical example module
+ * e.g., ["webawesome", "button"], "abc123" -> 'build.examples.webawesome.button.habc123'
  */
-const getMillPackageName = (prefix: string, hash: string): string => {
-  return `build.examples.${prefix}_${hash}`;
+const getMillPackageName = (pathSegments: string[], hash: string): string => {
+  const hHash = `h${hash}`; // Prefix hash with "h" for valid package name
+  const packagePath = pathSegments.join(".");
+  return `build.examples.${packagePath}.${hHash}`;
 };
 
 /**
@@ -52,7 +56,8 @@ const createPackageMillContent = (packageName: string): string => {
 };
 
 export const applyTemplate = (ctx: TemplateContext): string => {
-  const packageName = `examples.${ctx.prefix}_${ctx.hash}`;
+  // ctx.prefix is now the hierarchical path joined with "/"
+  const packageName = `examples.${ctx.prefix.replace(/\//g, ".")}.h${ctx.hash}`;
   const userCode = ctx.userCode || "";
   
   return `package ${packageName}
@@ -218,7 +223,8 @@ export const parseTopLevelExpressions = (code: string): string[] => {
  * preserving nested structures.
  */
 export const applyExamplesTemplate = (ctx: TemplateContext): string => {
-  const packageName = `examples.${ctx.prefix}_${ctx.hash}`;
+  // ctx.prefix is now the hierarchical path joined with "/"
+  const packageName = `examples.${ctx.prefix.replace(/\//g, ".")}.h${ctx.hash}`;
   const userCode = ctx.userCode || "";
   
   // Parse into top-level expressions (preserving nested structure)
@@ -269,29 +275,57 @@ const applyTemplateByType = (
 };
 
 /**
- * Ensure the root examples/package.mill exists
+ * Ensure parent modules exist for hierarchical structure
+ * Creates nested directory structure and package.mill files at each level
+ * e.g., examples/webawesome/button/package.mill
  */
-const ensureParentModules = (workspaceRoot: string): void => {
+const ensureParentModules = (workspaceRoot: string, pathSegments: string[]): void => {
   const examplesPath = join(workspaceRoot, "examples");
-  const rootPackagePath = join(examplesPath, "package.mill");
   
+  // Ensure root examples/package.mill exists
+  const rootPackagePath = join(examplesPath, "package.mill");
   if (!existsSync(rootPackagePath)) {
     mkdirSync(examplesPath, { recursive: true });
     writeFileSync(rootPackagePath, createPackageMillContent("build.examples"));
+  }
+  
+  // Create nested directory structure and package.mill files for each level
+  let currentPath = examplesPath;
+  let packageName = "build.examples";
+  
+  for (const segment of pathSegments) {
+    currentPath = join(currentPath, segment);
+    packageName = `${packageName}.${segment}`;
+    
+    // Ensure directory exists
+    mkdirSync(currentPath, { recursive: true });
+    
+    // Create package.mill if it doesn't exist
+    const packageMillPath = join(currentPath, "package.mill");
+    if (!existsSync(packageMillPath)) {
+      writeFileSync(packageMillPath, createPackageMillContent(packageName));
+    }
   }
 };
 
 /**
  * Generate an example module with package.mill and src/Main.scala
+ * Uses hierarchical directory structure: examples/{category}/{component}/h{hash}/
  */
 const generateExampleModule = (
-  prefix: string,
+  pathSegments: string[],
   hash: string,
   scalaCode: string,
   workspaceRoot: string,
   templateType: "preview" | "examples" = "preview"
 ): void => {
-  const exampleDir = join(workspaceRoot, "examples", `${prefix}_${hash}`);
+  // Ensure parent modules exist
+  ensureParentModules(workspaceRoot, pathSegments);
+  
+  // Create hierarchical path: examples/webawesome/button/h{hash}
+  const hHash = `h${hash}`;
+  const hierarchicalPath = joinHierarchicalPath(pathSegments);
+  const exampleDir = join(workspaceRoot, "examples", hierarchicalPath, hHash);
   const srcDir = join(exampleDir, "src");
   const mainScalaPath = join(srcDir, "Main.scala");
   const packageMillPath = join(exampleDir, "package.mill");
@@ -300,8 +334,9 @@ const generateExampleModule = (
   mkdirSync(srcDir, { recursive: true });
   
   // Generate Main.scala
+  // TemplateContext.prefix should be the hierarchical path joined with "/"
   const templateContext: TemplateContext = {
-    prefix: prefix,
+    prefix: hierarchicalPath,
     hash: hash,
     userCode: scalaCode,
   };
@@ -309,18 +344,112 @@ const generateExampleModule = (
   writeFileSync(mainScalaPath, scalaSource);
   
   // Generate package.mill
-  const packageName = getMillPackageName(prefix, hash);
+  const packageName = getMillPackageName(pathSegments, hash);
   writeFileSync(packageMillPath, createPackageMillContent(packageName));
 };
 
 /**
+ * Recursively clean up example modules that no longer exist
+ * Handles both old flat structure and new hierarchical structure
+ */
+const cleanupOldExamplesRecursive = (
+  currentHashes: Set<string>,
+  docFilePath: string,
+  examplesJson: ExamplesJson,
+  currentPath: string,
+  workspaceRoot: string
+): void => {
+  if (!existsSync(currentPath)) {
+    return;
+  }
+  
+  try {
+    const entries = readdirSync(currentPath, { withFileTypes: true });
+    
+    for (const entry of entries) {
+      const entryPath = join(currentPath, entry.name);
+      
+      if (entry.isDirectory()) {
+        // Check if this is an old flat structure directory (format: "{prefix}_{hash}" or "hash_{hash}")
+        if (entry.name.includes("_") && !entry.name.startsWith("h")) {
+          // Old flat structure: extract hash and check if it should be removed
+          const lastUnderscoreIndex = entry.name.lastIndexOf("_");
+          if (lastUnderscoreIndex !== -1) {
+            const entryHash = entry.name.substring(lastUnderscoreIndex + 1);
+            
+            // Check if this hash belongs to the current doc file
+            const examplesForCurrentDoc = examplesJson.examples.filter(
+              ex => ex.docPath === docFilePath && ex.hash === entryHash
+            );
+            
+            // Remove if it doesn't exist in current hashes
+            if (examplesForCurrentDoc.length > 0 && !currentHashes.has(entryHash)) {
+              rmSync(entryPath, { recursive: true, force: true });
+              continue;
+            }
+          }
+        }
+        // Check if this is an old "hash_" directory
+        else if (entry.name.startsWith("hash_")) {
+          const entryHash = entry.name.substring(5);
+          const examplesForCurrentDoc = examplesJson.examples.filter(
+            ex => ex.docPath === docFilePath && ex.hash === entryHash
+          );
+          if (examplesForCurrentDoc.length > 0 && !currentHashes.has(entryHash)) {
+            rmSync(entryPath, { recursive: true, force: true });
+            continue;
+          }
+        }
+        // Check if this is an old "example{N}" directory
+        else if (entry.name.startsWith("example") && !entry.name.includes("_")) {
+          rmSync(entryPath, { recursive: true, force: true });
+          continue;
+        }
+        // Otherwise, recursively process subdirectories (for hierarchical structure)
+        else {
+          cleanupOldExamplesRecursive(
+            currentHashes,
+            docFilePath,
+            examplesJson,
+            entryPath,
+            workspaceRoot
+          );
+          
+          // After recursive cleanup, check if directory is empty and remove it if so
+          // (but keep package.mill files)
+          try {
+            const remainingEntries = readdirSync(entryPath);
+            const hasOnlyPackageMill = remainingEntries.length === 1 && remainingEntries[0] === "package.mill";
+            if (remainingEntries.length === 0 || hasOnlyPackageMill) {
+              // Check if this directory has examples that belong to current doc
+              const relativePath = normalizePath(relative(workspaceRoot, entryPath));
+              const hasExamplesForDoc = examplesJson.examples.some(
+                ex => ex.docPath === docFilePath && ex.path.startsWith(relativePath)
+              );
+              if (!hasExamplesForDoc) {
+                rmSync(entryPath, { recursive: true, force: true });
+              }
+            }
+          } catch {
+            // Ignore errors when checking/removing directories
+          }
+        }
+      }
+    }
+  } catch (error) {
+    // Ignore errors during cleanup
+    console.warn(`Failed to cleanup old examples in ${currentPath}:`, error);
+  }
+};
+
+/**
  * Clean up example modules that no longer exist in the current MDX file
- * Works with flat examples/ directory structure
+ * Works with hierarchical examples/ directory structure
  * Only removes examples that belong to the current doc file
- * Handles both old "hash_" format and new "{prefix}_" format for backward compatibility
+ * Handles migration from old flat structure
  */
 const cleanupOldExamples = (
-  currentPrefixHashes: Array<{ prefix: string; hash: string }>,
+  currentPathHashes: Array<{ pathSegments: string[]; hash: string }>,
   docFilePath: string,
   workspaceRoot: string,
   examplesJson: ExamplesJson
@@ -331,107 +460,62 @@ const cleanupOldExamples = (
     return;
   }
   
-  try {
-    // Find all examples that belong to the current doc file
-    const examplesForCurrentDoc = examplesJson.examples.filter(
-      ex => ex.docPath === docFilePath
-    );
-    const hashesForCurrentDoc = new Set(examplesForCurrentDoc.map(ex => ex.hash));
-    
-    // Create a set of current prefix_hash combinations for quick lookup
-    const currentPrefixHashSet = new Set(
-      currentPrefixHashes.map(({ prefix, hash }) => `${prefix}_${hash}`)
-    );
-    
-    const entries = readdirSync(examplesPath);
-    
-    for (const entry of entries) {
-      // Check if it's an old hash-based example directory (starts with "hash_")
-      if (entry.startsWith("hash_")) {
-        const hash = entry.substring(5); // Remove "hash_" prefix
-        
-        // Only remove if:
-        // 1. This hash belongs to the current doc file (in hashesForCurrentDoc)
-        // 2. AND it's not in the current hash list (was removed from the file)
-        if (hashesForCurrentDoc.has(hash)) {
-          // Check if this hash is still present in current examples (with new prefix format)
-          const stillExists = currentPrefixHashes.some(({ hash: currentHash }) => currentHash === hash);
-          if (!stillExists) {
-            const examplePath = join(examplesPath, entry);
-            rmSync(examplePath, { recursive: true, force: true });
-          }
-        }
-      }
-      // Check if it's a new prefix-based example directory (format: "{prefix}_{hash}")
-      else if (entry.includes("_") && !entry.startsWith("example")) {
-        // Extract hash from the entry (assuming format is prefix_hash)
-        // We need to check if this entry matches any current examples
-        const entryMatches = currentPrefixHashSet.has(entry);
-        
-        if (!entryMatches) {
-          // Check if this entry belongs to the current doc file
-          const entryBelongsToDoc = examplesForCurrentDoc.some(ex => {
-            // Extract hash from entry by finding the last underscore
-            const lastUnderscoreIndex = entry.lastIndexOf("_");
-            if (lastUnderscoreIndex === -1) return false;
-            const entryHash = entry.substring(lastUnderscoreIndex + 1);
-            return ex.hash === entryHash;
-          });
-          
-          if (entryBelongsToDoc) {
-            const examplePath = join(examplesPath, entry);
-            rmSync(examplePath, { recursive: true, force: true });
-          }
-        }
-      }
-      // Also clean up old example{N} directories from previous implementation
-      else if (entry.startsWith("example") && !entry.includes("_")) {
-        const examplePath = join(examplesPath, entry);
-        rmSync(examplePath, { recursive: true, force: true });
-      }
-    }
-  } catch (error) {
-    // Ignore errors during cleanup (e.g., directory doesn't exist)
-    console.warn(`Failed to cleanup old examples in ${examplesPath}:`, error);
-  }
+  // Create a set of current hashes for quick lookup
+  const currentHashes = new Set(currentPathHashes.map(({ hash }) => hash));
+  
+  // Recursively clean up old examples
+  cleanupOldExamplesRecursive(
+    currentHashes,
+    docFilePath,
+    examplesJson,
+    examplesPath,
+    workspaceRoot
+  );
 }
 
 /**
  * Get mill build out path for an example
- * e.g., out/examples/laminar_button_abc123/fullLinkJS.dest/main.js
+ * e.g., out/examples/webawesome/button/habc123/fullLinkJS.dest/main.js
  */
 const getMillBuildOutPath = (
-  prefix: string,
+  pathSegments: string[],
   hash: string,
   workspaceRoot: string
 ): string => {
-  const pathParts = ["out", "examples", `${prefix}_${hash}`, "fullLinkJS.dest", "main.js"];
+  const hHash = `h${hash}`;
+  const hierarchicalPath = joinHierarchicalPath(pathSegments);
+  const pathParts = ["out", "examples", hierarchicalPath, hHash, "fullLinkJS.dest", "main.js"];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
 };
 
 /**
  * Get example directory path relative to workspace root
- * e.g., examples/laminar_button_abc123
+ * e.g., examples/webawesome/button/habc123
  */
 const getExampleDirectoryPath = (
-  prefix: string,
+  pathSegments: string[],
   hash: string,
   workspaceRoot: string
 ): string => {
-  const pathParts = ["examples", `${prefix}_${hash}`];
+  const hHash = `h${hash}`;
+  const hierarchicalPath = joinHierarchicalPath(pathSegments);
+  const pathParts = ["examples", hierarchicalPath, hHash];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
 };
 
 /**
  * Get example builds path relative to workspace root
- * e.g., examples-build/laminar_button_abc123.js
+ * Uses flat structure for builds: examples-build/webawesome_button_abc123.js
+ * (keeping flat structure for backward compatibility with build system)
  */
 const getExampleBuildsPath = (
-  prefix: string,
+  pathSegments: string[],
   hash: string,
   workspaceRoot: string
 ): string => {
-  const pathParts = ["examples-build", `${prefix}_${hash}.js`];
+  // For builds, use flattened prefix format for backward compatibility
+  const flattenedPrefix = pathSegments.join("_");
+  const pathParts = ["examples-build", `${flattenedPrefix}_${hash}.js`];
   return normalizePath(relative(workspaceRoot, join(workspaceRoot, ...pathParts)));
 };
 
@@ -489,17 +573,14 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
     // Load existing examples.json
     const examplesJson = readExamplesJson(workspaceRoot);
 
-    // Ensure root examples/package.mill exists
-    ensureParentModules(workspaceRoot);
-
     // Get docs file path relative to workspace root
     const docsFilePath = normalizePath(relative(workspaceRoot, filePath));
     
-    // Extract prefix from doc file path
-    const prefix = extractPrefixFromDocPath(docsFilePath);
+    // Extract hierarchical path segments from doc file path
+    const pathSegments = extractHierarchicalPathSegments(docsFilePath);
 
-    // Track example prefix/hash combinations
-    const examplePrefixHashes: Array<{ prefix: string; hash: string }> = [];
+    // Track example path segments/hash combinations
+    const examplePathHashes: Array<{ pathSegments: string[]; hash: string }> = [];
     const exampleInfos: ExampleInfo[] = [];
     const currentTimestamp = new Date().toISOString();
     
@@ -515,12 +596,12 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
         
         // Generate hash from code content and meta
         const hash = hashCode(node.value || "", node.meta);
-        examplePrefixHashes.push({ prefix, hash });
+        examplePathHashes.push({ pathSegments, hash });
         
         // Collect example metadata
-        const examplePath = getExampleDirectoryPath(prefix, hash, workspaceRoot);
-        const millBuildOutPath = getMillBuildOutPath(prefix, hash, workspaceRoot);
-        const exampleBuildsPath = getExampleBuildsPath(prefix, hash, workspaceRoot);
+        const examplePath = getExampleDirectoryPath(pathSegments, hash, workspaceRoot);
+        const millBuildOutPath = getMillBuildOutPath(pathSegments, hash, workspaceRoot);
+        const exampleBuildsPath = getExampleBuildsPath(pathSegments, hash, workspaceRoot);
         
         exampleInfos.push({
           hash,
@@ -533,7 +614,7 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
         
         try {
           generateExampleModule(
-            prefix,
+            pathSegments,
             hash,
             node.value || "",
             workspaceRoot,
@@ -547,7 +628,7 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
 
     // Clean up old examples that are no longer in this MDX file
     // Only remove examples that belong to the current doc file
-    cleanupOldExamples(examplePrefixHashes, docsFilePath, workspaceRoot, examplesJson);
+    cleanupOldExamples(examplePathHashes, docsFilePath, workspaceRoot, examplesJson);
 
     // Update examples.json with new examples
     // Filter out existing examples from this doc file

@@ -23,6 +23,7 @@ export const normalizePath = (path: string | null | undefined): string => {
 /**
  * Extract prefix from doc file path for meaningful example directory names
  * e.g., content/docs/laminar/button.mdx -> laminar_button
+ * @deprecated Use extractHierarchicalPathSegments for new hierarchical structure
  */
 export const extractPrefixFromDocPath = (docPath: string): string => {
   let path = normalizePath(docPath);
@@ -51,6 +52,49 @@ export const extractPrefixFromDocPath = (docPath: string): string => {
   path = path.replace(/^_+|_+$/g, "");
   
   return path || "example"; // Fallback to "example" if empty
+};
+
+/**
+ * Extract hierarchical path segments from doc file path
+ * e.g., content/docs/webawesome/button.mdx -> ["webawesome", "button"]
+ * Returns an array of path segments representing the hierarchy
+ */
+export const extractHierarchicalPathSegments = (docPath: string): string[] => {
+  let path = normalizePath(docPath);
+  
+  // Remove content/docs/ prefix if present
+  if (path.startsWith("content/docs/")) {
+    path = path.substring("content/docs/".length);
+  }
+  
+  // Remove .mdx extension
+  if (path.endsWith(".mdx")) {
+    path = path.substring(0, path.length - 4);
+  }
+  
+  // Split by path separators
+  const segments = path.split("/").filter(segment => segment.length > 0);
+  
+  // Sanitize each segment: remove invalid characters for directory names
+  // Keep only alphanumeric, underscores, and hyphens
+  const sanitizedSegments = segments.map(segment => {
+    let sanitized = segment.replace(/[^a-zA-Z0-9_-]/g, "_");
+    // Remove consecutive underscores
+    sanitized = sanitized.replace(/_+/g, "_");
+    // Remove leading/trailing underscores
+    sanitized = sanitized.replace(/^_+|_+$/g, "");
+    return sanitized || "example"; // Fallback to "example" if empty
+  });
+  
+  return sanitizedSegments.length > 0 ? sanitizedSegments : ["example"];
+};
+
+/**
+ * Join hierarchical path segments into a directory path
+ * e.g., ["webawesome", "button"] -> "webawesome/button"
+ */
+export const joinHierarchicalPath = (segments: string[]): string => {
+  return segments.join("/");
 };
 
 /**

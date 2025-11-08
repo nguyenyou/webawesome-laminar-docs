@@ -9,7 +9,8 @@ interface ExampleEntry {
 }
 
 /**
- * Extract all examples from the flat ExamplesJson structure
+ * Extract all examples from the ExamplesJson structure
+ * ExamplesJson uses a flat array, but paths reflect hierarchical directory structure
  */
 function extractExamples(
   json: ExamplesJson,
@@ -144,7 +145,7 @@ async function main() {
     return;
   }
 
-  // Extract all examples from the flat structure
+  // Extract all examples from examples.json
   const examples = extractExamples(examplesJson, workspaceRoot);
 
   if (examples.length === 0) {
