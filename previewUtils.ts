@@ -46,15 +46,14 @@ export const extractHierarchicalPathSegments = (docPath: string): string[] => {
 };
 
 /**
- * Get the built JavaScript file path for an example
- * e.g., examples-build/webawesome_button_example1.js
+ * Get the built JavaScript file path for a module
+ * e.g., examples-build/webawesome_button.js
  */
 export const getCompiledJsPath = (
   prefix: string,
-  counter: number,
   workspaceRoot: string
 ): string => {
-  return join(workspaceRoot, "examples-build", `${prefix}_example${counter}.js`);
+  return join(workspaceRoot, "examples-build", `${prefix}.js`);
 };
 
 /**

@@ -6,9 +6,11 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs";
 export const Preview = ({
   code,
   userCode,
+  exampleId = "example1",
 }: {
   code: string;
   userCode?: string;
+  exampleId?: string;
 }) => {
   const srcDoc = `<html>
 <head>
@@ -16,7 +18,7 @@ export const Preview = ({
 <base target=_blank>
 </head>
 <body style='overflow: hidden'>
- <div id="root"></div>
+ <div id="${exampleId}"></div>
  
  <script type="module">
   ${code || ""}

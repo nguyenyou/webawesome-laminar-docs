@@ -85,17 +85,19 @@ export const previewTransformPlugin: Plugin<[PreviewTransformPluginOptions?], Ro
     });
 
     // Transform nodes to Preview components
-    for (const { node, prefix, counter, parent, index } of previewNodes) {
-      // Get built JS file path using prefix and counter
-      const compiledJsPath = getCompiledJsPath(prefix, counter, workspaceRoot);
-      
-      // Read built JS file content
-      const jsContent = readCompiledJsFile(compiledJsPath);
-      
-      if (jsContent === null) {
-        console.warn(`Compiled JS file not found at ${compiledJsPath}, skipping preview transformation`);
-        continue;
-      }
+    // All examples from the same doc file share the same JS module
+    // Read the JS file once (it's the same for all examples in this doc)
+    const compiledJsPath = getCompiledJsPath(prefix, workspaceRoot);
+    const jsContent = readCompiledJsFile(compiledJsPath);
+    
+    if (jsContent === null) {
+      console.warn(`Compiled JS file not found at ${compiledJsPath}, skipping preview transformation`);
+      return;
+    }
+
+    // Transform each preview node
+    for (const { node, counter, parent, index } of previewNodes) {
+      const exampleId = `example${counter}`;
 
       // Create MDX JSX element for Preview component
       const previewElement: MdxJsxFlowElement = {
@@ -111,6 +113,11 @@ export const previewTransformPlugin: Plugin<[PreviewTransformPluginOptions?], Ro
             type: "mdxJsxAttribute",
             name: "userCode",
             value: node.value || "",
+          },
+          {
+            type: "mdxJsxAttribute",
+            name: "exampleId",
+            value: exampleId,
           }
         ],
         children: [],

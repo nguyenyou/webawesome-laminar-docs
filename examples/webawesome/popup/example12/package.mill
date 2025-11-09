@@ -1,3 +1,0 @@
-package build.examples.webawesome.popup.example12
-
-object `package` extends build.ExampleModule

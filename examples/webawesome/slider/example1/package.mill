@@ -1,3 +1,0 @@
-package build.examples.webawesome.slider.example1
-
-object `package` extends build.ExampleModule

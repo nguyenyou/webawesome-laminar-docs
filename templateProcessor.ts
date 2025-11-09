@@ -222,35 +222,29 @@ const groupExpressionsByBlankLines = (code: string, expressions: string[]): stri
 };
 
 /**
- * Apply preview template: wraps user code in a Scala main function
+ * Apply preview template: wraps user code in a Scala method
  */
 export const applyTemplate = (ctx: TemplateContext): string => {
-  // ctx.prefix is now the hierarchical path joined with "/" (using camelCase segments)
-  // Convert path segments to camelCase package names for valid Scala package names
-  const pathSegments = ctx.prefix.split("/");
-  const packageSegments = pathSegments.map(toCamelCase);
-  const packageName = `examples.${packageSegments.join(".")}.example${ctx.counter}`;
   const userCode = ctx.userCode || "";
+  const exampleId = `example${ctx.counter}`;
   
-  return `package ${packageName}
-  
-import org.scalajs.dom
-import com.raquo.laminar.api.L.*
-import doc.*
-import doc.facades.*
-import org.scalajs.dom.window
-import io.github.nguyenyou.webawesome.laminar.*
-import io.github.nguyenyou.webawesome.laminar.SharedTypes.*
-import io.github.nguyenyou.webawesome.laminar.CommonKeys.TreeSelection
+  return `def ${exampleId}() = {
+  import org.scalajs.dom
+  import com.raquo.laminar.api.L.*
+  import doc.*
+  import doc.facades.*
+  import org.scalajs.dom.window
+  import io.github.nguyenyou.webawesome.laminar.*
+  import io.github.nguyenyou.webawesome.laminar.SharedTypes.*
+  import io.github.nguyenyou.webawesome.laminar.CommonKeys.TreeSelection
+  import scala.scalajs.js
 
-import scala.scalajs.js
-
-@main 
-def app = {
-  val container = dom.document.querySelector("#root")
-  render(container, {
+  val container = dom.document.querySelector("#${exampleId}")
+  if (container != null) {
+    render(container, {
 ${indentCode(userCode, 6)}
-  })
+    })
+  }
 }
   `;
 };
@@ -261,12 +255,8 @@ ${indentCode(userCode, 6)}
  * Only adds commas between complete top-level expressions, preserving nested structures.
  */
 export const applyExamplesTemplate = (ctx: TemplateContext): string => {
-  // ctx.prefix is now the hierarchical path joined with "/" (using camelCase segments)
-  // Convert path segments to camelCase package names for valid Scala package names
-  const pathSegments = ctx.prefix.split("/");
-  const packageSegments = pathSegments.map(toCamelCase);
-  const packageName = `examples.${packageSegments.join(".")}.example${ctx.counter}`;
   const userCode = ctx.userCode || "";
+  const exampleId = `example${ctx.counter}`;
   
   // Parse into top-level expressions (preserving nested structure)
   const expressions = parseTopLevelExpressions(userCode);
@@ -298,19 +288,19 @@ ${indentCode(examplesArgs, 2)}
 ${indentCode(exampleGroupsArgs, 2)}
 )`;
   
-  return `package ${packageName}
-  
-import org.scalajs.dom
-import com.raquo.laminar.api.L.*
-import doc.*
-import io.github.nguyenyou.webawesome.laminar.*
+  return `def ${exampleId}() = {
+  import org.scalajs.dom
+  import com.raquo.laminar.api.L.*
+  import doc.*
+  import io.github.nguyenyou.webawesome.laminar.*
+  import scala.scalajs.js
 
-@main 
-def app = {
-  val container = dom.document.querySelector("#root")
-  render(container, {
+  val container = dom.document.querySelector("#${exampleId}")
+  if (container != null) {
+    render(container, {
 ${indentCode(exampleGroupsCall, 6)}
-  })
+    })
+  }
 }
   `;
 };

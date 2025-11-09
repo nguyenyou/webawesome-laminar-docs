@@ -1,3 +1,0 @@
-package build.examples.webawesome.textarea.example3
-
-object `package` extends build.ExampleModule

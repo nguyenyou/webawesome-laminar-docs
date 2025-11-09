@@ -1,3 +1,0 @@
-package build.examples.webawesome.formatNumber.example2
-
-object `package` extends build.ExampleModule

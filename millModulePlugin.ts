@@ -20,15 +20,14 @@ const joinHierarchicalPathCamelCase = (segments: string[]): string => {
 };
 
 /**
- * Generate mill package name for a hierarchical example module
- * e.g., ["webawesome", "button"], 1 -> 'build.examples.webawesome.button.example1'
+ * Generate mill package name for a consolidated example module
+ * e.g., ["webawesome", "button"] -> 'build.examples.webawesome.button'
  * Converts hyphenated segments to camelCase for valid Scala package names
  */
-const getMillPackageName = (pathSegments: string[], counter: number): string => {
-  const exampleName = `example${counter}`;
+const getMillPackageName = (pathSegments: string[]): string => {
   const packageSegments = pathSegments.map(toCamelCase);
   const packagePath = packageSegments.join(".");
-  return `build.examples.${packagePath}.${exampleName}`;
+  return `build.examples.${packagePath}`;
 };
 
 /**
@@ -91,46 +90,82 @@ const ensureParentModules = (workspaceRoot: string, pathSegments: string[]): voi
 };
 
 /**
- * Generate an example module with package.mill and src/Main.scala
- * Uses hierarchical directory structure with camelCase: examples/{category}/{component}/example{number}/
- * Directory names match package names per Mill convention
+ * Interface for collected example data
  */
-const generateExampleModule = (
+interface ExampleData {
+  counter: number;
+  scalaCode: string;
+  templateType: "preview" | "examples";
+}
+
+/**
+ * Generate a consolidated example module with package.mill and src/Main.scala
+ * Contains all examples from a doc file as methods
+ * Uses hierarchical directory structure: examples/{category}/{component}/
+ */
+const generateConsolidatedModule = (
   pathSegments: string[],
-  counter: number,
-  scalaCode: string,
-  workspaceRoot: string,
-  templateType: "preview" | "examples" = "preview"
+  examples: ExampleData[],
+  workspaceRoot: string
 ): void => {
   // Ensure parent modules exist
   ensureParentModules(workspaceRoot, pathSegments);
   
-  // Create hierarchical path: examples/webawesome/button/example1
+  // Create hierarchical path: examples/webawesome/button
   // Use camelCase segments for directory names (matches package names per Mill convention)
-  const exampleName = `example${counter}`;
   const hierarchicalPath = joinHierarchicalPathCamelCase(pathSegments);
-  const exampleDir = join(workspaceRoot, "examples", hierarchicalPath, exampleName);
-  const srcDir = join(exampleDir, "src");
+  const moduleDir = join(workspaceRoot, "examples", hierarchicalPath);
+  const srcDir = join(moduleDir, "src");
   const mainScalaPath = join(srcDir, "Main.scala");
-  const packageMillPath = join(exampleDir, "package.mill");
+  const packageMillPath = join(moduleDir, "package.mill");
   
   // Ensure directories exist
   mkdirSync(srcDir, { recursive: true });
   
-  // Generate Main.scala
-  // TemplateContext.prefix should be the hierarchical path joined with "/" (using camelCase segments)
-  // Package names will be converted to camelCase in applyTemplate/applyExamplesTemplate
-  const templateContext: TemplateContext = {
-    prefix: hierarchicalPath,
-    counter: counter,
-    userCode: scalaCode,
-  };
-  const scalaSource = applyTemplateByType(templateType, templateContext);
+  // Generate Main.scala with all example methods
+  const packageSegments = pathSegments.map(toCamelCase);
+  const packageName = `examples.${packageSegments.join(".")}`;
+  
+  // Collect all method definitions (imports are kept inside each method body)
+  const methodDefinitions: string[] = [];
+  const methodNames: string[] = [];
+  
+  for (const example of examples) {
+    const templateContext: TemplateContext = {
+      prefix: hierarchicalPath,
+      counter: example.counter,
+      userCode: example.scalaCode,
+    };
+    const methodSource = applyTemplateByType(example.templateType, templateContext);
+    
+    // Method source already contains just the method definition (no package declaration)
+    methodDefinitions.push(methodSource.trim());
+    
+    // Collect method name for main method
+    const methodName = `example${example.counter}`;
+    methodNames.push(methodName);
+  }
+  
+  // Generate main method that calls all example methods
+  const mainMethodCalls = methodNames.map(name => `  ${name}()`).join('\n');
+  const mainMethod = `@main
+def app = {
+${mainMethodCalls}
+}`;
+  
+  // Combine into single Main.scala
+  const scalaSource = `package ${packageName}
+
+${mainMethod}
+
+${methodDefinitions.join('\n\n')}
+`;
+  
   writeFileSync(mainScalaPath, scalaSource);
   
   // Generate package.mill
-  const packageName = getMillPackageName(pathSegments, counter);
-  writeFileSync(packageMillPath, createPackageMillContent(packageName));
+  const millPackageName = getMillPackageName(pathSegments);
+  writeFileSync(packageMillPath, createPackageMillContent(millPackageName));
 };
 
 interface MillModulePluginOptions {}
@@ -152,7 +187,8 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
     // Extract hierarchical path segments from doc file path
     const pathSegments = extractHierarchicalPathSegments(docsFilePath);
     
-    // Counter for examples in this MDX file (starts at 1)
+    // Collect all examples from this MDX file
+    const examples: ExampleData[] = [];
     let exampleCounter = 1;
     
     visit(tree, "code", (node) => {
@@ -168,19 +204,22 @@ export const millModulePlugin: Plugin<[MillModulePluginOptions?], Root> = () => 
         // Use sequential counter for this example
         const counter = exampleCounter++;
         
-        try {
-          generateExampleModule(
-            pathSegments,
-            counter,
-            node.value || "",
-            workspaceRoot,
-            templateType
-          );
-        } catch (error) {
-          console.error(`Failed to generate module for Scala ${templateType}:`, error);
-        }
+        examples.push({
+          counter,
+          scalaCode: node.value || "",
+          templateType,
+        });
       }
     });
+    
+    // Generate single consolidated module if we have any examples
+    if (examples.length > 0) {
+      try {
+        generateConsolidatedModule(pathSegments, examples, workspaceRoot);
+      } catch (error) {
+        console.error(`Failed to generate consolidated module:`, error);
+      }
+    }
   };
 };
 

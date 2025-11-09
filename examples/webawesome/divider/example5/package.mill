@@ -1,3 +1,0 @@
-package build.examples.webawesome.divider.example5
-
-object `package` extends build.ExampleModule

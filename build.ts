@@ -9,26 +9,28 @@ import { build as rolldownBuild } from 'rolldown';
  */
 const DEFAULT_BUNDLER: 'bun' | 'esbuild' | 'rolldown' = 'rolldown';
 
-interface ExampleEntry {
+interface ModuleEntry {
   entrypoint: string; // Absolute path to mill build output main.js
   outputPath: string; // Absolute path to examples-build output
-  counter: number; // Example counter number
+  pathSegments: string[]; // Path segments for this module (e.g., ["webawesome", "button"])
 }
 
 /**
- * Discover examples by scanning the filesystem
- * Scans out/examples/ directory recursively to find all example{N}/fullLinkJS.dest/main.js files
+ * Discover modules by scanning the filesystem
+ * Scans out/examples/ directory recursively to find all fullLinkJS.dest/main.js files
+ * Each module corresponds to a doc file and contains multiple example methods
  */
-function discoverExamples(workspaceRoot: string): ExampleEntry[] {
-  const examples: ExampleEntry[] = [];
+function discoverModules(workspaceRoot: string): ModuleEntry[] {
+  const modules: ModuleEntry[] = [];
   const outExamplesPath = path.join(workspaceRoot, 'out', 'examples');
 
   if (!existsSync(outExamplesPath)) {
-    return examples;
+    return modules;
   }
 
   /**
-   * Recursively scan directory for example directories
+   * Recursively scan directory for module directories
+   * A module is identified by having a fullLinkJS.dest/main.js file directly in it
    */
   function scanDirectory(dirPath: string, pathSegments: string[]): void {
     if (!existsSync(dirPath)) {
@@ -37,34 +39,35 @@ function discoverExamples(workspaceRoot: string): ExampleEntry[] {
 
     try {
       const entries = readdirSync(dirPath, { withFileTypes: true });
+      
+      // Check if this directory itself contains a main.js (it's a module)
+      const mainJsPath = path.join(dirPath, 'fullLinkJS.dest', 'main.js');
+      if (existsSync(mainJsPath)) {
+        // This is a module directory
+        // Derive output path: examples-build/{category}_{component}.js
+        const camelCaseSegments = pathSegments.map(segment => segment); // Already camelCase from directory names
+        const flattenedPrefix = camelCaseSegments.join('_');
+        const outputPath = path.join(
+          workspaceRoot,
+          'examples-build',
+          `${flattenedPrefix}.js`
+        );
 
+        modules.push({
+          entrypoint: mainJsPath,
+          outputPath,
+          pathSegments: [...pathSegments],
+        });
+        return; // Don't scan deeper, this is a module
+      }
+
+      // Otherwise, scan subdirectories
       for (const entry of entries) {
         const fullPath = path.join(dirPath, entry.name);
 
-        // Check if this is an example{N} directory
+        // Skip example{N} directories (old structure, should not exist anymore)
         const exampleMatch = entry.name.match(/^example(\d+)$/);
-        if (entry.isDirectory() && exampleMatch) {
-          const counter = parseInt(exampleMatch[1], 10);
-          const mainJsPath = path.join(fullPath, 'fullLinkJS.dest', 'main.js');
-
-          // Check if main.js exists
-          if (existsSync(mainJsPath)) {
-            // Derive output path: examples-build/{category}_{component}_example{N}.js
-            const camelCaseSegments = pathSegments.map(segment => segment); // Already camelCase from directory names
-            const flattenedPrefix = camelCaseSegments.join('_');
-            const outputPath = path.join(
-              workspaceRoot,
-              'examples-build',
-              `${flattenedPrefix}_example${counter}.js`
-            );
-
-            examples.push({
-              entrypoint: mainJsPath,
-              outputPath,
-              counter,
-            });
-          }
-        } else if (entry.isDirectory()) {
+        if (entry.isDirectory() && !exampleMatch) {
           // Recursively scan subdirectories
           scanDirectory(fullPath, [...pathSegments, entry.name]);
         }
@@ -75,7 +78,7 @@ function discoverExamples(workspaceRoot: string): ExampleEntry[] {
   }
 
   scanDirectory(outExamplesPath, []);
-  return examples;
+  return modules;
 }
 
 /**
@@ -192,11 +195,11 @@ function getBundler(): BundlerFunction {
 async function main() {
   const workspaceRoot = process.cwd();
 
-  // Discover examples by scanning filesystem
-  const examples = discoverExamples(workspaceRoot);
+  // Discover modules by scanning filesystem
+  const modules = discoverModules(workspaceRoot);
 
-  if (examples.length === 0) {
-    console.log('No examples found to build. Run mill build first to generate example outputs.');
+  if (modules.length === 0) {
+    console.log('No modules found to build. Run mill build first to generate module outputs.');
     return;
   }
 
@@ -217,7 +220,7 @@ async function main() {
   console.log(`Using bundler: ${bundlerName}`);
 
   try {
-    // Ensure output directory exists for all examples
+    // Ensure output directory exists for all modules
     const outputDir = path.join(workspaceRoot, 'examples-build');
     if (!existsSync(outputDir)) {
       mkdirSync(outputDir, { recursive: true });
@@ -225,12 +228,12 @@ async function main() {
 
     // Start timing
     const startTime = performance.now();
-    const fileCount = examples.length;
+    const fileCount = modules.length;
     let completedCount = 0;
 
-    // Build all examples in parallel
-    const buildPromises = examples.map(async (example, index) => {
-      await bundler(example.entrypoint, example.outputPath);
+    // Build all modules in parallel
+    const buildPromises = modules.map(async (module, index) => {
+      await bundler(module.entrypoint, module.outputPath);
       
       // Update and log progress (increment happens atomically in single-threaded JS)
       completedCount++;
@@ -249,9 +252,9 @@ async function main() {
     const durationMs = endTime - startTime;
     const durationStr = formatDuration(durationMs);
     
-    console.log(`Bundled ${fileCount} examples in ${durationStr}`);
+    console.log(`Bundled ${fileCount} modules in ${durationStr}`);
   } catch (error) {
-    console.error('Error building examples:', error);
+    console.error('Error building modules:', error);
     return;
   }
 }
