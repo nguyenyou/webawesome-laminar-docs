@@ -3,6 +3,12 @@ import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'fs';
 import * as esbuild from 'esbuild';
 import { build as rolldownBuild } from 'rolldown';
 
+/**
+ * Default bundler to use when BUNDLER environment variable is not set or invalid
+ * Valid values: 'bun', 'esbuild', 'rolldown'
+ */
+const DEFAULT_BUNDLER: 'bun' | 'esbuild' | 'rolldown' = 'rolldown';
+
 interface ExampleEntry {
   entrypoint: string; // Absolute path to mill build output main.js
   outputPath: string; // Absolute path to examples-build output
@@ -152,25 +158,35 @@ async function buildWithRolldown(entrypoint: string, outputPath: string): Promis
 
 /**
  * Get the bundler function based on BUNDLER environment variable
- * Defaults to 'bun' if not set or invalid value
+ * Defaults to DEFAULT_BUNDLER constant if not set or invalid value
  */
 function getBundler(): BundlerFunction {
   const bundlerEnv = process.env.BUNDLER?.toLowerCase();
   
-  if (bundlerEnv === 'esbuild') {
-    return buildWithEsbuild;
+  switch (bundlerEnv) {
+    case 'esbuild':
+      return buildWithEsbuild;
+    case 'rolldown':
+      return buildWithRolldown;
+    case 'bun':
+      return buildWithBun;
+    default:
+      // Default to DEFAULT_BUNDLER (handles invalid values)
+      if (bundlerEnv && bundlerEnv !== DEFAULT_BUNDLER) {
+        console.warn(`Invalid BUNDLER value "${process.env.BUNDLER}", defaulting to '${DEFAULT_BUNDLER}'`);
+      }
+      
+      // Return the default bundler based on DEFAULT_BUNDLER constant
+      switch (DEFAULT_BUNDLER) {
+        case 'esbuild':
+          return buildWithEsbuild;
+        case 'rolldown':
+          return buildWithRolldown;
+        case 'bun':
+        default:
+          return buildWithBun;
+      }
   }
-  
-  if (bundlerEnv === 'rolldown') {
-    return buildWithRolldown;
-  }
-  
-  // Default to bun (also handles 'bun' explicitly or invalid values)
-  if (bundlerEnv && bundlerEnv !== 'bun') {
-    console.warn(`Invalid BUNDLER value "${process.env.BUNDLER}", defaulting to 'bun'`);
-  }
-  
-  return buildWithBun;
 }
 
 async function main() {
@@ -187,9 +203,17 @@ async function main() {
   // Select bundler based on environment variable
   const bundler = getBundler();
   const bundlerEnv = process.env.BUNDLER?.toLowerCase();
-  const bundlerName = bundlerEnv === 'esbuild' ? 'esbuild' 
-    : bundlerEnv === 'rolldown' ? 'rolldown' 
-    : 'bun';
+  let bundlerName: string;
+  switch (bundlerEnv) {
+    case 'esbuild':
+    case 'rolldown':
+    case 'bun':
+      bundlerName = bundlerEnv;
+      break;
+    default:
+      bundlerName = DEFAULT_BUNDLER;
+      break;
+  }
   console.log(`Using bundler: ${bundlerName}`);
 
   try {
